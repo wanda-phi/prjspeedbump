@@ -1,0 +1,23 @@
+on: push
+name: Document
+jobs:
+  document:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: 'latest'
+      - name: Build
+        run: |
+          cd docs && mdbook build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: ./docs/book
