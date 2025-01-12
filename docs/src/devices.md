@@ -24,7 +24,7 @@ D2xx devices are USB peripherial devices that implement the D2xx protocol, origi
   - UMFTPD3A: programmer board for FT260/FT4222H (based on FT51A)
 - programmable MCUs with FTDI-provided libraries that can be used to implement the D2xx protocol in firmware
   - FT8U100A: ???-based MCU
-  - FT51A: 8051-based MCU
+  - FT51: 8051-based MCU
   - FT900 series: FT32-based MCU (custom RISC-like 32-bit Harvard architecture)
   - FT930 series: FT32B-based MCU (a revision of FT32)
 
@@ -34,44 +34,46 @@ The fixed-function D2xx devices as well as FT4222H can be configured through non
 
 Almost all D2xx devices allow the designer to provide custom USB vendor and product IDs (as well as string descriptors), making fully reliable detection impossible. However, once something is known to be a D2xx device, the bcdDevice field of device descriptor can be used to determine its exact type:
 
-| bcdDevice    | default VID:PID | # channels | device                          |
-| ------------ | --------------- | ---------- | ------------------------------- |
-| 0001         | 0403:8372       | 1          | FT8U100A UART "applet"          |
-| 0200         | 0403:6001       | 1          | FT8U232A or FT8U245A            |
-| 0400 or 0200 | 0403:6001       | 1          | FT232B or FT245B                |
-| 0500         | 0403:6010       | 2          | FT2232C, FT2232D                |
-| 0600         | 0403:6001       | 1          | FT232R or FT245R                |
-| 0600         | 0403:6049       | 1          | FT232RN or FT245RN              |
-| 0700         | 0403:6010       | 2          | FT2232H                         |
-| 0800         | 0403:6011       | 4          | FT4232H                         |
-| 0900         | 0403:6014       | 1          | FT232H                          |
-| 1000         | 0403:6015       | 1          | FT-X series                     |
-| 1400         | 0403:601b       | 1          | FT4222 mode 3 (unreleased)      |
-| 1500         | 0403:601b       | 2          | FT4222 mode 0 (unreleased)      |
-| 1600         | 0403:601b       | 4          | FT4222 mode 1 or 2 (unreleased) |
-| 1700         | 0403:601c       | 1          | FT4222H mode 3                  |
-| 1800         | 0403:601c       | 2          | FT4222H mode 0                  |
-| 1900         | 0403:601c       | 4          | FT4222H mode 1 or 2             |
-| 2100         | 0403:0fec       | 1?         | UMFT4222PROG                    |
-| 2400         | 0403:6031       | 1          | FT90x (1 channel)               |
-| 2400         | 0403:6032       | 2          | FT90x (2 channels)              |
-| 2400         | 0403:6033       | 3          | FT90x (3 channels)              |
-| 2500         | 0403:6034       | 1          | FT93x (1 channel)               |
-| 2500         | 0403:6035       | 2          | FT93x (2 channels)              |
-| 2500         | 0403:6036       | 3          | FT93x (3 channels)              |
-| 2500         | 0403:6037       | 4          | FT93x (4 channels)              |
-| 2500         | 0403:6038       | 5          | FT93x (5 channels)              |
-| 2500         | 0403:6039       | 6          | FT93x (6 channels)              |
-| 2500         | 0403:603a       | 7          | FT93x (7 channels)              |
-| 2700         | 0403:603e       | 1?         | UMFTPD3A                        |
-| 2800         | 0403:6040       | 2          | FT2233HP                        |
-| 2900         | 0403:6041       | 4          | FT4233HP                        |
-| 3000         | 0403:6042       | 2          | FT2232HP                        |
-| 3100         | 0403:6043       | 4          | FT4232HP                        |
-| 3200         | 0403:6044       | 1          | FT232HP                         |
-| 3300         | 0403:6045       | 1          | FT232HP                         |
-| 3500         | 0403:6047       | 2          | FT2232HA                        |
-| 3600         | 0403:6048       | 4          | FT4232HA                        |
+| bcdDevice    | default VID:PID | # channels | device                                    |
+| ------------ | --------------- | ---------- | ----------------------------------------- |
+| 0001         | 0403:8372       | 1          | FT8U100A UART "applet"                    |
+| 0200         | 0403:6001       | 1          | [FT8U232A or FT8U245A](ft8u232a.md)       |
+| 0400 or 0200 | 0403:6001       | 1          | [FT232B or FT245B](ft232b.md)             |
+| 0400 or 0200 | 0403:6004       | 1          | [FT232B (alternate PID strap)](ft232b.md) |
+| 0400 or 0200 | 0403:6005       | 1          | [FT245B (alternate PID strap)](ft232b.md) |
+| 0500         | 0403:6010       | 2          | [FT2232C, FT2232D](ft2232.md)             |
+| 0600         | 0403:6001       | 1          | [FT232R or FT245R](ft232r.md)             |
+| 0600         | 0403:6049       | 1          | [FT232RN or FT245RN](ft232r.md)           |
+| 0700         | 0403:6010       | 2          | [FT2232H](ft2232h.md)                     |
+| 0800         | 0403:6011       | 4          | [FT4232H](ft2232h.md)                     |
+| 0900         | 0403:6014       | 1          | [FT232H](ft232h.md)                       |
+| 1000         | 0403:6015       | 1          | [FT-X series](ft-x.md)                    |
+| 1400         | 0403:601b       | 1          | FT4222 mode 3 (unreleased)                |
+| 1500         | 0403:601b       | 2          | FT4222 mode 0 (unreleased)                |
+| 1600         | 0403:601b       | 4          | FT4222 mode 1 or 2 (unreleased)           |
+| 1700         | 0403:601c       | 1          | [FT4222H](ft4222h.md) mode 3              |
+| 1800         | 0403:601c       | 2          | [FT4222H](ft4222h.md) mode 0              |
+| 1900         | 0403:601c       | 4          | [FT4222H](ft4222h.md) mode 1 or 2         |
+| 2100         | 0403:0fec       | 1?         | UMFT4222PROG                              |
+| 2400         | 0403:6031       | 1          | FT90x (1 channel)                         |
+| 2400         | 0403:6032       | 2          | FT90x (2 channels)                        |
+| 2400         | 0403:6033       | 3          | FT90x (3 channels)                        |
+| 2500         | 0403:6034       | 1          | FT93x (1 channel)                         |
+| 2500         | 0403:6035       | 2          | FT93x (2 channels)                        |
+| 2500         | 0403:6036       | 3          | FT93x (3 channels)                        |
+| 2500         | 0403:6037       | 4          | FT93x (4 channels)                        |
+| 2500         | 0403:6038       | 5          | FT93x (5 channels)                        |
+| 2500         | 0403:6039       | 6          | FT93x (6 channels)                        |
+| 2500         | 0403:603a       | 7          | FT93x (7 channels)                        |
+| 2700         | 0403:603e       | 1?         | UMFTPD3A                                  |
+| 2800         | 0403:6040       | 2          | [FT2233HP](ft2232h.md)                    |
+| 2900         | 0403:6041       | 4          | [FT4233HP](ft2232h.md)                    |
+| 3000         | 0403:6042       | 2          | [FT2232HP](ft2232h.md)                    |
+| 3100         | 0403:6043       | 4          | [FT4232HP](ft2232h.md)                    |
+| 3200         | 0403:6044       | 1          | [FT233HP](ft232h.md)                      |
+| 3300         | 0403:6045       | 1          | [FT232HP](ft232h.md)                      |
+| 3500         | 0403:6047       | 2          | [FT2232HA](ft2232h.md)                    |
+| 3600         | 0403:6048       | 4          | [FT4232HA](ft2232h.md)                    |
 
 ### FT8U232A and FT8U245A
 
