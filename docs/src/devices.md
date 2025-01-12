@@ -393,17 +393,13 @@ VNC2, also known as Vinculum-II, is an MCU with USB host and peripherial interfa
 | VNC2-32L | 32-pin LQFP | 12   |
 | VNC2-32Q | 32-pin QFN  | 12   |
 
-## FT31x series
-
-### FT311 and FT312
+#### FT311 and FT312
 
 FT311 and FT312 are Android Open Accessory host devices. They are USB full-speed hosts that accept a single peripherial that should support the AOA protocol. They will then expose UART or other interface to the Android device.
 
 The device has internal flash memory which stores, among other things, the descriptor strings presented to the Android device. It can be modified via an FTDI null-modem cable and a configuration utility.
 
-FT311 and FT312 are the same silicon.
-
-The device is most likely based on the VNC1 or VNC2 MCU.
+Both of these devices are actually just VNC2 chips with preprogrammed firmware.
 
 | device       | package     | interfaces                                                               |
 | ------------ | ----------- | ------------------------------------------------------------------------ |
@@ -412,7 +408,7 @@ The device is most likely based on the VNC1 or VNC2 MCU.
 | FT312D-32Q1C | 32-pin QFN  | UART                                                                     |
 | FT312D-32L1C | 32-pin LQFP | UART                                                                     |
 
-### FT313
+## FT313
 
 FT313 is an EHCI controller meant to be connected as a peripherial to 8051-style MCU bus.  It has 24kiB of internal buffer memory and DMA support.
 
