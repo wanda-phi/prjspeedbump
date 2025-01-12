@@ -1,0 +1,695 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Project Speedbump</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Project Speedbump</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="devices"><a class="header" href="#devices">Devices</a></h1>
+<p>FTDI has made a great variety of devices.  Here we attempt to categorize all of them.</p>
+<p>Note that, at one point, FTDI has spun off its MCU division as a new company, Bridgetek. There are many  device that exist with both FTDI (FTxxx) and Bridgetek (BTxxx) naming and branding.  To simplify things, we just consider all Bridgetek devices to be FTDI devices as well.</p>
+<p>Usually, the last letter of a full part name (eg. Q in FT2232HQ) represents the package type (SSOP / QFP / QFN / etc). We usually skip this letter when describing the devices, as it doesn't affect their behavior in any way.</p>
+<h2 id="d2xx-devices"><a class="header" href="#d2xx-devices">D2xx devices</a></h2>
+<p>D2xx devices are USB peripherial devices that implement the D2xx protocol, originally created for USB—UART bridging. They come in several varieties:</p>
+<ul>
+<li>the "proper" fixed-function D2xx devices implementing the D2xx protocol in hardware
+<ul>
+<li>FT8U232A, FT232B, FT232R, FT230X, FT231X, FT234X: single-channel USB—UART bridge</li>
+<li>FT8U245A, FT245B, FT245R, FT240X: single-channel USB—FIFO bridge</li>
+<li>FT200X, FT201X: single-channel USB—I2C peripherial bridge</li>
+<li>FT220X, FT221X: single-channel USB-SPI/FT1248 bridge</li>
+<li>FT2232, FT2232H: dual-channel USB—multiprotocol bridge</li>
+<li>FT4232H: quad-channel USB—multiprotocol bridge</li>
+<li>FT232H: single-channel USB-multiprotocol bridge</li>
+</ul>
+</li>
+<li>preprogrammed MCUs implementing the D2xx protocol in fixed firmware
+<ul>
+<li>FT4222H: quad-channel USB—SPI/I2C bridge</li>
+<li>UMFT4222PROG: programmer board for FT4222H (based on FT51A)</li>
+<li>UMFTPD3A: programmer board for FT260/FT4222H (based on FT51A)</li>
+</ul>
+</li>
+<li>programmable MCUs with FTDI-provided libraries that can be used to implement the D2xx protocol in firmware
+<ul>
+<li>FT8U100A: ???-based MCU</li>
+<li>FT51A: 8051-based MCU</li>
+<li>FT900 series: FT32-based MCU (custom RISC-like 32-bit Harvard architecture)</li>
+<li>FT930 series: FT32B-based MCU (a revision of FT32)</li>
+</ul>
+</li>
+</ul>
+<p>D2xx devices come with one or more "channel"s, which are essentially independent bidirectional data pipes. They correspond to USB interfaces with one IN endpoint and one OUT endpoint. On the host side, they can be opened and used independently by distinct applications.</p>
+<p>The fixed-function D2xx devices as well as FT4222H can be configured through non-volatile memory — some device types use an external EEPROM for that purpose, while others come with on-chip EEPROM or OTP memory.</p>
+<p>Almost all D2xx devices allow the designer to provide custom USB vendor and product IDs (as well as string descriptors), making fully reliable detection impossible. However, once something is known to be a D2xx device, the bcdDevice field of device descriptor can be used to determine its exact type:</p>
+<div class="table-wrapper"><table><thead><tr><th>bcdDevice</th><th>default VID:PID</th><th># channels</th><th>device</th></tr></thead><tbody>
+<tr><td>0001</td><td>0403:8372</td><td>1</td><td>FT8U100A UART "applet"</td></tr>
+<tr><td>0200</td><td>0403:6001</td><td>1</td><td>FT8U232A or FT8U245A</td></tr>
+<tr><td>0400 or 0200</td><td>0403:6001</td><td>1</td><td>FT232B or FT245B</td></tr>
+<tr><td>0500</td><td>0403:6010</td><td>2</td><td>FT2232C, FT2232D</td></tr>
+<tr><td>0600</td><td>0403:6001</td><td>1</td><td>FT232R or FT245R</td></tr>
+<tr><td>0600</td><td>0403:6049</td><td>1</td><td>FT232RN or FT245RN</td></tr>
+<tr><td>0700</td><td>0403:6010</td><td>2</td><td>FT2232H</td></tr>
+<tr><td>0800</td><td>0403:6011</td><td>4</td><td>FT4232H</td></tr>
+<tr><td>0900</td><td>0403:6014</td><td>1</td><td>FT232H</td></tr>
+<tr><td>1000</td><td>0403:6015</td><td>1</td><td>FT-X series</td></tr>
+<tr><td>1400</td><td>0403:601b</td><td>1</td><td>FT4222 mode 3 (unreleased)</td></tr>
+<tr><td>1500</td><td>0403:601b</td><td>2</td><td>FT4222 mode 0 (unreleased)</td></tr>
+<tr><td>1600</td><td>0403:601b</td><td>4</td><td>FT4222 mode 1 or 2 (unreleased)</td></tr>
+<tr><td>1700</td><td>0403:601c</td><td>1</td><td>FT4222H mode 3</td></tr>
+<tr><td>1800</td><td>0403:601c</td><td>2</td><td>FT4222H mode 0</td></tr>
+<tr><td>1900</td><td>0403:601c</td><td>4</td><td>FT4222H mode 1 or 2</td></tr>
+<tr><td>2100</td><td>0403:0fec</td><td>1?</td><td>UMFT4222PROG</td></tr>
+<tr><td>2400</td><td>0403:6031</td><td>1</td><td>FT90x (1 channel)</td></tr>
+<tr><td>2400</td><td>0403:6032</td><td>2</td><td>FT90x (2 channels)</td></tr>
+<tr><td>2400</td><td>0403:6033</td><td>3</td><td>FT90x (3 channels)</td></tr>
+<tr><td>2500</td><td>0403:6034</td><td>1</td><td>FT93x (1 channel)</td></tr>
+<tr><td>2500</td><td>0403:6035</td><td>2</td><td>FT93x (2 channels)</td></tr>
+<tr><td>2500</td><td>0403:6036</td><td>3</td><td>FT93x (3 channels)</td></tr>
+<tr><td>2500</td><td>0403:6037</td><td>4</td><td>FT93x (4 channels)</td></tr>
+<tr><td>2500</td><td>0403:6038</td><td>5</td><td>FT93x (5 channels)</td></tr>
+<tr><td>2500</td><td>0403:6039</td><td>6</td><td>FT93x (6 channels)</td></tr>
+<tr><td>2500</td><td>0403:603a</td><td>7</td><td>FT93x (7 channels)</td></tr>
+<tr><td>2700</td><td>0403:603e</td><td>1?</td><td>UMFTPD3A</td></tr>
+<tr><td>2800</td><td>0403:6040</td><td>2</td><td>FT2233HP</td></tr>
+<tr><td>2900</td><td>0403:6041</td><td>4</td><td>FT4233HP</td></tr>
+<tr><td>3000</td><td>0403:6042</td><td>2</td><td>FT2232HP</td></tr>
+<tr><td>3100</td><td>0403:6043</td><td>4</td><td>FT4232HP</td></tr>
+<tr><td>3200</td><td>0403:6044</td><td>1</td><td>FT232HP</td></tr>
+<tr><td>3300</td><td>0403:6045</td><td>1</td><td>FT232HP</td></tr>
+<tr><td>3500</td><td>0403:6047</td><td>2</td><td>FT2232HA</td></tr>
+<tr><td>3600</td><td>0403:6048</td><td>4</td><td>FT4232HA</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft8u232a-and-ft8u245a"><a class="header" href="#ft8u232a-and-ft8u245a">FT8U232A and FT8U245A</a></h3>
+<p>These are the first-generation fixed-function D2xx devices. FT8U232A is a USB—UART bridge, while FT8U245A is a USB—FIFO bridge. They look exactly the same from the software perspective, and in fact may or may not be the same silicon.</p>
+<p>They are configured by an optional external 93C46 (64×16-bit word) EEPROM. If no EEPROM is present, or the EEPROM is unprogrammed, the device will use a default configuration.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>FT8U232AM</td><td>32-pin MQFP</td></tr>
+<tr><td>FT8U245AM</td><td>32-pin MQFP</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft232b-and-ft245b"><a class="header" href="#ft232b-and-ft245b">FT232B and FT245B</a></h3>
+<p>These are a second-generation revision of FT8U2xxA. They are largely software-compatible, but introduce a few new features:</p>
+<ul>
+<li>configurable latency timer</li>
+<li>bitbang mode</li>
+<li>serial number descriptor</li>
+<li>support for larger 93C56 (128×16) and 93C66 (256×16) EEPROMs in addition to 93C46</li>
+</ul>
+<p>They are mostly, but not completely pin compatible with FT8U2xxA in the QFP packages.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>FT232BM</td><td>32-pin LQFP</td></tr>
+<tr><td>FT232BL</td><td>32-pin lead-free LQFP</td></tr>
+<tr><td>FT232BQ</td><td>32-pin QFN</td></tr>
+<tr><td>FT245BM</td><td>32-pin LQFP</td></tr>
+<tr><td>FT245BL</td><td>32-pin lead-free LQFP</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft2232cdl"><a class="header" href="#ft2232cdl">FT2232C/D/L</a></h3>
+<p>A third-generation D2xx device. This device features two largely-independent channels (called A and B), which can be independently configured through EEPROM in several modes:</p>
+<ul>
+<li>UART (like FT232B)</li>
+<li>FIFO (like FT245B)</li>
+<li>CPU FIFO (new mode, meant for use as a peripherial on an 8051-style MCU bus)</li>
+<li>fast opto-isolated serial (custom serial protocol, optimised for low pin count and speed)</li>
+</ul>
+<p>In addition, the device can also dynamically switch either of the two channels into alternate modes:</p>
+<ul>
+<li>async bitbang mode: like FT232B/FT245B</li>
+<li>MPSSE mode: implements a fast controller for SPI, JTAG, and similar protocols (channel A only)</li>
+<li>sync bitbang mode: new, variation of the async bitbang mode</li>
+<li>MCU bus: uses pins of both channels; makes the device capable of controlling an 8051-style MCU bus and driving MCU peripherials</li>
+</ul>
+<p>Like FT2xxB, the device can be configured by a 93C46/93C56/93C66 external EEPROM.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>what is</th></tr></thead><tbody>
+<tr><td>FT2232C</td><td>48-pin LQFP</td><td>base version</td></tr>
+<tr><td>FT2232L</td><td>48-pin lead-free LQFP</td><td>base version</td></tr>
+<tr><td>FT2232D</td><td>48-pin lead-free LQFP</td><td>revised version</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft232rft245r"><a class="header" href="#ft232rft245r">FT232R/FT245R</a></h3>
+<p>A fourth-generation D2xx device. The FT232R and FT245R are, in fact, the same chip, and it seems that they can be converted into one another via an EEPROM change. They are an enhanced version of FT2xxB, with the following new features:</p>
+<ul>
+<li>internal 32×32-bit EEPROM for configuration (instead of external 93C*), plus 8×32-bit factory-programmed area with unique per-chip ID
+<ul>
+<li>whether the device is FT232R or FT245R is stored in the user-programmable area and can be changed, though vendor tools go out of their way not to do so</li>
+</ul>
+</li>
+<li>internal oscillator</li>
+<li>configurable CBUS pins with multiple functions (FT232R only)</li>
+<li>CBUS GPIO mode (allows putting individual CBUS pins under software control while continuing to use other pins for their normal UART purpose)</li>
+<li>adds the synchronous bitbang mode (ported from FT2232C)</li>
+</ul>
+<p>The FT2xxRN is a variant of the device that makes the internal oscillator work with 3.3V VCC.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>FT232RL</td><td>28-pin TSSOP</td></tr>
+<tr><td>FT232RQ</td><td>32-pin QFN</td></tr>
+<tr><td>FT245RL</td><td>28-pin TSSOP</td></tr>
+<tr><td>FT245RQ</td><td>32-pin QFN</td></tr>
+<tr><td>FT232RNL</td><td>28-pin TSSOP</td></tr>
+<tr><td>FT232RNQ</td><td>32-pin QFN</td></tr>
+<tr><td>FT245RNL</td><td>28-pin TSSOP</td></tr>
+<tr><td>FT245RNQ</td><td>32-pin QFN</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft2232h-and-ft4232h"><a class="header" href="#ft2232h-and-ft4232h">FT2232H and FT4232H</a></h3>
+<p>Fifth-generation D2xx devices. FT2232H and FT4232H are the same silicon, and are differentiated by a fuse programmed in the factory.</p>
+<p>FT2232H is an enhanced version of FT2232C, with the following new features:</p>
+<ul>
+<li>USB 2.0 high-speed interface</li>
+<li>max UART speed bumped from 3Mbaud to 12Mbaud</li>
+<li>max FIFO speed bumped from 1MB/s to 8MB/s</li>
+<li>adds new synchronous FIFO submode, which further increases FIFO speed to 40MB/s</li>
+<li>MPSSE mode is available on both channels</li>
+<li>each channel now has 16 pins instead of 13 (additional pins can be used as GPIO in MPSSE mode)</li>
+</ul>
+<p>FT4232H is a variant with the following differences:</p>
+<ul>
+<li>four channels (A, B, C, D) instead of two, each of which includes 8 pins instead of 16</li>
+<li>modes requiring more than 8 pins are not supported (FIFO, CPU FIFO, MCU bus)</li>
+<li>fast opto-isolated serial mode is also not supported</li>
+<li>only channels A and B support MPSSE (C and D are limitted to UART and bitbang)</li>
+</ul>
+<p>Later on, variants of these devices were made with USB-PD support. They have the same core functionality as the base version, but they require a 93C66 EEPROM to fit the extra configuration required for USB-PD.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>what</th></tr></thead><tbody>
+<tr><td>FT2232HL</td><td>64-pin LQFP</td><td>base FT2232H</td></tr>
+<tr><td>FT2232HQ</td><td>56-pin VQFN</td><td>base FT2232H</td></tr>
+<tr><td>FT4232HL</td><td>64-pin LQFP</td><td>base FT4232H</td></tr>
+<tr><td>FT4232HQ</td><td>56-pin VQFN</td><td>base FT4232H</td></tr>
+<tr><td>FT2233HPQ</td><td>76-pin QFN</td><td>FT2232H with two USB-PD ports</td></tr>
+<tr><td>FT4233HPQ</td><td>76-pin QFN</td><td>FT4232H with two USB-PD ports</td></tr>
+<tr><td>FT2232HPQ</td><td>68-pin QFN</td><td>FT2232H with one USB-PD port</td></tr>
+<tr><td>FT4232HPQ</td><td>68-pin QFN</td><td>FT4232H with one USB-PD port</td></tr>
+<tr><td>FT2232HAQ</td><td>64-pin QFN</td><td>FT2232H automotive version</td></tr>
+<tr><td>FT4232HAQ</td><td>64-pin QFN</td><td>FT4232H automotive version</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft232h"><a class="header" href="#ft232h">FT232H</a></h3>
+<p>A single-channel variant of FT2232H, with some FT232R features merged in. Features include:</p>
+<ul>
+<li>USB 2.0 high-speed interface</li>
+<li>a single channel, with 18 pins</li>
+<li>supports all FT2232H modes except for the MCU bus mode (which would require more than 16 pins)</li>
+<li>adds FT232R-style configurable CBUS pins, as well as the CBUS bitbang mode</li>
+<li>continues to require external EEPROM; only 93C56 and 93C66 are supported</li>
+<li>adds a new FT1248 mode</li>
+</ul>
+<p>Like FT2232H and FT4232H, this device also got USB-PD variants later on.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>what</th></tr></thead><tbody>
+<tr><td>FT232HL</td><td>48-pin LQFP</td><td>base FT232H</td></tr>
+<tr><td>FT232HQ</td><td>48-pin QFN</td><td>base FT232H</td></tr>
+<tr><td>FT233HPQ</td><td>64-pin QFN</td><td>FT232H with two USB-PD ports</td></tr>
+<tr><td>FT232HPQ</td><td>56-pin QFN</td><td>FT232H with one USB-PD port</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft-x-series"><a class="header" href="#ft-x-series">FT-X series</a></h3>
+<p>A single-channel D2xx device. Essentially an enhanced version of FT232R, with the following changes:</p>
+<ul>
+<li>internal 2048-byte MTP memory for configuration, including some immutable factory pre-programmed data</li>
+<li>the device comes in several variants; the variant is selected by the factory-programmed MTP area and cannot be changed
+<ul>
+<li>FT200X and FT201X: USB to I2C peripherial bridge</li>
+<li>FT220X and FT221X: USB to FT1248 / SPI bridge</li>
+<li>FT230X, FT231X, FT234X: USB to UART bridge (like FT232R)</li>
+<li>FT240X: USB to FIFO bridge (like FT245R)</li>
+</ul>
+</li>
+<li>adds battery charger detection</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>business end</th><th>business end pins</th></tr></thead><tbody>
+<tr><td>FT200XD</td><td>10-pin DFN</td><td>I2C peripherial</td><td>2×I2C + 1×CBUS</td></tr>
+<tr><td>FT201XS</td><td>16-pin SSOP</td><td>I2C peripherial</td><td>2×I2C + 6×CBUS</td></tr>
+<tr><td>FT201XQ</td><td>16-pin QFN</td><td>I2C peripherial</td><td>2×I2C + 6×CBUS</td></tr>
+<tr><td>FT220XS</td><td>16-pin SSOP</td><td>4-bit FT1248 or SPI</td><td>7×FT1248/SPI + 1×CBUS</td></tr>
+<tr><td>FT220XQ</td><td>16-pin QFN</td><td>4-bit FT1248 or SPI</td><td>7×FT1248/SPI + 1×CBUS</td></tr>
+<tr><td>FT221XS</td><td>20-pin SSOP</td><td>8-bit FT1248 or SPI</td><td>11×FT1248/SPI + 1×CBUS</td></tr>
+<tr><td>FT221XQ</td><td>20-pin QFN</td><td>8-bit FT1248 or SPI</td><td>11×FT1248/SPI + 1×CBUS</td></tr>
+<tr><td>FT230XS</td><td>16-pin SSOP</td><td>basic UART</td><td>4×UART + 4×CBUS</td></tr>
+<tr><td>FT230XQ</td><td>16-pin QFN</td><td>basic UART</td><td>4×UART + 4×CBUS</td></tr>
+<tr><td>FT231XS</td><td>20-pin SSOP</td><td>full UART</td><td>8×UART + 4×CBUS</td></tr>
+<tr><td>FT231XQ</td><td>20-pin QFN</td><td>full UART</td><td>8×UART + 4×CBUS</td></tr>
+<tr><td>FT234XD</td><td>12-pin DFN</td><td>basic UART</td><td>4×UART + 1×CBUS</td></tr>
+<tr><td>FT240XS</td><td>24-pin SSOP</td><td>FIFO</td><td>13×FIFO + 2×CBUS</td></tr>
+<tr><td>FT240XQ</td><td>24-pin QFN</td><td>FIFO</td><td>13×FIFO + 2×CBUS</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft4222h"><a class="header" href="#ft4222h">FT4222H</a></h3>
+<p>The FT4222H is a high-speed USB to QSPI/I2C + GPIO bridge. Internally, it is based on an MCU (unknown, but likely FT32).</p>
+<p>The device is configured using internal OTP memory.</p>
+<p>The device has four channel configurations, selectable by two configuration pins:</p>
+<div class="table-wrapper"><table><thead><tr><th>mode</th><th>channel count</th><th>channel 0</th><th>channel 1</th><th>channel 2</th><th>channel 3</th></tr></thead><tbody>
+<tr><td>0</td><td>2</td><td>SPIC / SPIP / I2CC / I2CP</td><td>GPIO</td><td>-</td><td>-</td></tr>
+<tr><td>1</td><td>4</td><td>SPIC (CS0)</td><td>SPIC (CS1)</td><td>SPIC (CS2)</td><td>GPIO</td></tr>
+<tr><td>2</td><td>4</td><td>SPIC (CS0)</td><td>SPIC (CS1)</td><td>SPIC (CS2)</td><td>SPIC (CS3)</td></tr>
+<tr><td>3</td><td>1</td><td>SPIC / SPIP / I2CC / I2CP</td><td>-</td><td>-</td><td>-</td></tr>
+</tbody></table>
+</div>
+<p>The device has four modes, selected at runtime:</p>
+<ul>
+<li>SPIC: SPI controller; depending on channel configuration, can use up to four CS lines, and thus control 4 peripherials; every peripherial is controlled by a dedicated channel</li>
+<li>SPIP: SPI peripherial (not available in modes 1 and 2)</li>
+<li>I2CC: I2C controller (not available in modes 1 and 2)</li>
+<li>I2CP: I2C peripherial (not available in modes 1 and 2)</li>
+</ul>
+<p>The device comes in 4 revisions, which differ in firmware version:</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>firmware</th></tr></thead><tbody>
+<tr><td>FT4222HQ-A</td><td>32-pin VQFN</td><td>rev A</td></tr>
+<tr><td>FT4222HQ-B</td><td>32-pin VQFN</td><td>rev B</td></tr>
+<tr><td>FT4222HQ-C</td><td>32-pin VQFN</td><td>rev C</td></tr>
+<tr><td>FT4222HQ-D</td><td>32-pin VQFN</td><td>rev D</td></tr>
+</tbody></table>
+</div>
+<h2 id="d3xx-devices"><a class="header" href="#d3xx-devices">D3xx devices</a></h2>
+<p>D3xx devices are USB super-speed peripherial devices that implement the D3xx protocol. There are several variants:</p>
+<ul>
+<li>FT600 and FT601: USB—FIFO bridge
+<ul>
+<li>FT600: up to 16-bit FIFO</li>
+<li>FT601: up to 32-bit FIFO</li>
+</ul>
+</li>
+<li>FT602: USB—FIFO bridge implementing the UVC protocol</li>
+</ul>
+<p>All of these devices are internally based on an FT32-based MCU.</p>
+<div class="table-wrapper"><table><thead><tr><th>default VID:PID</th><th>device</th></tr></thead><tbody>
+<tr><td>0403:601e</td><td>FT600</td></tr>
+<tr><td>0403:601f</td><td>FT601</td></tr>
+<tr><td>TODO</td><td>FT602</td></tr>
+</tbody></table>
+</div>
+<h2 id="ft260"><a class="header" href="#ft260">FT260</a></h2>
+<p>FT260 is a USB—UART/I2C bridge implementing the HID device class. It is internally based on an unknown MCU (FT32? FT51?). It can be configured using internal eFUSE memory or external EEPROM.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>default VID:PID</th><th>package</th></tr></thead><tbody>
+<tr><td>FT260Q</td><td>0403:6030</td><td>28-pin WQFN</td></tr>
+<tr><td>FT260S</td><td>0403:6030</td><td>28-pin TSSOP</td></tr>
+</tbody></table>
+</div>
+<h2 id="ft12-series"><a class="header" href="#ft12-series">FT12 series</a></h2>
+<p>FT12 series devices are, essentially, completely customizable USB peripherial devices meant to be controlled by an external MCU. The FT12 acts as a PHY and endpoint FIFO controller, while the MCU is supposed to implement all USB endpoint logic, including control requests.</p>
+<p>Note that the internal VID:PID listed in the table is actually presented to the <em>MCU</em> as FT12's identification, not to the host. The actual USB VID:PID is provided by the MCU.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>max endpoints</th><th>MCU interface</th><th>internal VID:PID</th><th>package</th></tr></thead><tbody>
+<tr><td>FT120T</td><td>6</td><td>MCU parallel bus</td><td>none</td><td>28-pin TSSOP</td></tr>
+<tr><td>FT121T</td><td>16</td><td>SPI</td><td>0403:6018</td><td>16-pin TSSOP</td></tr>
+<tr><td>FT121Q</td><td>16</td><td>SPI</td><td>0403:6018</td><td>16-pin QFN</td></tr>
+<tr><td>FT122T</td><td>16</td><td>MCU parallel bus</td><td>0403:6018</td><td>28-pin TSSOP</td></tr>
+<tr><td>FT122Q</td><td>16</td><td>MCU parallel bus</td><td>0403:6018</td><td>28-pin QFN</td></tr>
+</tbody></table>
+</div>
+<h2 id="mcu-devices"><a class="header" href="#mcu-devices">MCU devices</a></h2>
+<h3 id="ft8u100a"><a class="header" href="#ft8u100a">FT8U100A</a></h3>
+<p>FT8U100A is an MCU based on an unknown 8-bit architecture (8051?). It implements a USB hub, with 1 upstream port and 7 physical downstream ports, as well as virtual downstream ports for internal devices. It also has a variety of peripherials, such as UART, PS/2 keyboard/mouse host, IrDA, I2C controller, and GPIO. It comes with ready-made firmware that can be used to expose these peripherials as USB devices (including SIO UART, the first device in the D2xx family).</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>FT8U100AX</td><td>100-pin PQFP</td></tr>
+</tbody></table>
+</div><div class="table-wrapper"><table><thead><tr><th>VID:PID</th><th>internal device</th></tr></thead><tbody>
+<tr><td>0403:8370</td><td>USB hub</td></tr>
+<tr><td>0403:8371</td><td>PS/2 keyboard and mouse</td></tr>
+<tr><td>0403:8372</td><td>UART (D2xx protocol)</td></tr>
+</tbody></table>
+</div>
+<p>TODO: list incomplete</p>
+<h3 id="ft51"><a class="header" href="#ft51">FT51</a></h3>
+<p>FT51 is an 8051-based MCU that has a programmable USB peripherial interface, as well as a USB hub. It is used in the UMFTPD3A and UMFT4222PROG boards. It comes in several variants, all of which are the same silicon and only differ in the number of pins:</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>GPIO</th></tr></thead><tbody>
+<tr><td>FT51AQ</td><td>48-pin QFN</td><td>16×DIO + 16×AIO</td></tr>
+<tr><td>FT51AL</td><td>44-pin LQFP</td><td>16×DIO + 16×AIO</td></tr>
+<tr><td>FT51BQ</td><td>32-pin QFN</td><td>16×DIO + 8×AIO</td></tr>
+<tr><td>FT51CS</td><td>28-pin SSOP</td><td>12×DIO + 8×AIO</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft900-series"><a class="header" href="#ft900-series">FT900 series</a></h3>
+<p>FT900 is an MCU based on FTDI's custom FT32 RISC-like architecture. It comes in several variants, all of which are actually the same silicon:</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>ethernet</th><th>CAN</th><th>GPIO pins</th><th>SD host</th><th>SPI peripherial</th><th>I2C</th><th>I2S</th><th>package</th></tr></thead><tbody>
+<tr><td>FT900Q</td><td>yes</td><td>yes</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin QFN</td></tr>
+<tr><td>FT900L</td><td>yes</td><td>yes</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin LQFP</td></tr>
+<tr><td>FT901Q</td><td>yes</td><td>no</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin QFN</td></tr>
+<tr><td>FT901L</td><td>yes</td><td>no</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin LQFP</td></tr>
+<tr><td>FT902Q</td><td>no</td><td>yes</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin QFN</td></tr>
+<tr><td>FT902L</td><td>no</td><td>yes</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin LQFP</td></tr>
+<tr><td>FT903Q</td><td>no</td><td>no</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin QFN</td></tr>
+<tr><td>FT903L</td><td>no</td><td>no</td><td>66</td><td>yes</td><td>2</td><td>2</td><td>yes</td><td>100-pin LQFP</td></tr>
+<tr><td>FT905Q</td><td>yes</td><td>yes</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>76-pin QFN</td></tr>
+<tr><td>FT905L</td><td>yes</td><td>yes</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>80-pin LQFP</td></tr>
+<tr><td>FT906Q</td><td>yes</td><td>no</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>76-pin QFN</td></tr>
+<tr><td>FT906L</td><td>yes</td><td>no</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>80-pin LQFP</td></tr>
+<tr><td>FT907Q</td><td>no</td><td>yes</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>76-pin QFN</td></tr>
+<tr><td>FT907L</td><td>no</td><td>yes</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>80-pin LQFP</td></tr>
+<tr><td>FT908Q</td><td>no</td><td>no</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>76-pin QFN</td></tr>
+<tr><td>FT908L</td><td>no</td><td>no</td><td>44</td><td>no</td><td>1</td><td>1</td><td>no</td><td>80-pin LQFP</td></tr>
+</tbody></table>
+</div>
+<p>FT900 comes with (device-side) libraries that can implement the D2xx protocol in software.</p>
+<h3 id="ft930-series"><a class="header" href="#ft930-series">FT930 series</a></h3>
+<p>FT930 is an MCU based on FT32B, a revision of the FT32 architecture used in the FT900 series. It comes in several variants, all of which are actually the same silicon:</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>DAC</th><th>ADC</th><th>PWM</th><th>SD host</th><th>RTC</th><th>UART</th><th>GPIO</th><th>pins</th></tr></thead><tbody>
+<tr><td>FT930Q</td><td>×2</td><td>×3</td><td>×8</td><td>yes</td><td>yes</td><td>×4</td><td>40</td><td>68-pin QFN</td></tr>
+<tr><td>FT931Q</td><td>×2</td><td>×3</td><td>×4</td><td>yes</td><td>yes</td><td>×2</td><td>28</td><td>56-pin QFN</td></tr>
+<tr><td>FT932Q</td><td>×2</td><td>×3</td><td>×4</td><td>yes</td><td>no</td><td>×2</td><td>24</td><td>48-pin QFN</td></tr>
+<tr><td>FT933Q</td><td>no</td><td>×2</td><td>×4</td><td>no</td><td>no</td><td>×2</td><td>16</td><td>48-pin QFN</td></tr>
+</tbody></table>
+</div>
+<p>In addition to the main FT32B core that is advertised in the datasheet, FT930 also contains a secondary MCU (unknown architecture, but likely also FT32). The "hardware D2xx engine" advertised in the datasheet is actually implemented in software on the other MCU core.</p>
+<h3 id="vnc1"><a class="header" href="#vnc1">VNC1</a></h3>
+<p>VNC1, also known as Vinculum, is an MCU with USB host and peripherial interfaces. It is based on a custom 8-bit Harvard architecture, known as FT8.  It has a cute 32-bit integer numeric coprocessor for complex arithmetic tasks such as "handling the FAT filesystem".</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>VNC1L</td><td>48-pin LQFP</td></tr>
+</tbody></table>
+</div>
+<h3 id="vnc2"><a class="header" href="#vnc2">VNC2</a></h3>
+<p>VNC2, also known as Vinculum-II, is an MCU with USB host and peripherial interfaces. It is based on a custom Harvard 16-bit architecture, known as FT16.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>GPIO</th></tr></thead><tbody>
+<tr><td>VNC2-48L</td><td>48-pin LQFP</td><td>28</td></tr>
+<tr><td>VNC2-48Q</td><td>48-pin QFN</td><td>28</td></tr>
+<tr><td>VNC2-32L</td><td>32-pin LQFP</td><td>12</td></tr>
+<tr><td>VNC2-32Q</td><td>32-pin QFN</td><td>12</td></tr>
+</tbody></table>
+</div>
+<h2 id="ft31x-series"><a class="header" href="#ft31x-series">FT31x series</a></h2>
+<h3 id="ft311-and-ft312"><a class="header" href="#ft311-and-ft312">FT311 and FT312</a></h3>
+<p>FT311 and FT312 are Android Open Accessory host devices. They are USB full-speed hosts that accept a single peripherial that should support the AOA protocol. They will then expose UART or other interface to the Android device.</p>
+<p>The device has internal flash memory which stores, among other things, the descriptor strings presented to the Android device. It can be modified via an FTDI null-modem cable and a configuration utility.</p>
+<p>FT311 and FT312 are the same silicon.</p>
+<p>The device is most likely based on the VNC1 or VNC2 MCU.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>interfaces</th></tr></thead><tbody>
+<tr><td>FT311D-32Q1C</td><td>32-pin QFN</td><td>one of: UART, GPIO, PWM, I2C controller, SPI controller, SPI peripherial</td></tr>
+<tr><td>FT311D-32L1C</td><td>32-pin LQFP</td><td>one of: UART, GPIO, PWM, I2C controller, SPI controller, SPI peripherial</td></tr>
+<tr><td>FT312D-32Q1C</td><td>32-pin QFN</td><td>UART</td></tr>
+<tr><td>FT312D-32L1C</td><td>32-pin LQFP</td><td>UART</td></tr>
+</tbody></table>
+</div>
+<h3 id="ft313"><a class="header" href="#ft313">FT313</a></h3>
+<p>FT313 is an EHCI controller meant to be connected as a peripherial to 8051-style MCU bus.  It has 24kiB of internal buffer memory and DMA support.</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>FT313HQ</td><td>64-pin QFN</td></tr>
+<tr><td>FT313HL</td><td>64-pin LQFP</td></tr>
+<tr><td>FT313HP</td><td>64-pin TQFP</td></tr>
+</tbody></table>
+</div>
+<h2 id="eve-display-controllers"><a class="header" href="#eve-display-controllers">EVE display controllers</a></h2>
+<p>EVE (Embedded Video Engine) aka FT8xx aka BT8xx is a series of display controllers.  They are meant to be driven by an external MCU, and provide parallel or LVDS video output (and, in some cases, input), audio output, and a resistive or capacitive touch controller.</p>
+<h3 id="eve-aka-ft80x"><a class="header" href="#eve-aka-ft80x">EVE aka FT80x</a></h3>
+<p>The first generation of EVE.  Both chips are the same silicon.  It features:</p>
+<ul>
+<li>SPI peripherial or I2C peripherial interface exposing internal RAM and registers, meant to be controlled by the MCU host</li>
+<li>256kiB of internal RAM</li>
+<li>parallel 18-bit RGB video output, up to 480×272 resolution</li>
+<li>display list based graphics engine driving the video output
+<ul>
+<li>basic rendering features</li>
+<li>JPEG decode</li>
+<li>zlib decompression</li>
+<li>ROM and RAM fonts</li>
+</ul>
+</li>
+<li>backlight control</li>
+<li>one-channel PWM audio output, playing PCM audio or predefined sound effects from ROM wave table</li>
+<li>touch controller
+<ul>
+<li>resistive version: directly controls the touchscreen via analog pins</li>
+<li>capacitive version: has an I2C controller interface meant to be connected to the capacitive touchscreen</li>
+</ul>
+</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>touch interface</th><th>package</th></tr></thead><tbody>
+<tr><td>FT800Q</td><td>resistive</td><td>48-pin VQFN</td></tr>
+<tr><td>FT801Q</td><td>capacitive</td><td>48-pin VQFN</td></tr>
+</tbody></table>
+</div>
+<h3 id="eve2-aka-ft81x-and-bt88x"><a class="header" href="#eve2-aka-ft81x-and-bt88x">EVE2 aka FT81x and BT88x</a></h3>
+<p>The second generation of EVE.  FT81x has the following differences from FT80x:</p>
+<ul>
+<li>MCU interface is SPI or QSPI peripherial</li>
+<li>1MiB of internal RAM</li>
+<li>different memory map</li>
+<li>video output supports up to 800×600 resolution</li>
+<li>video output is 24-bit instead of 18-bit (on FT812 and FT813 only)</li>
+</ul>
+<p>The BT88x is a smaller variant of EVE2.  It has the following differences from FT81x:</p>
+<ul>
+<li>only 256kiB of internal RAM</li>
+<li>video output resolution is limitted to 131072 pixels total</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>video output</th><th>touch interface</th><th>internal RAM</th><th>package</th></tr></thead><tbody>
+<tr><td>FT810Q</td><td>18-bit RGB</td><td>resistive</td><td>1MiB</td><td>48-pin VQFN</td></tr>
+<tr><td>FT811Q</td><td>18-bit RGB</td><td>capacitive</td><td>1MiB</td><td>48-pin VQFN</td></tr>
+<tr><td>FT812Q</td><td>24-bit RGB</td><td>resistive</td><td>1MiB</td><td>56-pin VQFN</td></tr>
+<tr><td>FT813Q</td><td>24-bit RGB</td><td>capacitive</td><td>1MiB</td><td>56-pin VQFN</td></tr>
+<tr><td>BT880Q</td><td>18-bit RGB</td><td>resistive</td><td>256kiB</td><td>48-pin VQFN</td></tr>
+<tr><td>BT881Q</td><td>18-bit RGB</td><td>capacitive</td><td>256kiB</td><td>48-pin VQFN</td></tr>
+<tr><td>BT882Q</td><td>24-bit RGB</td><td>resistive</td><td>256kiB</td><td>56-pin VQFN</td></tr>
+<tr><td>BT883Q</td><td>24-bit RGB</td><td>capacitive</td><td>256kiB</td><td>56-pin VQFN</td></tr>
+</tbody></table>
+</div>
+<p>All of the FT81x devices are the same silicon.  FT810 and FT811 are pin-compatible with FT800 and FT801.</p>
+<p>Likewise, all BT88x devices are the same silicon.  They are pin-compatible with their corresponding FT81x devices.</p>
+<h3 id="eve3-aka-bt815bt816"><a class="header" href="#eve3-aka-bt815bt816">EVE3 aka BT815/BT816</a></h3>
+<p>The third generation of EVE.  It has switched to the BT (Bridgetek) device name prefix.  It has the following differences from EVE2:</p>
+<ul>
+<li>added QSPI controller interface meant for connecting an external flash chip with preprogrammed graphics or audio data</li>
+<li>sigma-delta audio output instead of PWM</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>touch interface</th><th>package</th></tr></thead><tbody>
+<tr><td>BT815Q</td><td>capacitive</td><td>64-pin VQFN</td></tr>
+<tr><td>BT816Q</td><td>resistive</td><td>64-pin VQFN</td></tr>
+</tbody></table>
+</div>
+<p>Both BT815 and BT816 are the same silicon.</p>
+<h3 id="eve4-aka-bt817bt818"><a class="header" href="#eve4-aka-bt817bt818">EVE4 aka BT817/BT818</a></h3>
+<p>The fourth generation of EVE.  It has the following differences from EVE3:</p>
+<ul>
+<li>video output supports up to 1920×480, 1440×540, or 1280×800 resolution</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>touch interface</th><th>package</th></tr></thead><tbody>
+<tr><td>BT817Q</td><td>capacitive</td><td>64-pin VQFN</td></tr>
+<tr><td>BT817AQ</td><td>capacitive</td><td>64-pin VQFN</td></tr>
+<tr><td>BT818Q</td><td>resistive</td><td>64-pin VQFN</td></tr>
+</tbody></table>
+</div>
+<p>BT817A is an automotive variant of BT817.</p>
+<p>All EVE4 devices are the same silicon.</p>
+<h3 id="eve5-aka-bt820"><a class="header" href="#eve5-aka-bt820">EVE5 aka BT820</a></h3>
+<p>The fifth generation of EVE, with major changes.  It has the following features:</p>
+<ul>
+<li>QSPI peripherial interface for the MCU host</li>
+<li>QSPI controller interface for flash</li>
+<li>memory controller for DDR3/DDR3L/LPDDR2 working memory</li>
+<li>SD card host interface</li>
+<li>dual-channel FPD-link video output
+<ul>
+<li>with backlight control</li>
+</ul>
+</li>
+<li>dual-channel FPD-link video input</li>
+<li>I2C controller interface for capacitive touch</li>
+<li>audio output through stereo delta-sigma or I2S</li>
+<li>16 GPIO pins</li>
+<li>display list based graphics engine
+<ul>
+<li>PNG and JPG decode support</li>
+<li>deflate decode support</li>
+<li>ROM and RAM fonts</li>
+</ul>
+</li>
+<li>render engine for memory-to-memory drawing
+<ul>
+<li>ASTC decode support</li>
+</ul>
+</li>
+</ul>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
+<tr><td>BT820B</td><td>329-pin BGA</td></tr>
+</tbody></table>
+</div>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
