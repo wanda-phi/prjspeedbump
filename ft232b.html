@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>FT232B and FT245B - Project Speedbump</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Project Speedbump</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="ft232b-and-ft245b"><a class="header" href="#ft232b-and-ft245b">FT232B and FT245B</a></h1>
+<p>The second generation of fixed-function D2xx devices, an upgrade to FT8U232A and FT8U245A.  The devices are:</p>
+<ul>
+<li>FT232BM: UART mode, 32-pin LQFP</li>
+<li>FT232BL: UART mode, 32-pin LQFP (lead-free version)</li>
+<li>FT232BQ: UART mode, 32-pin QFN</li>
+<li>FT245BM: FIFO mode, 32-pin LQFP</li>
+<li>FT245BL: FIFO mode, 32-pin LQFP (lead-free version)</li>
+</ul>
+<p>Both FT232B and FT245B look exactly the same from the software perspective, and in fact may or may not be the same silicon.</p>
+<p>Features:</p>
+<ul>
+<li>is a full-speed USB 1.1 peripherial</li>
+<li>single channel D2xx device, hardwired to either UART or <a href="fifo.html">FIFO</a> base mode
+<ul>
+<li>can be set to an alternate mode: <a href="bitbang.html">async bitbang</a></li>
+</ul>
+</li>
+<li>384-byte IN FIFO, 128-byte OUT FIFO</li>
+<li>48MHz internal base clock, generated from 6MHz crystal</li>
+<li>5V VCC supply for internal circuitry</li>
+<li>separate 3.3V or 5V VCCIO supply for business-end IO</li>
+<li>separate AGND and AVCC 5V supply for the clock multiplier</li>
+<li>internal 3.3V LDO</li>
+<li>internal power-on reset circuit</li>
+<li>required external support circuitry:
+<ul>
+<li>USB D+ pullup</li>
+<li>decoupling capacitor for internal LDO</li>
+<li>6MHz crystal or external clock</li>
+<li>optionally, a 93C46 64×16-bit EEPROM; a 93C56 or 93C66 is also acceptable, but the device will not be able to access the extra space</li>
+</ul>
+</li>
+</ul>
+<p>On reset, the device samples the value of the EESK pin to determine the default VID:PID that will be used unless configured otherwise by the EEPROM.  The default VID:PID is:</p>
+<ul>
+<li><code>0403:6001</code> if EESK is high (or left floating, as the device has weak internal pullup)</li>
+<li><code>0403:6004</code> if EESK is low and the device is an FT232B</li>
+<li><code>0403:6005</code> if EESK is low and the device is an FT245B</li>
+</ul>
+<p>The <code>bcdDevice</code> value for the device is <code>0x0200</code> (same as FT8U2xxA) if no serial number has been configured, or <code>0x0400</code> if a serial number has been configured.</p>
+<h2 id="pinout"><a class="header" href="#pinout">Pinout</a></h2>
+<p>The pinout is mostly, but not quite, compatible with FT8U2xxA.</p>
+<div class="table-wrapper"><table><thead><tr><th>LQFP / QFN pin</th><th>category</th><th>FT8U232A</th><th>FT8U245A</th></tr></thead><tbody>
+<tr><td>1</td><td>EEPROM</td><td>EESK</td><td>EESK</td></tr>
+<tr><td>2</td><td>EEPROM</td><td>EEDATA</td><td>EEDATA</td></tr>
+<tr><td>3</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>4</td><td>control</td><td>RESET#</td><td>RESET#</td></tr>
+<tr><td>5</td><td>control</td><td>RSTOUT#</td><td>RSTOUT#</td></tr>
+<tr><td>6</td><td>power</td><td>3V3OUT</td><td>3V3OUT</td></tr>
+<tr><td>7</td><td>USB</td><td>USBDP</td><td>USBDP</td></tr>
+<tr><td>8</td><td>USB</td><td>USBDM</td><td>USBDM</td></tr>
+<tr><td>9</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>10</td><td>IO</td><td>SLEEP#</td><td>PWREN#</td></tr>
+<tr><td>11</td><td>IO</td><td>RXLED#</td><td>SI/WU#</td></tr>
+<tr><td>12</td><td>IO</td><td>TXLED#</td><td>RXF#</td></tr>
+<tr><td>13</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>14</td><td>IO</td><td>PWRCTL</td><td>TXE#</td></tr>
+<tr><td>15</td><td>IO</td><td>PWREN#</td><td>WR</td></tr>
+<tr><td>16</td><td>IO</td><td>TXDEN</td><td>RD#</td></tr>
+<tr><td>17</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>18</td><td>IO</td><td>RI#</td><td>D7</td></tr>
+<tr><td>19</td><td>IO</td><td>DCD#</td><td>D6</td></tr>
+<tr><td>20</td><td>IO</td><td>DSR#</td><td>D5</td></tr>
+<tr><td>21</td><td>IO</td><td>DTR#</td><td>D4</td></tr>
+<tr><td>22</td><td>IO</td><td>CTS#</td><td>D3</td></tr>
+<tr><td>23</td><td>IO</td><td>RTS#</td><td>D2</td></tr>
+<tr><td>24</td><td>IO</td><td>RXD</td><td>D1</td></tr>
+<tr><td>25</td><td>IO</td><td>TXD</td><td>D0</td></tr>
+<tr><td>26</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>27</td><td>clock</td><td>XTIN</td><td>XTIN</td></tr>
+<tr><td>28</td><td>clock</td><td>XTOUT</td><td>XTOUT</td></tr>
+<tr><td>29</td><td>power</td><td>AGND</td><td>AGND</td></tr>
+<tr><td>30</td><td>power</td><td>AVCC</td><td>AVCC</td></tr>
+<tr><td>31</td><td>control</td><td>TEST</td><td>TEST</td></tr>
+<tr><td>32</td><td>EEPROM</td><td>EECS</td><td>EECS</td></tr>
+</tbody></table>
+</div>
+<p>UART-mode IO pins have the following functions:</p>
+<ul>
+<li>TXD, RXD, RTS#, CTS#, DTR#, DSR#, DCD#, RI#: standard UART pins</li>
+<li>SLEEP#: device output, goes low when in USB suspend mode</li>
+<li>RXLED#, TXLED#: active-low LED outputs</li>
+<li>PWRCTL: device input, used to generate USB descriptors when EEPROM not present or not functional
+<ul>
+<li>0: bus-powered</li>
+<li>1: self-powered</li>
+</ul>
+</li>
+<li>TXDEN: device output, high while TXD is actively transmitting data; can be used as transmitter enable for RS485 transceivers</li>
+<li>PWREN#: device output, low when the device has been configured by the host and is not in suspend mode (can be used to gate power to the rest of the board)</li>
+</ul>
+<p>FIFO-mode IO pins have the following functions:</p>
+<ul>
+<li>D0-D7, TXE#, RXF#, RD#, WR, SI/WU#: standard FIFO-mode pins</li>
+<li>PWREN#: like in UART mode</li>
+</ul>
+<p>The EEPROM interface is 3-pin at the FTDI chip, while the EEPROM itself has a 4-pin interface.  This is because the FTDI device uses a single tied data line.  To connect the EEPROM, connect the FTDI EEDATA pin directly to the ROM's data input, and to the data output via a 2.2kΩ resistor.</p>
+<h2 id="eeprom-data-format"><a class="header" href="#eeprom-data-format">EEPROM data format</a></h2>
+<p>The format is backwards-compatible with the one used by FT8U2xxA devices.</p>
+<ul>
+<li>word 0x00: always 0</li>
+<li>word 0x01: idVendor (USB VID)</li>
+<li>word 0x02: idProduct (USB PID)</li>
+<li>word 0x03: bcdDevice (should be 0x400 or 0x200 when serial number not present)</li>
+<li>word 0x04: USB config (goes straight to configuration descriptor)
+<ul>
+<li>bits 0-7: bmAttributes
+<ul>
+<li>bit 5: remote wakeup enabled</li>
+<li>bit 6: self-powered</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>bits 8-15: bMaxPower (max power in units of 2mA)</li>
+</ul>
+</li>
+<li>word 0x05: device control
+<ul>
+<li>bit 0: IN endpoint is isochronous</li>
+<li>bit 1: OUT endpoint is isochronous</li>
+<li>bit 2: IO pulldown in suspend</li>
+<li>bit 3: serial number enabled</li>
+<li>bit 4: bcdUSB is present</li>
+</ul>
+</li>
+<li>word 0x06: bcdUSB</li>
+<li>word 0x07: manufacturer string pointer</li>
+<li>word 0x08: product description string pointer</li>
+<li>word 0x09: serial number string pointer</li>
+<li>words 0x0a..0x3f: string / user area</li>
+<li>word 0x3f: checksum</li>
+</ul>
+<p>String pointers are formatted as follows:</p>
+<ul>
+<li>bits 0-6: pointer to descriptor within EEPROM (counted <em>in bytes</em>)</li>
+<li>bit 7: always set to 1</li>
+<li>bits 8-15: total length of descriptor in bytes</li>
+</ul>
+<p>The string descriptors are stored in ROM with the descriptor header included, as follows:</p>
+<ul>
+<li>word 0: header
+<ul>
+<li>bits 0-7: total length of descriptor in bytes (includes header)</li>
+<li>bits 8-15: descriptor type (always 3 — string)</li>
+</ul>
+</li>
+<li>words 1 and up: string in UTF-16</li>
+</ul>
+<p>The checksum can be computed as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn checksum(eeprom: [u16; 0x40]) -&gt; u16 {
+    let mut res: u16 = 0xaaaa;
+    for pos in 0..0x3f { // checksum word is NOT included — we're calculating it
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    res
+}
+<span class="boring">}</span></code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ft8u232a.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ft2232.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ft8u232a.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ft2232.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

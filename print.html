@@ -181,7 +181,7 @@
 <li>programmable MCUs with FTDI-provided libraries that can be used to implement the D2xx protocol in firmware
 <ul>
 <li>FT8U100A: ???-based MCU</li>
-<li>FT51A: 8051-based MCU</li>
+<li>FT51: 8051-based MCU</li>
 <li>FT900 series: FT32-based MCU (custom RISC-like 32-bit Harvard architecture)</li>
 <li>FT930 series: FT32B-based MCU (a revision of FT32)</li>
 </ul>
@@ -192,21 +192,23 @@
 <p>Almost all D2xx devices allow the designer to provide custom USB vendor and product IDs (as well as string descriptors), making fully reliable detection impossible. However, once something is known to be a D2xx device, the bcdDevice field of device descriptor can be used to determine its exact type:</p>
 <div class="table-wrapper"><table><thead><tr><th>bcdDevice</th><th>default VID:PID</th><th># channels</th><th>device</th></tr></thead><tbody>
 <tr><td>0001</td><td>0403:8372</td><td>1</td><td>FT8U100A UART "applet"</td></tr>
-<tr><td>0200</td><td>0403:6001</td><td>1</td><td>FT8U232A or FT8U245A</td></tr>
-<tr><td>0400 or 0200</td><td>0403:6001</td><td>1</td><td>FT232B or FT245B</td></tr>
-<tr><td>0500</td><td>0403:6010</td><td>2</td><td>FT2232C, FT2232D</td></tr>
-<tr><td>0600</td><td>0403:6001</td><td>1</td><td>FT232R or FT245R</td></tr>
-<tr><td>0600</td><td>0403:6049</td><td>1</td><td>FT232RN or FT245RN</td></tr>
-<tr><td>0700</td><td>0403:6010</td><td>2</td><td>FT2232H</td></tr>
-<tr><td>0800</td><td>0403:6011</td><td>4</td><td>FT4232H</td></tr>
-<tr><td>0900</td><td>0403:6014</td><td>1</td><td>FT232H</td></tr>
-<tr><td>1000</td><td>0403:6015</td><td>1</td><td>FT-X series</td></tr>
+<tr><td>0200</td><td>0403:6001</td><td>1</td><td><a href="ft8u232a.html">FT8U232A or FT8U245A</a></td></tr>
+<tr><td>0400 or 0200</td><td>0403:6001</td><td>1</td><td><a href="ft232b.html">FT232B or FT245B</a></td></tr>
+<tr><td>0400 or 0200</td><td>0403:6004</td><td>1</td><td><a href="ft232b.html">FT232B (alternate PID strap)</a></td></tr>
+<tr><td>0400 or 0200</td><td>0403:6005</td><td>1</td><td><a href="ft232b.html">FT245B (alternate PID strap)</a></td></tr>
+<tr><td>0500</td><td>0403:6010</td><td>2</td><td><a href="ft2232.html">FT2232C, FT2232D</a></td></tr>
+<tr><td>0600</td><td>0403:6001</td><td>1</td><td><a href="ft232r.html">FT232R or FT245R</a></td></tr>
+<tr><td>0600</td><td>0403:6049</td><td>1</td><td><a href="ft232r.html">FT232RN or FT245RN</a></td></tr>
+<tr><td>0700</td><td>0403:6010</td><td>2</td><td><a href="ft2232h.html">FT2232H</a></td></tr>
+<tr><td>0800</td><td>0403:6011</td><td>4</td><td><a href="ft2232h.html">FT4232H</a></td></tr>
+<tr><td>0900</td><td>0403:6014</td><td>1</td><td><a href="ft232h.html">FT232H</a></td></tr>
+<tr><td>1000</td><td>0403:6015</td><td>1</td><td><a href="ft-x.html">FT-X series</a></td></tr>
 <tr><td>1400</td><td>0403:601b</td><td>1</td><td>FT4222 mode 3 (unreleased)</td></tr>
 <tr><td>1500</td><td>0403:601b</td><td>2</td><td>FT4222 mode 0 (unreleased)</td></tr>
 <tr><td>1600</td><td>0403:601b</td><td>4</td><td>FT4222 mode 1 or 2 (unreleased)</td></tr>
-<tr><td>1700</td><td>0403:601c</td><td>1</td><td>FT4222H mode 3</td></tr>
-<tr><td>1800</td><td>0403:601c</td><td>2</td><td>FT4222H mode 0</td></tr>
-<tr><td>1900</td><td>0403:601c</td><td>4</td><td>FT4222H mode 1 or 2</td></tr>
+<tr><td>1700</td><td>0403:601c</td><td>1</td><td><a href="ft4222h.html">FT4222H</a> mode 3</td></tr>
+<tr><td>1800</td><td>0403:601c</td><td>2</td><td><a href="ft4222h.html">FT4222H</a> mode 0</td></tr>
+<tr><td>1900</td><td>0403:601c</td><td>4</td><td><a href="ft4222h.html">FT4222H</a> mode 1 or 2</td></tr>
 <tr><td>2100</td><td>0403:0fec</td><td>1?</td><td>UMFT4222PROG</td></tr>
 <tr><td>2400</td><td>0403:6031</td><td>1</td><td>FT90x (1 channel)</td></tr>
 <tr><td>2400</td><td>0403:6032</td><td>2</td><td>FT90x (2 channels)</td></tr>
@@ -219,14 +221,14 @@
 <tr><td>2500</td><td>0403:6039</td><td>6</td><td>FT93x (6 channels)</td></tr>
 <tr><td>2500</td><td>0403:603a</td><td>7</td><td>FT93x (7 channels)</td></tr>
 <tr><td>2700</td><td>0403:603e</td><td>1?</td><td>UMFTPD3A</td></tr>
-<tr><td>2800</td><td>0403:6040</td><td>2</td><td>FT2233HP</td></tr>
-<tr><td>2900</td><td>0403:6041</td><td>4</td><td>FT4233HP</td></tr>
-<tr><td>3000</td><td>0403:6042</td><td>2</td><td>FT2232HP</td></tr>
-<tr><td>3100</td><td>0403:6043</td><td>4</td><td>FT4232HP</td></tr>
-<tr><td>3200</td><td>0403:6044</td><td>1</td><td>FT232HP</td></tr>
-<tr><td>3300</td><td>0403:6045</td><td>1</td><td>FT232HP</td></tr>
-<tr><td>3500</td><td>0403:6047</td><td>2</td><td>FT2232HA</td></tr>
-<tr><td>3600</td><td>0403:6048</td><td>4</td><td>FT4232HA</td></tr>
+<tr><td>2800</td><td>0403:6040</td><td>2</td><td><a href="ft2232h.html">FT2233HP</a></td></tr>
+<tr><td>2900</td><td>0403:6041</td><td>4</td><td><a href="ft2232h.html">FT4233HP</a></td></tr>
+<tr><td>3000</td><td>0403:6042</td><td>2</td><td><a href="ft2232h.html">FT2232HP</a></td></tr>
+<tr><td>3100</td><td>0403:6043</td><td>4</td><td><a href="ft2232h.html">FT4232HP</a></td></tr>
+<tr><td>3200</td><td>0403:6044</td><td>1</td><td><a href="ft232h.html">FT233HP</a></td></tr>
+<tr><td>3300</td><td>0403:6045</td><td>1</td><td><a href="ft232h.html">FT232HP</a></td></tr>
+<tr><td>3500</td><td>0403:6047</td><td>2</td><td><a href="ft2232h.html">FT2232HA</a></td></tr>
+<tr><td>3600</td><td>0403:6048</td><td>4</td><td><a href="ft2232h.html">FT4232HA</a></td></tr>
 </tbody></table>
 </div>
 <h3 id="ft8u232a-and-ft8u245a"><a class="header" href="#ft8u232a-and-ft8u245a">FT8U232A and FT8U245A</a></h3>
@@ -646,7 +648,1109 @@
 <div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
 <tr><td>BT820B</td><td>329-pin BGA</td></tr>
 </tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="d2xx-protocol"><a class="header" href="#d2xx-protocol">D2xx protocol</a></h1>
+<p>D2xx is the name of protocol used by most FTDI USB devices.  It was originally made for the UART function of the FT8U100A, and remains quite UART-oriented.  However, FTDI has reused it for all kinds of stream-based interfaces.</p>
+<h2 id="channels-and-interfaces"><a class="header" href="#channels-and-interfaces">Channels and interfaces</a></h2>
+<p>A D2xx device can have one or more channels.  A channel is, at the core, a bidirectional byte-oriented stream of data.</p>
+<p>Channels are often identified by single letters, in order (A, B, C, D, ...).</p>
+<p>Each channel is exposed as a separate USB interface.  Each interface has two bulk endpoints: IN and OUT.  In addition, a channel also makes use of D2xx-specific control requests on the default config pipe (endpoint 0).</p>
+<p>Some devices have an undocumented option to use isochronous endpoints instead of bulk endpoints.  That options is undoubtedly broken in some completely hilarious ways.</p>
+<h2 id="identifying-a-d2xx-device"><a class="header" href="#identifying-a-d2xx-device">Identifying a D2xx device</a></h2>
+<p>Since all D2xx devices can have custom VIDs and PIDs programmed, there is no sure-fire way to identify a USB device as a D2xx device — you need to know what VID:PID you are looking for.  However, there are some predefined VID:PID combinations that will be used by default.  They are listed in the table on the <a href="devices.html#d2xx-devices">devices page</a>.</p>
+<p>As you can see, FTDI used to reuse its VID:PID combinations for groups of similar devices for some time, but then decided to just start assigning new IDs for every new device.</p>
+<p>Once something is known to be a FTD2xx device, further identification can be obtained from the <code>bcdDevice</code> field of USB descriptor.  The <code>bcdDevice</code> values are likewise listed on the <a href="devices.html#d2xx-devices">devices page</a>.  It is not clear whether the <code>bcdDevice</code> field may be overriden via EEPROM.</p>
+<p>Even putting VID:PID and <code>bcdDevice</code> together, it is still not always possible to uniquely identify the device.  Usually, one can just live with the uncertainty.  However, there are some more checks that can be done for further identification:</p>
+<ul>
+<li>FT8U2xxA and FT2xxB can be told apart by attempting the <code>GET_LATENCY_TIMER</code> request — a failure implies A-series device, while a success implies B-series device</li>
+<li>FT232R and FT245R can be told apart by a field in the internal EEPROM, which the vendor claims to not be modifiable by the user</li>
+<li>likewise, FT-X series devices can be told apart to some extent by another EEPROM field</li>
+</ul>
+<h2 id="stream-protocol"><a class="header" href="#stream-protocol">Stream protocol</a></h2>
+<p>Note: FT2xxR devices have configurable <code>wMaxPacketSize</code> field in the bulk endpoint descriptors.  There are devices in the wild where people have programmed the (invalid) value of 0 in that field.  In case a device is encountered with such value, it should be overriden in the driver to 64 bytes.</p>
+<h3 id="in-endpoint"><a class="header" href="#in-endpoint">IN endpoint</a></h3>
+<p>The IN endpoint of a channel is used to transfer byte stream data from the device to the user.  It involves a framing protocol: every packet transferred on the endpoint includes a header with modem and line status.  Packets are always at least 2 bytes long.  The packet format is as follows:</p>
+<ul>
+<li>byte 0: modem status (shows the most recent state of the modem status input pins)
+<ul>
+<li>bit 0: always 1?</li>
+<li>bit 1: always 0?</li>
+<li>bit 2: always 0?</li>
+<li>bit 3: always 0?</li>
+<li>TODO: allegedly high-speed devices have 0010 in low bits?</li>
+<li>bit 4: CTS</li>
+<li>bit 5: DSR</li>
+<li>bit 6: RI</li>
+<li>bit 7: DCD</li>
+</ul>
+</li>
+<li>byte 1: line status
+<ul>
+<li>bit 0: data ready (???)</li>
+<li>bit 1: overrun error (device received data on the business end when there was no more space in IN endpoint FIFO)</li>
+<li>bit 2: parity error</li>
+<li>bit 3: framing error</li>
+<li>bit 4: break interrupt</li>
+<li>bit 5: TX holding register (???)</li>
+<li>bit 6: TX (OUT endpoint) FIFO is empty</li>
+<li>bit 7: FIFO error (???)</li>
+</ul>
+</li>
+<li>bytes 2 and up (if any): actual stream data</li>
+</ul>
+<p>As can be seen, the protocol is very UART-oriented.  The modem and line status bytes are present even for D2xx devices that have nothing to do with UART, though they are mostly dummied out in that case.  The TX FIFO empty bit is, however, generally useful.</p>
+<p>TODO: kernel driver alleges that parity/framing errors are always associated with the last byte in the packet. Check this.</p>
+<p>To avoid excessive load on the host, the device doesn't always transmit packets on the IN endpoint as soon as data is available.  Instead, the device will send a packet in the following circumstances:</p>
+<ul>
+<li>a full-sized packet has been filled</li>
+<li>a special "event" character has been received (if enabled by driver)</li>
+<li>data is available and the latency timer has expired
+<ul>
+<li>on FT8U2xxA (and FT8U100A?), the latency timer is always 16ms</li>
+<li>on newer devices, the default latency timer is 16ms, but it can be configured to any value between 2ms and 255ms</li>
+</ul>
+</li>
+<li>TODO: line errors / modem status changes too? kernel alleges device will send an update packet every 40ms even with no activity</li>
+</ul>
+<h3 id="out-endpoint"><a class="header" href="#out-endpoint">OUT endpoint</a></h3>
+<p>There are two variants of the protocol with respect to OUT endpoint handling.</p>
+<p>The original variant is present on the FT8U100A only.  In this variant, every OUT endpoint packet has to be prefixed with a header.  The packet then has the following format:</p>
+<ul>
+<li>byte 0: header
+<ul>
+<li>bit 0: must be 1</li>
+<li>bit 1: must be 0</li>
+<li>bits 2-7: length of payload (ie. length of packet, not including the header byte)</li>
+</ul>
+</li>
+<li>bytes 1 and up: actual stream data</li>
+</ul>
+<p>Since the header is completely useless, it has been done away with in later devices.  In every device other than FT8U100A, the OUT endpoint is completely headerless and packets contain just the raw stream data.</p>
+<h2 id="control-requests"><a class="header" href="#control-requests">Control requests</a></h2>
+<p>The protocol includes the following control requests:</p>
+<div class="table-wrapper"><table><thead><tr><th>request</th><th><code>bmRequestType</code></th><th><code>bRequest</code></th><th><code>wValue</code></th><th><code>wIndex</code></th><th>data</th></tr></thead><tbody>
+<tr><td><code>RESET</code></td><td><code>0x40</code></td><td><code>0x00</code></td><td>reset kind</td><td>channel</td><td>-</td></tr>
+<tr><td><code>SET_MODEM_CTRL</code></td><td><code>0x40</code></td><td><code>0x01</code></td><td>DTR + RTS state</td><td>channel</td><td>-</td></tr>
+<tr><td><code>SET_FLOW_CTRL</code></td><td><code>0x40</code></td><td><code>0x02</code></td><td>XON / XOFF chars</td><td>channel + mode</td><td>-</td></tr>
+<tr><td><code>SET_BAUD_RATE</code></td><td><code>0x40</code></td><td><code>0x03</code></td><td>divisor low bits</td><td>channel + divisor high bits</td><td>-</td></tr>
+<tr><td><code>SET_DATA_CHARACTERISTICS</code></td><td><code>0x40</code></td><td><code>0x04</code></td><td>data format + break state</td><td>channel</td><td>-</td></tr>
+<tr><td><code>GET_MODEM_STATUS</code></td><td><code>0xc0</code></td><td><code>0x05</code></td><td>0</td><td>channel</td><td>2 bytes</td></tr>
+<tr><td><code>SET_EVENT_CHAR</code></td><td><code>0x40</code></td><td><code>0x06</code></td><td>event char + enable</td><td>channel</td><td>-</td></tr>
+<tr><td><code>SET_ERROR_CHAR</code></td><td><code>0x40</code></td><td><code>0x07</code></td><td>error char + enable</td><td>channel</td><td>-</td></tr>
+<tr><td><code>SET_LATENCY_TIMER</code></td><td><code>0x40</code></td><td><code>0x09</code></td><td>latency timer</td><td>channel</td><td>-</td></tr>
+<tr><td><code>GET_LATENCY_TIMER</code></td><td><code>0xc0</code></td><td><code>0x0a</code></td><td>0</td><td>channel</td><td>1 byte</td></tr>
+<tr><td><code>SET_BITMODE</code></td><td><code>0x40</code></td><td><code>0x0b</code></td><td>bit mode + output mask</td><td>channel</td><td>-</td></tr>
+<tr><td><code>GET_PIN_STATE</code></td><td><code>0xc0</code></td><td><code>0x0c</code></td><td>0</td><td>channel</td><td>1 byte</td></tr>
+<tr><td><code>VENDOR_CMD_GET</code></td><td><code>0xc0</code></td><td><code>0x20</code></td><td>request</td><td>channel</td><td>up to 0x80 bytes</td></tr>
+<tr><td><code>VENDOR_CMD_SET</code></td><td><code>0x40</code></td><td><code>0x21</code></td><td>request + data</td><td>channel</td><td>up to 0x80 bytes</td></tr>
+<tr><td><code>READ_EEPROM</code></td><td><code>0xc0</code></td><td><code>0x90</code></td><td>0</td><td>word address</td><td>2 bytes</td></tr>
+<tr><td><code>WRITE_EEPROM</code></td><td><code>0x40</code></td><td><code>0x91</code></td><td>word value</td><td>word address</td><td>-</td></tr>
+<tr><td><code>ERASE_EEPROM</code></td><td><code>0x40</code></td><td><code>0x92</code></td><td>0</td><td>0</td><td>-</td></tr>
+</tbody></table>
 </div>
+<p>Most control requests operate on a channel.  The channel is specified as follows:</p>
+<ul>
+<li>for single-channel devices: channel is 0</li>
+<li>for multi-channel devices: the channel indices start at 1 (ie. channel number in control request is USB interface index + 1)
+<ul>
+<li>TODO: allegedly, specifying 0 means "all channels"?</li>
+</ul>
+</li>
+</ul>
+<p>The channel is usually stuffed directly into <code>wIndex</code>.  However, there are variations to keep you on your toes.</p>
+<h3 id="reset"><a class="header" href="#reset"><code>RESET</code></a></h3>
+<p>Resets the device or purges IN/OUT endpoint buffers on device.</p>
+<ul>
+<li>applicable to: all D2xx devices</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x00</code></li>
+<li><code>wValue</code>: kind of reset to perform
+<ul>
+<li>0: reset the serial engine
+<ul>
+<li>purge both IN and OUT endpoints</li>
+<li>disable event char and set it to <code>0x0d</code> (<code>'\r'</code>)</li>
+<li>disable flow control</li>
+<li>clear DTR and RTS</li>
+</ul>
+</li>
+<li>1: purge OUT endpoint (nuke all buffered data)</li>
+<li>2: purge IN endpoint</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<p>TODO: determine <em>exactly</em> what the reset actually resets; the above list is according to the kernel sources.</p>
+<p>TODO: libftd2xx seems to always send resets with <code>wIndex</code> set to 0; is this a bug?</p>
+<h3 id="set_modem_ctrl"><a class="header" href="#set_modem_ctrl"><code>SET_MODEM_CTRL</code></a></h3>
+<p>Changes the state of DTR and RTS lines.</p>
+<ul>
+<li>applicable to: all D2xx devices (but may be a no-op in non-UART modes)</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x01</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bit 0: new DTR value</li>
+<li>bit 1: new RTS value</li>
+<li>bit 8: change DTR (if not set, DTR will be unchanged)</li>
+<li>bit 9: change RTS</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<h3 id="set_flow_ctrl"><a class="header" href="#set_flow_ctrl"><code>SET_FLOW_CTRL</code></a></h3>
+<p>Changes hardware flow control mode.</p>
+<ul>
+<li>applicable to: all D2xx devices (but may be a no-op in non-UART modes)</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x02</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bits 0-7: XON character</li>
+<li>bits 8-15: XOFF character</li>
+</ul>
+</li>
+<li><code>wIndex</code>:
+<ul>
+<li>bits 0-7: channel</li>
+<li>bit 8: enable RTS/CTS flow control</li>
+<li>bit 9: enable DTR/DSR flow control</li>
+<li>bit 10: enable XON/XOFF flow control</li>
+</ul>
+</li>
+</ul>
+<p>TODO: make double-sure of <code>wIndex</code> encoding</p>
+<p>TODO: check if XON/XOFF is applicable to eg. FIFO mode</p>
+<h3 id="set_baud_rate"><a class="header" href="#set_baud_rate"><code>SET_BAUD_RATE</code></a></h3>
+<p>Sets the baud rate, and also the clock for bitbang and MPSSE modes.</p>
+<ul>
+<li>applicable to: all D2xx devices (but may be a no-op on MCU-based ones)</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x03</code></li>
+<li><code>wValue</code>: bits 0-15 of the divisor value</li>
+<li><code>wIndex</code>:
+<ul>
+<li>for single-channel device:
+<ul>
+<li>bits 0-1: bits 16-17 of the divisor</li>
+</ul>
+</li>
+<li>for multi-channel device:
+<ul>
+<li>bits 0-7: channel</li>
+<li>bits 8-9: bits 16-17 of the divisor</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The format of the divisor varies depending on the exact device.</p>
+<h4 id="ft8u100a-1"><a class="header" href="#ft8u100a-1">FT8U100A</a></h4>
+<p>For FT8U100A, the divisor is an enum, selecting the baud rate from the following fixed list:</p>
+<ul>
+<li>0: 300 baud</li>
+<li>1: 600</li>
+<li>2: 1200</li>
+<li>3: 2400</li>
+<li>4: 4800</li>
+<li>5: 9600</li>
+<li>6: 19200</li>
+<li>7: 38400</li>
+<li>8: 57600</li>
+<li>9: 115200</li>
+</ul>
+<h4 id="ft8u232a-ft8u245a"><a class="header" href="#ft8u232a-ft8u245a">FT8U232A, FT8U245A</a></h4>
+<p>These devices run on 48MHz base clock.  The base clock is divided by a fractional divisor to obtain the channel clock.  The channel clock is then further divided by 16 to obtain the baud rate.</p>
+<p>The divisor is encoded into a 16-bit number as follows:</p>
+<ul>
+<li>bits 0-13: integer part (must be at least 2, except for the special case below)</li>
+<li>bits 14-15: fractional part, encoded
+<ul>
+<li>0: .0</li>
+<li>1: .5</li>
+<li>2: .25</li>
+<li>3: .125</li>
+</ul>
+</li>
+</ul>
+<p>There is also a special divisor with dedicated encoding:</p>
+<ul>
+<li><code>0x0000</code> encodes a special divisor of 1 (corresponding to 3000000 baud rate)</li>
+</ul>
+<h4 id="ft232b-ft245b-ft232r-ft245r-ft2232cdl-ft-x-series"><a class="header" href="#ft232b-ft245b-ft232r-ft245r-ft2232cdl-ft-x-series">FT232B, FT245B, FT232R, FT245R, FT2232[CDL], FT-X series</a></h4>
+<p>These devices are similar to FT8U2xxA, with minor extensions.  The encoding scheme is backwards-compatible.</p>
+<p>The divisor is encoded into a 17-bit number (with top bit overflowing into the <code>wIndex</code> field) as follows:</p>
+<ul>
+<li>bits 0-13: integer part (must be at least 2, except for the special cases below)</li>
+<li>bits 14-16: fractional part, encoded
+<ul>
+<li>0: .0</li>
+<li>1: .5</li>
+<li>2: .25</li>
+<li>3: .125</li>
+<li>4: .375</li>
+<li>5: .675</li>
+<li>6: .75</li>
+<li>7: .875</li>
+</ul>
+</li>
+</ul>
+<p>There are also two special divisors with dedicated encoding:</p>
+<ul>
+<li><code>0x0000</code> encodes a special divisor of 1 (corresponding to 3000000 baud rate)</li>
+<li><code>0x0001</code> encodes a special divisor of 1.5 (corresponding to 2000000 baud rate)</li>
+</ul>
+<p>In addition to providing the UART baud rate, the channel clock (not divided by 16) is also used for other modes such as bitbang and MPSSE.</p>
+<h4 id="ft2232h-ft4232h-ft232h-and-all-their-variants"><a class="header" href="#ft2232h-ft4232h-ft232h-and-all-their-variants">FT2232H, FT4232H, FT232H (and all their variants)</a></h4>
+<p>These devices are USB high-speed peripherials, and support a higher baud rate and channel clock range.  The base clock of the device is 120MHz.  The divisor encoding is an extension of the one used in FT232B, and is backwards compatible.</p>
+<p>The divisor is encoded into an 18-bit number (with top two bits overflowing into the <code>wIndex</code> field) as follows:</p>
+<ul>
+<li>bits 0-13: integer part (must be at least 2, except for the special cases below)</li>
+<li>bits 14-16: fractional part, encoded
+<ul>
+<li>0: .0</li>
+<li>1: .5</li>
+<li>2: .25</li>
+<li>3: .125</li>
+<li>4: .375</li>
+<li>5: .675</li>
+<li>6: .75</li>
+<li>7: .875</li>
+</ul>
+</li>
+<li>bit 17: divisor and UART mode
+<ul>
+<li>0: low-speed, FT232B compatible:
+<ul>
+<li>base 120MHz clock is pre-divided by 2.5 into a 48MHz clock before being put through the divisor</li>
+<li>baud rate is channel clock divided by 16</li>
+</ul>
+</li>
+<li>1: high-speed:
+<ul>
+<li>base 120MHz clock is fed directly into the divisor</li>
+<li>baud rate is channel clock divided by 10</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>There are also two special divisors with dedicated encoding:</p>
+<ul>
+<li><code>0x00000</code> or <code>0x20000</code> encodes a special divisor of 1 (corresponding to low-speed 3000000 or high-speed 12000000 baud rate, respectively)</li>
+<li><code>0x00001</code> or <code>0x20001</code> encodes a special divisor of 1.5 (corresponding to low-speed 2000000 or high-speed 8000000 baud rate, respectively)</li>
+</ul>
+<p>In addition to providing the UART baud rate, the channel clock (not divided by 10 or 16) is also used for other modes such as bitbang and MPSSE.</p>
+<p>Note that, while the new high-speed divisor mode is usually preferable due to more precision, it cannot represent some of the lowest baud rates (600 baud and below). The low-speed mode should be used for those.</p>
+<h3 id="set_data_characteristics"><a class="header" href="#set_data_characteristics"><code>SET_DATA_CHARACTERISTICS</code></a></h3>
+<p>Sets the UART data format and break state.</p>
+<ul>
+<li>applicable to: all D2xx devices (but will be a no-op in non-UART mode)</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x04</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bits 0-7: number of data bits (7-8; allegedly FT8U100A can also do 5-6)</li>
+<li>bits 8-10: parity mode
+<ul>
+<li>0: none</li>
+<li>1: odd</li>
+<li>2: even</li>
+<li>3: mark</li>
+<li>4: space</li>
+</ul>
+</li>
+<li>bits 11-13: stop bits
+<ul>
+<li>0: 1 bit</li>
+<li>1: 1.5 bits (support status unclear)</li>
+<li>2: 2 bits</li>
+</ul>
+</li>
+<li>bit 14: transmitter in break state if set</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<h3 id="get_modem_status"><a class="header" href="#get_modem_status"><code>GET_MODEM_STATUS</code></a></h3>
+<p>Returns current modem status and line status.  This is the same information that is transmitted in the packet header bytes on the IN endpoint.</p>
+<ul>
+<li>applicable to: all D2xx devices</li>
+<li><code>bmRequestType</code>: <code>0xc0</code></li>
+<li><code>bRequest</code>: <code>0x05</code></li>
+<li><code>wValue</code>: <code>0</code></li>
+<li><code>wIndex</code>: channel</li>
+<li><code>wLength</code>: <code>2</code></li>
+<li>data:
+<ul>
+<li>byte 0: modem status (shows the most recent state of the modem status input pins)
+<ul>
+<li>bit 0: always 1?</li>
+<li>bit 1: always 0?</li>
+<li>bit 2: always 0?</li>
+<li>bit 3: always 0?</li>
+<li>TODO: allegedly high-speed devices have 0010 in low bits?</li>
+<li>bit 4: CTS</li>
+<li>bit 5: DSR</li>
+<li>bit 6: RI</li>
+<li>bit 7: DCD</li>
+</ul>
+</li>
+<li>byte 1: line status
+<ul>
+<li>bit 0: data ready (???)</li>
+<li>bit 1: overrun error (device received data on the business end when there was no more space in IN endpoint FIFO)</li>
+<li>bit 2: parity error</li>
+<li>bit 3: framing error</li>
+<li>bit 4: break interrupt</li>
+<li>bit 5: TX holding register (???)</li>
+<li>bit 6: TX (OUT endpoint) FIFO is empty</li>
+<li>bit 7: FIFO error (???)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>TODO: allegedly FT8U100A only returns the first byte?</p>
+<h3 id="set_event_char"><a class="header" href="#set_event_char"><code>SET_EVENT_CHAR</code></a></h3>
+<p>Sets the special "event" character.  Whenever a matching byte is received on the business end of the device, a packet will be sent on the IN endpoint immediately, instead of waiting for the buffer to fill completely or for the latency timer to expire.  This can be eg. set to <code>0x0d</code> (CR) to immediately present received lines to the host.</p>
+<ul>
+<li>applicable to: all D2xx devices</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x06</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bits 0-7: event character</li>
+<li>bit 8: event character enable (if unset, no event character processing is done)</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<h3 id="set_error_char"><a class="header" href="#set_error_char"><code>SET_ERROR_CHAR</code></a></h3>
+<p>Sets the special "error" character that will be inserted into the receive FIFO in place of parity and framing errors.</p>
+<ul>
+<li>applicable to: all D2xx devices (but will be a no-op in non-UART mode)</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x07</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bits 0-7: error character</li>
+<li>bit 8: error character enable (if unset, parity and framing errors do not insert anything into the FIFO)</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<h3 id="set_latency_timer"><a class="header" href="#set_latency_timer"><code>SET_LATENCY_TIMER</code></a></h3>
+<p>Sets the latency timer (see IN endpoint description).</p>
+<ul>
+<li>applicable to: everything except FT8U100A, FT8U232A, FT8U245A</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x09</code></li>
+<li><code>wValue</code>: latency timer, in units of 1ms (2 to 255)</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<p>Note: on FT232R and FT245R this command is also used as EEPROM write unlock. The latency timer has to be set to <code>0x77</code> to enable EEPROM writes.  Otherwise, the write commands get ignored.</p>
+<h3 id="get_latency_timer"><a class="header" href="#get_latency_timer"><code>GET_LATENCY_TIMER</code></a></h3>
+<p>Reads back the latency timer (see IN endpoint description).  Also useful for telling FT8U2xxA and FT2xxB apart.</p>
+<ul>
+<li>applicable to: everything except FT8U100A, FT8U232A, FT8U245A</li>
+<li><code>bmRequestType</code>: <code>0xc0</code></li>
+<li><code>bRequest</code>: <code>0x0a</code></li>
+<li><code>wValue</code>: 0</li>
+<li><code>wIndex</code>: channel</li>
+<li><code>wLength</code>: 1</li>
+<li>data: latency timer (1 byte)</li>
+</ul>
+<h3 id="set_bitmode"><a class="header" href="#set_bitmode"><code>SET_BITMODE</code></a></h3>
+<p>Sets a special mode on the channel, overriding whatever base mode it has.</p>
+<ul>
+<li>applicable to: FT232B, FT245B, FT232R, FT245R, FT2232[CDL], FT2232H, FT4232H, FT232H, FT-X series
+<ul>
+<li>async bitbang: all of the above devices</li>
+<li>MPSSE: FT2232[CDL] (channel A only), FT2232H, FT4232H (channel A and B only), FT232H</li>
+<li>sync bitbang: FT232R, FT245R, FT2232[CDL], FT2232H, FT4232H, FT232H, FT-X series</li>
+<li>MCU host bus: FT2232[CDL], FT2232H</li>
+<li>fast opto-isolated serial: FT2232[CDL], FT2232H, FT232H</li>
+<li>CBUS bit-bang: FT232R, FT232H, FT-X series</li>
+<li>synchronous 245-style FIFO: FT2232H, FT232H</li>
+<li>FT1248: FT232H maybe?!?</li>
+</ul>
+</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x09</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bits 0-7: depends on mode
+<ul>
+<li>async and sync bit-bang: mask of which data pins are outputs (0 is input, 1 is output)</li>
+<li>CBUS bit-bang:
+<ul>
+<li>bits 0-3: output data</li>
+<li>bits 4-7: output pin mask (0 is input, 1 is output)</li>
+</ul>
+</li>
+<li>others: unused?</li>
+</ul>
+</li>
+<li>bits 8-15: mode
+<ul>
+<li>0x00: reset to base mode</li>
+<li>0x01: <a href="bitbang.html">async bit-bang</a></li>
+<li>0x02: <a href="mpsse.html">MPSSE</a></li>
+<li>0x04: <a href="bitbang.html">sync bit-bang</a></li>
+<li>0x08: <a href="mcu-bus.html">MCU host bus</a></li>
+<li>0x10: reset <a href="opto.html">fast opto-isolated serial</a> (?!?!?)</li>
+<li>0x20: <a href="bitbang.html">CBUS bit-bang</a></li>
+<li>0x40: <a href="fifo.html">synchronous 245-style FIFO</a></li>
+<li>0x80: allegedly <a href="ft1248.html">FT1248</a> according to libftdi (?!?!?)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel</li>
+</ul>
+<p>TODO: figure out the details of this cursed thing</p>
+<p>TODO: why are FT1248 and fast opto-isolated serial set both here and in the EEPROM</p>
+<p>TODO: CBUS bit-bang has special semantics and can be combined with base mode?!? figure that out</p>
+<h3 id="get_pin_state"><a class="header" href="#get_pin_state"><code>GET_PIN_STATE</code></a></h3>
+<p>Reads current raw state of the channel's DBUS pins.</p>
+<p>FTDI calls this request <code>GET_BITMODE</code>. However, this naming decision is a crime against catgirlkind, and we shall not respect it.</p>
+<ul>
+<li>applicable to: FT232B, FT245B, FT232R, FT245R, FT2232[CDL], FT2232H, FT4232H, FT232H, FT-X series</li>
+<li><code>bmRequestType</code>: <code>0xc0</code></li>
+<li><code>bRequest</code>: <code>0x0c</code></li>
+<li><code>wValue</code>: 0</li>
+<li><code>wIndex</code>: channel</li>
+<li><code>wLength</code>: 1</li>
+<li>data: pin state</li>
+</ul>
+<p>TODO: allegedly this reads CBUS state instead of DBUS state when in CBUS bit-bang mode</p>
+<h3 id="vendor_cmd_get"><a class="header" href="#vendor_cmd_get"><code>VENDOR_CMD_GET</code></a></h3>
+<p>Does a vendor-specific operation with get semantics.  Corresponds to <code>FT_VendorCmdGet</code> and <code>FT_VendorCmdGetEx</code>.</p>
+<p>You may be asking yourself why FTDI saw fit to create a space for vendor-defined requests within its vendor-defined requests space as defined by USB, given that it is the defining vendor in both cases.  The answer is that I have no meowing idea.  However, this seems to be where they stuff a bunch of subcommands specific to their weirder devices.</p>
+<ul>
+<li>applicable to: FT4222H, allegedly UMFTPD3A</li>
+<li><code>bmRequestType</code>: <code>0xc0</code></li>
+<li><code>bRequest</code>: <code>0x20</code></li>
+<li><code>wValue</code>: request type</li>
+<li><code>wIndex</code>: channel (or not, it's vendor-defined after all)</li>
+<li><code>wLength</code>: up to <code>0x80</code></li>
+</ul>
+<p>The request set appears to be specific to the exact device.  For the FT4222H request list, see [TODO].</p>
+<h3 id="vendor_cmd_set"><a class="header" href="#vendor_cmd_set"><code>VENDOR_CMD_SET</code></a></h3>
+<p>Does a vendor-specific operation with set semantics.  Corresponds to <code>FT_VendorCmdSet</code>.</p>
+<ul>
+<li>applicable to: FT4222H, allegedly UMFTPD3A</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x21</code></li>
+<li><code>wValue</code>:
+<ul>
+<li>bits 0-7: request type</li>
+<li>bits 8-15: data, if a single byte of data is transferred</li>
+</ul>
+</li>
+<li><code>wIndex</code>: channel (or not, it's vendor-defined after all)</li>
+<li><code>wLength</code>: up to <code>0x80</code></li>
+</ul>
+<p>If exactly 1 byte is sent to the device, it is put in the high byte of <code>wValue</code>, and <code>wLength</code> is set to 0.  If more than 1 byte is sent to the device, they are all put in the data payload, and the high byte of <code>wValue</code> is unused.</p>
+<p>The request set appears to be specific to the exact device.  For the FT4222H request list, see [TODO].</p>
+<h3 id="read_eeprom"><a class="header" href="#read_eeprom"><code>READ_EEPROM</code></a></h3>
+<p>Reads a 16-bit word from the EEPROM.</p>
+<ul>
+<li>applicable to: FT8U100A?, FT8U232A, FT8U245A, FT232B, FT245B, FT232R, FT245R, FT2232[CDL], FT2232H, FT4232H, FT232H, FT-X series</li>
+<li><code>bmRequestType</code>: <code>0xc0</code></li>
+<li><code>bRequest</code>: <code>0x90</code></li>
+<li><code>wValue</code>: 0</li>
+<li><code>wIndex</code>: word address to read; note that the address is counted in 16-bit words, not bytes</li>
+<li><code>wLength</code>: 2</li>
+<li>data: word from EEPROM (little-endian)</li>
+</ul>
+<p>The format of the EEPROM depends on the device.  See the documentation for the particular device.</p>
+<h3 id="write_eeprom"><a class="header" href="#write_eeprom"><code>WRITE_EEPROM</code></a></h3>
+<p>Writes a 16-bit word into the EEPROM.</p>
+<ul>
+<li>applicable to: FT8U100A?, FT8U232A, FT8U245A, FT232B, FT245B, FT232R, FT245R, FT2232[CDL], FT2232H, FT4232H, FT232H, FT-X series</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x91</code></li>
+<li><code>wValue</code>: word to write to the EEPROM</li>
+<li><code>wIndex</code>: word address to write; note that the address is counted in 16-bit words, not bytes</li>
+</ul>
+<p>Note: on FT232R and FT245R this command is only accepted when the latency timer is set to the magic <code>0x77</code> value.</p>
+<p>Note that the EEPROM on FT232R and FT245R devices is 32-bit dword oriented, not 16-bit.  This is completely transparent on reads, but is significant for writes: FT2xxR EEPROM must always be written one aligned dword at a time, with the lower-address word written first.</p>
+<p>TODO: what about FT-X series?</p>
+<h3 id="erase_eeprom"><a class="header" href="#erase_eeprom"><code>ERASE_EEPROM</code></a></h3>
+<p>Erases the entire EEPROM.</p>
+<ul>
+<li>applicable to: FT8U100A?, FT8U232A, FT8U245A, FT232B, FT245B, FT2232[CDL], FT2232H, FT4232H, FT232H</li>
+<li><code>bmRequestType</code>: <code>0x40</code></li>
+<li><code>bRequest</code>: <code>0x92</code></li>
+<li><code>wValue</code>: 0</li>
+<li><code>wIndex</code>: 0</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fifo-modes"><a class="header" href="#fifo-modes">FIFO modes</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="bitbang-modes"><a class="header" href="#bitbang-modes">Bitbang modes</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mpsse-mode"><a class="header" href="#mpsse-mode">MPSSE mode</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mcu-host-bus-mode"><a class="header" href="#mcu-host-bus-mode">MCU host bus mode</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft1248-mode"><a class="header" href="#ft1248-mode">FT1248 mode</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="fast-opto-isolated-serial-mode"><a class="header" href="#fast-opto-isolated-serial-mode">Fast opto-isolated serial mode</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="i2c-peripherial-mode"><a class="header" href="#i2c-peripherial-mode">I2C peripherial mode</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft8u232a-and-ft8u245a-1"><a class="header" href="#ft8u232a-and-ft8u245a-1">FT8U232A and FT8U245A</a></h1>
+<p>The first generation of fixed-function D2xx devices.  The devices are:</p>
+<ul>
+<li>FT8U232AM: UART mode, 32-pin MQFP</li>
+<li>FT8U245AM: FIFO mode, 32-pin MQFP</li>
+</ul>
+<p>Both devices look exactly the same from the software perspective, and in fact may or may not be the same silicon.</p>
+<p>Features:</p>
+<ul>
+<li>is a full-speed USB 1.1 peripherial</li>
+<li>single channel D2xx device, hardwired to either UART or FIFO mode
+<ul>
+<li>no alternate bit modes</li>
+</ul>
+</li>
+<li>384-byte IN FIFO, 128-byte OUT FIFO</li>
+<li>48MHz internal base clock, generated from 6MHz crystal</li>
+<li>5V VCC supply (used for internal circuitry and business-end IO)</li>
+<li>separate AGND and AVCC supply for the clock multiplier</li>
+<li>internal 3.3V LDO</li>
+<li>required external support circuitry:
+<ul>
+<li>USB D+ pullup</li>
+<li>power-on reset circuit</li>
+<li>decoupling capacitor for internal LDO</li>
+<li>RC timer for oscillator bootstrap</li>
+<li>6MHz crystal</li>
+<li>optionally, a 93C46 64×16-bit EEPROM</li>
+</ul>
+</li>
+</ul>
+<p>The default VID:PID of the device is <code>0403:6001</code>, unless configured otherwise by the EEPROM.  The <code>bcdDevice</code> value is <code>0x0200</code>.</p>
+<h2 id="pinout"><a class="header" href="#pinout">Pinout</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>MQFP pin</th><th>category</th><th>FT8U232A</th><th>FT8U245A</th></tr></thead><tbody>
+<tr><td>1</td><td>EEPROM</td><td>EESK</td><td>EESK</td></tr>
+<tr><td>2</td><td>EEPROM</td><td>EEDATA</td><td>EEDATA</td></tr>
+<tr><td>3</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>4</td><td>control</td><td>RESET#</td><td>RESET#</td></tr>
+<tr><td>5</td><td>control</td><td>TEST</td><td>TEST</td></tr>
+<tr><td>6</td><td>power</td><td>3V3OUT</td><td>3V3OUT</td></tr>
+<tr><td>7</td><td>USB</td><td>USBDP</td><td>USBDP</td></tr>
+<tr><td>8</td><td>USB</td><td>USBDM</td><td>USBDM</td></tr>
+<tr><td>9</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>10</td><td>IO</td><td>SLEEP#</td><td>EEGNT#</td></tr>
+<tr><td>11</td><td>IO</td><td>RXLED#</td><td>EEREQ#</td></tr>
+<tr><td>12</td><td>IO</td><td>TXLED#</td><td>RXF#</td></tr>
+<tr><td>13</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>14</td><td>IO</td><td>PWRCTL</td><td>TXE#</td></tr>
+<tr><td>15</td><td>IO</td><td>USBEN</td><td>WR</td></tr>
+<tr><td>16</td><td>IO</td><td>TXDEN</td><td>RD#</td></tr>
+<tr><td>17</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>18</td><td>IO</td><td>RI#</td><td>D7</td></tr>
+<tr><td>19</td><td>IO</td><td>DCD#</td><td>D6</td></tr>
+<tr><td>20</td><td>IO</td><td>DSR#</td><td>D5</td></tr>
+<tr><td>21</td><td>IO</td><td>DTR#</td><td>D4</td></tr>
+<tr><td>22</td><td>IO</td><td>CTS#</td><td>D3</td></tr>
+<tr><td>23</td><td>IO</td><td>RTS#</td><td>D2</td></tr>
+<tr><td>24</td><td>IO</td><td>RXD</td><td>D1</td></tr>
+<tr><td>25</td><td>IO</td><td>TXD</td><td>D0</td></tr>
+<tr><td>26</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>27</td><td>clock</td><td>XTIN</td><td>XTIN</td></tr>
+<tr><td>28</td><td>clock</td><td>XTOUT</td><td>XTOUT</td></tr>
+<tr><td>29</td><td>power</td><td>AGND</td><td>AGND</td></tr>
+<tr><td>30</td><td>power</td><td>AVCC</td><td>AVCC</td></tr>
+<tr><td>31</td><td>clock</td><td>RCCLK</td><td>RCCLK</td></tr>
+<tr><td>32</td><td>EEPROM</td><td>EECS</td><td>EECS</td></tr>
+</tbody></table>
+</div>
+<p>UART-mode IO pins have the following functions:</p>
+<ul>
+<li>TXD, RXD, RTS#, CTS#, DTR#, DSR#, DCD#, RI#: standard UART pins</li>
+<li>SLEEP#: device output, goes low when in USB suspend mode</li>
+<li>RXLED#, TXLED#: active-low LED outputs</li>
+<li>PWRCTL: device input, used to generate USB descriptors when EEPROM not present or not functional
+<ul>
+<li>0: bus-powered</li>
+<li>1: self-powered</li>
+</ul>
+</li>
+<li>TXDEN: device output, high while TXD is actively transmitting data; can be used as transmitter enable for RS485 transceivers</li>
+<li>USBEN: device output, high after the host configures the device</li>
+</ul>
+<p>FIFO-mode IO pins have the following functions:</p>
+<ul>
+<li>D0-D7, TXE#, RXF#, RD#, WR: standard FIFO-mode pins</li>
+<li>EEREQ#: device input, requests access to EEPROM via data bus</li>
+<li>EEGNT#: device output, grants access to EEPROM via data bus</li>
+</ul>
+<p>The semantics of EEREQ# and EEGNT# are unclear.  They were removed from all subsequent devices.</p>
+<p>TODO: wtf is this exactly</p>
+<p>The EEPROM interface is 3-pin at the FTDI chip, while the EEPROM itself has a 4-pin interface.  This is because the FTDI device uses a single tied data line.  To connect the EEPROM, connect the FTDI EEDATA pin directly to the ROM's data input, and to the data output via a 2.2kΩ resistor.</p>
+<h2 id="eeprom-data-format"><a class="header" href="#eeprom-data-format">EEPROM data format</a></h2>
+<ul>
+<li>word 0x00: always 0</li>
+<li>word 0x01: idVendor (USB VID)</li>
+<li>word 0x02: idProduct (USB PID)</li>
+<li>word 0x03: bcdDevice (should be 0x200)</li>
+<li>word 0x04: USB config (goes straight to configuration descriptor)
+<ul>
+<li>bits 0-7: bmAttributes
+<ul>
+<li>bit 5: remote wakeup enabled</li>
+<li>bit 6: self-powered</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>bits 8-15: bMaxPower (max power in units of 2mA)</li>
+</ul>
+</li>
+<li>words 0x05, 0x06: always 0</li>
+<li>word 0x07: manufacturer string pointer</li>
+<li>word 0x08: product description string pointer</li>
+<li>word 0x09: serial number string pointer</li>
+<li>words 0x0a..0x3f: string / user area</li>
+<li>word 0x3f: checksum</li>
+</ul>
+<p>String pointers are formatted as follows:</p>
+<ul>
+<li>bits 0-6: pointer to descriptor within EEPROM (counted <em>in bytes</em>)</li>
+<li>bit 7: always set to 1</li>
+<li>bits 8-15: total length of descriptor in bytes</li>
+</ul>
+<p>The string descriptors are stored in ROM with the descriptor header included, as follows:</p>
+<ul>
+<li>word 0: header
+<ul>
+<li>bits 0-7: total length of descriptor in bytes (includes header)</li>
+<li>bits 8-15: descriptor type (always 3 — string)</li>
+</ul>
+</li>
+<li>words 1 and up: string in UTF-16</li>
+</ul>
+<p>The checksum can be computed as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn checksum(eeprom: [u16; 0x40]) -&gt; u16 {
+    let mut res: u16 = 0xaaaa;
+    for pos in 0..0x3f { // checksum word is NOT included — we're calculating it
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    res
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft232b-and-ft245b-1"><a class="header" href="#ft232b-and-ft245b-1">FT232B and FT245B</a></h1>
+<p>The second generation of fixed-function D2xx devices, an upgrade to FT8U232A and FT8U245A.  The devices are:</p>
+<ul>
+<li>FT232BM: UART mode, 32-pin LQFP</li>
+<li>FT232BL: UART mode, 32-pin LQFP (lead-free version)</li>
+<li>FT232BQ: UART mode, 32-pin QFN</li>
+<li>FT245BM: FIFO mode, 32-pin LQFP</li>
+<li>FT245BL: FIFO mode, 32-pin LQFP (lead-free version)</li>
+</ul>
+<p>Both FT232B and FT245B look exactly the same from the software perspective, and in fact may or may not be the same silicon.</p>
+<p>Features:</p>
+<ul>
+<li>is a full-speed USB 1.1 peripherial</li>
+<li>single channel D2xx device, hardwired to either UART or <a href="fifo.html">FIFO</a> base mode
+<ul>
+<li>can be set to an alternate mode: <a href="bitbang.html">async bitbang</a></li>
+</ul>
+</li>
+<li>384-byte IN FIFO, 128-byte OUT FIFO</li>
+<li>48MHz internal base clock, generated from 6MHz crystal</li>
+<li>5V VCC supply for internal circuitry</li>
+<li>separate 3.3V or 5V VCCIO supply for business-end IO</li>
+<li>separate AGND and AVCC 5V supply for the clock multiplier</li>
+<li>internal 3.3V LDO</li>
+<li>internal power-on reset circuit</li>
+<li>required external support circuitry:
+<ul>
+<li>USB D+ pullup</li>
+<li>decoupling capacitor for internal LDO</li>
+<li>6MHz crystal or external clock</li>
+<li>optionally, a 93C46 64×16-bit EEPROM; a 93C56 or 93C66 is also acceptable, but the device will not be able to access the extra space</li>
+</ul>
+</li>
+</ul>
+<p>On reset, the device samples the value of the EESK pin to determine the default VID:PID that will be used unless configured otherwise by the EEPROM.  The default VID:PID is:</p>
+<ul>
+<li><code>0403:6001</code> if EESK is high (or left floating, as the device has weak internal pullup)</li>
+<li><code>0403:6004</code> if EESK is low and the device is an FT232B</li>
+<li><code>0403:6005</code> if EESK is low and the device is an FT245B</li>
+</ul>
+<p>The <code>bcdDevice</code> value for the device is <code>0x0200</code> (same as FT8U2xxA) if no serial number has been configured, or <code>0x0400</code> if a serial number has been configured.</p>
+<h2 id="pinout-1"><a class="header" href="#pinout-1">Pinout</a></h2>
+<p>The pinout is mostly, but not quite, compatible with FT8U2xxA.</p>
+<div class="table-wrapper"><table><thead><tr><th>LQFP / QFN pin</th><th>category</th><th>FT8U232A</th><th>FT8U245A</th></tr></thead><tbody>
+<tr><td>1</td><td>EEPROM</td><td>EESK</td><td>EESK</td></tr>
+<tr><td>2</td><td>EEPROM</td><td>EEDATA</td><td>EEDATA</td></tr>
+<tr><td>3</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>4</td><td>control</td><td>RESET#</td><td>RESET#</td></tr>
+<tr><td>5</td><td>control</td><td>RSTOUT#</td><td>RSTOUT#</td></tr>
+<tr><td>6</td><td>power</td><td>3V3OUT</td><td>3V3OUT</td></tr>
+<tr><td>7</td><td>USB</td><td>USBDP</td><td>USBDP</td></tr>
+<tr><td>8</td><td>USB</td><td>USBDM</td><td>USBDM</td></tr>
+<tr><td>9</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>10</td><td>IO</td><td>SLEEP#</td><td>PWREN#</td></tr>
+<tr><td>11</td><td>IO</td><td>RXLED#</td><td>SI/WU#</td></tr>
+<tr><td>12</td><td>IO</td><td>TXLED#</td><td>RXF#</td></tr>
+<tr><td>13</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>14</td><td>IO</td><td>PWRCTL</td><td>TXE#</td></tr>
+<tr><td>15</td><td>IO</td><td>PWREN#</td><td>WR</td></tr>
+<tr><td>16</td><td>IO</td><td>TXDEN</td><td>RD#</td></tr>
+<tr><td>17</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>18</td><td>IO</td><td>RI#</td><td>D7</td></tr>
+<tr><td>19</td><td>IO</td><td>DCD#</td><td>D6</td></tr>
+<tr><td>20</td><td>IO</td><td>DSR#</td><td>D5</td></tr>
+<tr><td>21</td><td>IO</td><td>DTR#</td><td>D4</td></tr>
+<tr><td>22</td><td>IO</td><td>CTS#</td><td>D3</td></tr>
+<tr><td>23</td><td>IO</td><td>RTS#</td><td>D2</td></tr>
+<tr><td>24</td><td>IO</td><td>RXD</td><td>D1</td></tr>
+<tr><td>25</td><td>IO</td><td>TXD</td><td>D0</td></tr>
+<tr><td>26</td><td>power</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>27</td><td>clock</td><td>XTIN</td><td>XTIN</td></tr>
+<tr><td>28</td><td>clock</td><td>XTOUT</td><td>XTOUT</td></tr>
+<tr><td>29</td><td>power</td><td>AGND</td><td>AGND</td></tr>
+<tr><td>30</td><td>power</td><td>AVCC</td><td>AVCC</td></tr>
+<tr><td>31</td><td>control</td><td>TEST</td><td>TEST</td></tr>
+<tr><td>32</td><td>EEPROM</td><td>EECS</td><td>EECS</td></tr>
+</tbody></table>
+</div>
+<p>UART-mode IO pins have the following functions:</p>
+<ul>
+<li>TXD, RXD, RTS#, CTS#, DTR#, DSR#, DCD#, RI#: standard UART pins</li>
+<li>SLEEP#: device output, goes low when in USB suspend mode</li>
+<li>RXLED#, TXLED#: active-low LED outputs</li>
+<li>PWRCTL: device input, used to generate USB descriptors when EEPROM not present or not functional
+<ul>
+<li>0: bus-powered</li>
+<li>1: self-powered</li>
+</ul>
+</li>
+<li>TXDEN: device output, high while TXD is actively transmitting data; can be used as transmitter enable for RS485 transceivers</li>
+<li>PWREN#: device output, low when the device has been configured by the host and is not in suspend mode (can be used to gate power to the rest of the board)</li>
+</ul>
+<p>FIFO-mode IO pins have the following functions:</p>
+<ul>
+<li>D0-D7, TXE#, RXF#, RD#, WR, SI/WU#: standard FIFO-mode pins</li>
+<li>PWREN#: like in UART mode</li>
+</ul>
+<p>The EEPROM interface is 3-pin at the FTDI chip, while the EEPROM itself has a 4-pin interface.  This is because the FTDI device uses a single tied data line.  To connect the EEPROM, connect the FTDI EEDATA pin directly to the ROM's data input, and to the data output via a 2.2kΩ resistor.</p>
+<h2 id="eeprom-data-format-1"><a class="header" href="#eeprom-data-format-1">EEPROM data format</a></h2>
+<p>The format is backwards-compatible with the one used by FT8U2xxA devices.</p>
+<ul>
+<li>word 0x00: always 0</li>
+<li>word 0x01: idVendor (USB VID)</li>
+<li>word 0x02: idProduct (USB PID)</li>
+<li>word 0x03: bcdDevice (should be 0x400 or 0x200 when serial number not present)</li>
+<li>word 0x04: USB config (goes straight to configuration descriptor)
+<ul>
+<li>bits 0-7: bmAttributes
+<ul>
+<li>bit 5: remote wakeup enabled</li>
+<li>bit 6: self-powered</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>bits 8-15: bMaxPower (max power in units of 2mA)</li>
+</ul>
+</li>
+<li>word 0x05: device control
+<ul>
+<li>bit 0: IN endpoint is isochronous</li>
+<li>bit 1: OUT endpoint is isochronous</li>
+<li>bit 2: IO pulldown in suspend</li>
+<li>bit 3: serial number enabled</li>
+<li>bit 4: bcdUSB is present</li>
+</ul>
+</li>
+<li>word 0x06: bcdUSB</li>
+<li>word 0x07: manufacturer string pointer</li>
+<li>word 0x08: product description string pointer</li>
+<li>word 0x09: serial number string pointer</li>
+<li>words 0x0a..0x3f: string / user area</li>
+<li>word 0x3f: checksum</li>
+</ul>
+<p>String pointers are formatted as follows:</p>
+<ul>
+<li>bits 0-6: pointer to descriptor within EEPROM (counted <em>in bytes</em>)</li>
+<li>bit 7: always set to 1</li>
+<li>bits 8-15: total length of descriptor in bytes</li>
+</ul>
+<p>The string descriptors are stored in ROM with the descriptor header included, as follows:</p>
+<ul>
+<li>word 0: header
+<ul>
+<li>bits 0-7: total length of descriptor in bytes (includes header)</li>
+<li>bits 8-15: descriptor type (always 3 — string)</li>
+</ul>
+</li>
+<li>words 1 and up: string in UTF-16</li>
+</ul>
+<p>The checksum can be computed as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn checksum(eeprom: [u16; 0x40]) -&gt; u16 {
+    let mut res: u16 = 0xaaaa;
+    for pos in 0..0x3f { // checksum word is NOT included — we're calculating it
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    res
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft2232cdl-1"><a class="header" href="#ft2232cdl-1">FT2232[CDL]</a></h1>
+<p>The third generation of fixed-function D2xx devices, now with two channels.  The devices are:</p>
+<ul>
+<li>FT2232C: first revision; 48-pin LQFP package</li>
+<li>FT2232L: first revision; 48-pin LQFP package (lead-free version)</li>
+<li>FT2232D: second revision, fixed CPU FIFO mode; 48-pin LQFP package (lead-free version)</li>
+</ul>
+<p>The FT2232H is an entirely different device, and is not described here.</p>
+<p>Features:</p>
+<ul>
+<li>is a full-speed USB 1.1 peripherial</li>
+<li>dual-channel D2xx device</li>
+<li>each channel can be independently configured to one of several supported modes:
+<ul>
+<li>FT232B-like UART mode (default)</li>
+<li>FT245B-like <a href="fifo.html">FIFO mode</a> (selected in EEPROM)</li>
+<li>new <a href="fifo.html">CPU FIFO mode</a> (selected in EEPROM; FT2232D only — this mode is present but unusably broken on FT2232C)</li>
+<li>FT2xxB-like <a href="bitbang.html">async bitbang mode</a> (dynamically selected)</li>
+<li>new <a href="bitbang.html">sync bitbang mode</a> (dynamically selected)</li>
+<li>new <a href="mpsse.html">MPSSE mode</a> (dynamically selected; channel A only)</li>
+<li>new <a href="opto.html">fast opto-isolated serial mode</a> (selected in EEPROM)</li>
+<li>new <a href="mcu-bus.html">MCU bus controller mode</a> (dynamically selected; uses both channels)</li>
+</ul>
+</li>
+<li>384-byte IN FIFOs, 128-byte OUT FIFOs (per channel)</li>
+<li>48MHz internal base clock, generated from 6MHz crystal</li>
+<li>5V VCC supply for internal circuitry</li>
+<li>separate 3.3V or 5V VCCIOA supply for channel A business-end IO</li>
+<li>separate 3.3V or 5V VCCIOB supply for channel B business-end IO</li>
+<li>separate AGND and AVCC 5V supply for the clock multiplier</li>
+<li>internal 3.3V LDO</li>
+<li>internal power-on reset circuit</li>
+<li>required external support circuitry:
+<ul>
+<li>USB D+ pullup</li>
+<li>decoupling capacitor for internal LDO</li>
+<li>6MHz crystal or external clock</li>
+<li>optionally, a 93C46 (64×16-bit), 93C56 (128×16-bit), or 93C66 (256×16-bit) EEPROM</li>
+</ul>
+</li>
+</ul>
+<p>The default VID:PID of the device is <code>0403:6010</code>, unless configured otherwise by the EEPROM.  The <code>bcdDevice</code> value is <code>0x0500</code>.</p>
+<h2 id="pinout-2"><a class="header" href="#pinout-2">Pinout</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>pin</th><th>category</th><th>function</th></tr></thead><tbody>
+<tr><td>1</td><td>EEPROM</td><td>EESK</td></tr>
+<tr><td>2</td><td>EEPROM</td><td>EEDATA</td></tr>
+<tr><td>3</td><td>power</td><td>VCC</td></tr>
+<tr><td>4</td><td>control</td><td>RESET#</td></tr>
+<tr><td>5</td><td>control</td><td>RSTOUT#</td></tr>
+<tr><td>6</td><td>power</td><td>3V3OUT</td></tr>
+<tr><td>7</td><td>USB</td><td>USBDP</td></tr>
+<tr><td>8</td><td>USB</td><td>USBDM</td></tr>
+<tr><td>9</td><td>power</td><td>GND</td></tr>
+<tr><td>10</td><td>IO-A</td><td>SI/WUA</td></tr>
+<tr><td>11</td><td>IO-A</td><td>ACBUS3</td></tr>
+<tr><td>12</td><td>IO-A</td><td>ACBUS2</td></tr>
+<tr><td>13</td><td>IO-A</td><td>ACBUS1</td></tr>
+<tr><td>14</td><td>power</td><td>VCCIOA</td></tr>
+<tr><td>15</td><td>IO-A</td><td>ACBUS0</td></tr>
+<tr><td>16</td><td>IO-A</td><td>ADBUS7</td></tr>
+<tr><td>17</td><td>IO-A</td><td>ADBUS6</td></tr>
+<tr><td>18</td><td>power</td><td>GND</td></tr>
+<tr><td>19</td><td>IO-A</td><td>ADBUS5</td></tr>
+<tr><td>20</td><td>IO-A</td><td>ADBUS4</td></tr>
+<tr><td>21</td><td>IO-A</td><td>ADBUS3</td></tr>
+<tr><td>22</td><td>IO-A</td><td>ADBUS2</td></tr>
+<tr><td>23</td><td>IO-A</td><td>ADBUS1</td></tr>
+<tr><td>24</td><td>IO-A</td><td>ADBUS0</td></tr>
+<tr><td>25</td><td>power</td><td>GND</td></tr>
+<tr><td>26</td><td>IO-B</td><td>SI/WUB</td></tr>
+<tr><td>27</td><td>IO-B</td><td>BCBUS3</td></tr>
+<tr><td>28</td><td>IO-B</td><td>BCBUS2</td></tr>
+<tr><td>29</td><td>IO-B</td><td>BCBUS1</td></tr>
+<tr><td>30</td><td>IO-B</td><td>BCBUS0</td></tr>
+<tr><td>31</td><td>power</td><td>VCCIOB</td></tr>
+<tr><td>32</td><td>IO-B</td><td>BDBUS7</td></tr>
+<tr><td>33</td><td>IO-B</td><td>BDBUS6</td></tr>
+<tr><td>34</td><td>power</td><td>GND</td></tr>
+<tr><td>35</td><td>IO-B</td><td>BDBUS5</td></tr>
+<tr><td>36</td><td>IO-B</td><td>BDBUS4</td></tr>
+<tr><td>37</td><td>IO-B</td><td>BDBUS3</td></tr>
+<tr><td>38</td><td>IO-B</td><td>BDBUS2</td></tr>
+<tr><td>39</td><td>IO-B</td><td>BDBUS1</td></tr>
+<tr><td>40</td><td>IO-B</td><td>BDBUS0</td></tr>
+<tr><td>41</td><td>control</td><td>PWREN#</td></tr>
+<tr><td>42</td><td>power</td><td>VCC</td></tr>
+<tr><td>43</td><td>clock</td><td>XTIN</td></tr>
+<tr><td>44</td><td>clock</td><td>XTOUT</td></tr>
+<tr><td>45</td><td>power</td><td>AGND</td></tr>
+<tr><td>46</td><td>power</td><td>AVCC</td></tr>
+<tr><td>47</td><td>control</td><td>TEST</td></tr>
+<tr><td>48</td><td>EEPROM</td><td>EECS</td></tr>
+</tbody></table>
+</div>
+<h2 id="pin-functions-per-mode"><a class="header" href="#pin-functions-per-mode">Pin functions per mode</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>pin</th><th>UART</th><th>FIFO</th><th>CPU FIFO</th><th>bitbang (U)</th><th>bitbang (F)</th><th>MPSSE</th><th>MCU bus</th><th>opto-isolated</th></tr></thead><tbody>
+<tr><td>ADBUS0</td><td>TXD</td><td>D0</td><td>D0</td><td>D0</td><td>D0</td><td>TCK/SK</td><td>AD0</td><td>-</td></tr>
+<tr><td>ADBUS1</td><td>RXD</td><td>D1</td><td>D1</td><td>D1</td><td>D1</td><td>TDI/DO</td><td>AD1</td><td>-</td></tr>
+<tr><td>ADBUS2</td><td>RTS#</td><td>D2</td><td>D2</td><td>D2</td><td>D2</td><td>TDO/DI</td><td>AD2</td><td>-</td></tr>
+<tr><td>ADBUS3</td><td>CTS#</td><td>D3</td><td>D3</td><td>D3</td><td>D3</td><td>TMS/CS</td><td>AD3</td><td>-</td></tr>
+<tr><td>ADBUS4</td><td>DTR#</td><td>D4</td><td>D4</td><td>D4</td><td>D4</td><td>GPIOL0</td><td>AD4</td><td>-</td></tr>
+<tr><td>ADBUS5</td><td>DSR#</td><td>D5</td><td>D5</td><td>D5</td><td>D5</td><td>GPIOL1</td><td>AD5</td><td>-</td></tr>
+<tr><td>ADBUS6</td><td>DCD#</td><td>D6</td><td>D6</td><td>D6</td><td>D6</td><td>GPIOL2</td><td>AD6</td><td>-</td></tr>
+<tr><td>ADBUS7</td><td>RI#</td><td>D7</td><td>D7</td><td>D7</td><td>D7</td><td>GPIOL3</td><td>AD7</td><td>-</td></tr>
+<tr><td>ACBUS0</td><td>TXDEN</td><td>RXF#</td><td>CS#</td><td>-</td><td>WR#</td><td>GPIOH0</td><td>I/O0</td><td>-</td></tr>
+<tr><td>ACBUS1</td><td>SLEEP#</td><td>TXE#</td><td>A0</td><td>-</td><td>RD#</td><td>GPIOH1</td><td>I/O1</td><td>-</td></tr>
+<tr><td>ACBUS2</td><td>RXLED#</td><td>RD#</td><td>RD#</td><td>WR#</td><td>-</td><td>GPIOH2</td><td>IORDY</td><td>-</td></tr>
+<tr><td>ACBUS3</td><td>TXLED#</td><td>WR</td><td>WR#</td><td>RD#</td><td>-</td><td>GPIOH3</td><td>OSC</td><td>-</td></tr>
+<tr><td>SI/WUA</td><td>SI/WU</td><td>SI/WU</td><td>- (?)</td><td>SI/WU</td><td>SI/WU</td><td>N/A</td><td>-</td><td>-</td></tr>
+<tr><td>BDBUS0</td><td>TXD</td><td>D0</td><td>D0</td><td>D0</td><td>D0</td><td>N/A</td><td>A8</td><td>FSDI</td></tr>
+<tr><td>BDBUS1</td><td>RXD</td><td>D1</td><td>D1</td><td>D1</td><td>D1</td><td>N/A</td><td>A9</td><td>FSCLK</td></tr>
+<tr><td>BDBUS2</td><td>RTS#</td><td>D2</td><td>D2</td><td>D2</td><td>D2</td><td>N/A</td><td>A10</td><td>FSDO</td></tr>
+<tr><td>BDBUS3</td><td>CTS#</td><td>D3</td><td>D3</td><td>D3</td><td>D3</td><td>N/A</td><td>A11</td><td>FSCTS</td></tr>
+<tr><td>BDBUS4</td><td>DTR#</td><td>D4</td><td>D4</td><td>D4</td><td>D4</td><td>N/A</td><td>A12</td><td>-</td></tr>
+<tr><td>BDBUS5</td><td>DSR#</td><td>D5</td><td>D5</td><td>D5</td><td>D5</td><td>N/A</td><td>A13</td><td>-</td></tr>
+<tr><td>BDBUS6</td><td>DCD#</td><td>D6</td><td>D6</td><td>D6</td><td>D6</td><td>N/A</td><td>A14</td><td>-</td></tr>
+<tr><td>BDBUS7</td><td>RI#</td><td>D7</td><td>D7</td><td>D7</td><td>D7</td><td>N/A</td><td>A15</td><td>-</td></tr>
+<tr><td>BCBUS0</td><td>TXDEN</td><td>RXF#</td><td>CS#</td><td>-</td><td>WR#</td><td>N/A</td><td>CS#</td><td>-</td></tr>
+<tr><td>BCBUS1</td><td>SLEEP#</td><td>TXE#</td><td>A0</td><td>-</td><td>RD#</td><td>N/A</td><td>ALE</td><td>-</td></tr>
+<tr><td>BCBUS2</td><td>RXLED#</td><td>RD#</td><td>RD#</td><td>WR#</td><td>-</td><td>N/A</td><td>RD#</td><td>-</td></tr>
+<tr><td>BCBUS3</td><td>TXLED#</td><td>WR</td><td>WR#</td><td>RD#</td><td>-</td><td>N/A</td><td>WR#</td><td>-</td></tr>
+<tr><td>SI/WUB</td><td>SI/WU</td><td>SI/WU</td><td>- (?)</td><td>SI/WU</td><td>SI/WU</td><td>N/A</td><td>-</td><td>SI/WU</td></tr>
+</tbody></table>
+</div>
+<p>Note: for bitbang modes, the pin assignments in the "bitbang (U)" column apply when the base mode of the channel is UART, and the "bitbang (F)" column applies otherwise.</p>
+<h2 id="eeprom-data-format-2"><a class="header" href="#eeprom-data-format-2">EEPROM data format</a></h2>
+<p>The device will accept 64-word, 128-word, and 256-word EEPROMs.  In case of 256-word EEPROMs, only first half is covered by the checksum.  The other half can still be used to store user data.</p>
+<ul>
+<li>word 0x00:
+<ul>
+<li>bits 0-2: channel A mode
+<ul>
+<li>0: UART</li>
+<li>1: <a href="fifo.html">245-style FIFO</a></li>
+<li>2: <a href="fifo.html">CPU FIFO</a></li>
+<li>4: <a href="opto.html">fast opto-isolated serial</a></li>
+</ul>
+</li>
+<li>bit 3: channel A enable bind to VCP driver</li>
+<li>bit 4: channel A high current output drive</li>
+<li>bits 8-10: channel B mode (see above)</li>
+<li>bit 11: channel B enable bind to VCP driver</li>
+<li>bit 12: channel B high current output drive</li>
+</ul>
+</li>
+<li>word 0x01: idVendor (USB VID)</li>
+<li>word 0x02: idProduct (USB PID)</li>
+<li>word 0x03: bcdDevice (0x500)</li>
+<li>word 0x04: USB config (goes straight to configuration descriptor)
+<ul>
+<li>bits 0-7: bmAttributes
+<ul>
+<li>bit 5: remote wakeup enabled</li>
+<li>bit 6: self-powered</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>bits 8-15: bMaxPower (max power in units of 2mA)</li>
+</ul>
+</li>
+<li>word 0x05: device control
+<ul>
+<li>bit 0: channel A IN endpoint is isochronous</li>
+<li>bit 1: channel A OUT endpoint is isochronous</li>
+<li>bit 2: IO pulldown in suspend</li>
+<li>bit 3: serial number enabled</li>
+<li>bit 4: bcdUSB is present</li>
+<li>bit 5: channel B IN endpoint is isochronous</li>
+<li>bit 6: channel B OUT endpoint is isochronous</li>
+</ul>
+</li>
+<li>word 0x06: bcdUSB</li>
+<li>word 0x07: manufacturer string pointer</li>
+<li>word 0x08: product description string pointer</li>
+<li>word 0x09: serial number string pointer</li>
+<li>word 0x0a: EEPROM type
+<ul>
+<li>0x46: 93C46 (64-word)</li>
+<li>0x56: 93C56 (128-word)</li>
+<li>0x66: 93C66 (256-word)</li>
+</ul>
+</li>
+<li>for 64-word EEPROM:
+<ul>
+<li>words 0x0b..0x3f: string / user area</li>
+<li>word 0x3f: checksum</li>
+</ul>
+</li>
+<li>for 128-word and 256-word EEPROM:
+<ul>
+<li>words 0xb..0x4b: user area</li>
+<li>words 0x4b..0x7f: string / user area</li>
+<li>word 0x7f: checksum</li>
+</ul>
+</li>
+<li>words 0x80..0x100 (256-word EEPROM only): user area (not covered by checksum)</li>
+</ul>
+<p>String pointers are formatted as follows:</p>
+<ul>
+<li>for 64-word EEPROM:
+<ul>
+<li>bits 0-6: pointer to descriptor within EEPROM (counted <em>in bytes</em>)</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>for 128-word or 256-word EEPROM: pointer to descriptor within EEPROM (counted <em>in bytes</em>); note that FTDI tools will only store string descriptors in the area starting at word 0x4b, ensuring the high bit is always set</li>
+<li>bits 8-15: total length of descriptor in bytes</li>
+</ul>
+<p>TODO: figure out wtf it is with the always-set high bit</p>
+<p>The string descriptors are stored in ROM with the descriptor header included, as follows:</p>
+<ul>
+<li>word 0: header
+<ul>
+<li>bits 0-7: total length of descriptor in bytes (includes header)</li>
+<li>bits 8-15: descriptor type (always 3 — string)</li>
+</ul>
+</li>
+<li>words 1 and up: string in UTF-16</li>
+</ul>
+<p>The checksum can be computed as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn checksum(eeprom: &amp;[u16]) -&gt; u16 {
+    let checksum_word = match eeprom.len() {
+        0x40 =&gt; 0x3f,
+        0x80 | 0x100 =&gt; 0x7f,
+    };
+    let mut res: u16 = 0xaaaa;
+    for pos in 0..checksum_word { // checksum word is NOT included — we're calculating it
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    res
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft232r-and-ft245r"><a class="header" href="#ft232r-and-ft245r">FT232R and FT245R</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft2232h-and-ft4232h-1"><a class="header" href="#ft2232h-and-ft4232h-1">FT2232H and FT4232H</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft232h-1"><a class="header" href="#ft232h-1">FT232H</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft-x-series-1"><a class="header" href="#ft-x-series-1">FT-X series</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ft4222h-1"><a class="header" href="#ft4222h-1">FT4222H</a></h1>
+<p>TODO</p>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

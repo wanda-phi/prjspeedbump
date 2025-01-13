@@ -180,7 +180,7 @@
 <li>programmable MCUs with FTDI-provided libraries that can be used to implement the D2xx protocol in firmware
 <ul>
 <li>FT8U100A: ???-based MCU</li>
-<li>FT51A: 8051-based MCU</li>
+<li>FT51: 8051-based MCU</li>
 <li>FT900 series: FT32-based MCU (custom RISC-like 32-bit Harvard architecture)</li>
 <li>FT930 series: FT32B-based MCU (a revision of FT32)</li>
 </ul>
@@ -191,21 +191,23 @@
 <p>Almost all D2xx devices allow the designer to provide custom USB vendor and product IDs (as well as string descriptors), making fully reliable detection impossible. However, once something is known to be a D2xx device, the bcdDevice field of device descriptor can be used to determine its exact type:</p>
 <div class="table-wrapper"><table><thead><tr><th>bcdDevice</th><th>default VID:PID</th><th># channels</th><th>device</th></tr></thead><tbody>
 <tr><td>0001</td><td>0403:8372</td><td>1</td><td>FT8U100A UART "applet"</td></tr>
-<tr><td>0200</td><td>0403:6001</td><td>1</td><td>FT8U232A or FT8U245A</td></tr>
-<tr><td>0400 or 0200</td><td>0403:6001</td><td>1</td><td>FT232B or FT245B</td></tr>
-<tr><td>0500</td><td>0403:6010</td><td>2</td><td>FT2232C, FT2232D</td></tr>
-<tr><td>0600</td><td>0403:6001</td><td>1</td><td>FT232R or FT245R</td></tr>
-<tr><td>0600</td><td>0403:6049</td><td>1</td><td>FT232RN or FT245RN</td></tr>
-<tr><td>0700</td><td>0403:6010</td><td>2</td><td>FT2232H</td></tr>
-<tr><td>0800</td><td>0403:6011</td><td>4</td><td>FT4232H</td></tr>
-<tr><td>0900</td><td>0403:6014</td><td>1</td><td>FT232H</td></tr>
-<tr><td>1000</td><td>0403:6015</td><td>1</td><td>FT-X series</td></tr>
+<tr><td>0200</td><td>0403:6001</td><td>1</td><td><a href="ft8u232a.html">FT8U232A or FT8U245A</a></td></tr>
+<tr><td>0400 or 0200</td><td>0403:6001</td><td>1</td><td><a href="ft232b.html">FT232B or FT245B</a></td></tr>
+<tr><td>0400 or 0200</td><td>0403:6004</td><td>1</td><td><a href="ft232b.html">FT232B (alternate PID strap)</a></td></tr>
+<tr><td>0400 or 0200</td><td>0403:6005</td><td>1</td><td><a href="ft232b.html">FT245B (alternate PID strap)</a></td></tr>
+<tr><td>0500</td><td>0403:6010</td><td>2</td><td><a href="ft2232.html">FT2232C, FT2232D</a></td></tr>
+<tr><td>0600</td><td>0403:6001</td><td>1</td><td><a href="ft232r.html">FT232R or FT245R</a></td></tr>
+<tr><td>0600</td><td>0403:6049</td><td>1</td><td><a href="ft232r.html">FT232RN or FT245RN</a></td></tr>
+<tr><td>0700</td><td>0403:6010</td><td>2</td><td><a href="ft2232h.html">FT2232H</a></td></tr>
+<tr><td>0800</td><td>0403:6011</td><td>4</td><td><a href="ft2232h.html">FT4232H</a></td></tr>
+<tr><td>0900</td><td>0403:6014</td><td>1</td><td><a href="ft232h.html">FT232H</a></td></tr>
+<tr><td>1000</td><td>0403:6015</td><td>1</td><td><a href="ft-x.html">FT-X series</a></td></tr>
 <tr><td>1400</td><td>0403:601b</td><td>1</td><td>FT4222 mode 3 (unreleased)</td></tr>
 <tr><td>1500</td><td>0403:601b</td><td>2</td><td>FT4222 mode 0 (unreleased)</td></tr>
 <tr><td>1600</td><td>0403:601b</td><td>4</td><td>FT4222 mode 1 or 2 (unreleased)</td></tr>
-<tr><td>1700</td><td>0403:601c</td><td>1</td><td>FT4222H mode 3</td></tr>
-<tr><td>1800</td><td>0403:601c</td><td>2</td><td>FT4222H mode 0</td></tr>
-<tr><td>1900</td><td>0403:601c</td><td>4</td><td>FT4222H mode 1 or 2</td></tr>
+<tr><td>1700</td><td>0403:601c</td><td>1</td><td><a href="ft4222h.html">FT4222H</a> mode 3</td></tr>
+<tr><td>1800</td><td>0403:601c</td><td>2</td><td><a href="ft4222h.html">FT4222H</a> mode 0</td></tr>
+<tr><td>1900</td><td>0403:601c</td><td>4</td><td><a href="ft4222h.html">FT4222H</a> mode 1 or 2</td></tr>
 <tr><td>2100</td><td>0403:0fec</td><td>1?</td><td>UMFT4222PROG</td></tr>
 <tr><td>2400</td><td>0403:6031</td><td>1</td><td>FT90x (1 channel)</td></tr>
 <tr><td>2400</td><td>0403:6032</td><td>2</td><td>FT90x (2 channels)</td></tr>
@@ -218,14 +220,14 @@
 <tr><td>2500</td><td>0403:6039</td><td>6</td><td>FT93x (6 channels)</td></tr>
 <tr><td>2500</td><td>0403:603a</td><td>7</td><td>FT93x (7 channels)</td></tr>
 <tr><td>2700</td><td>0403:603e</td><td>1?</td><td>UMFTPD3A</td></tr>
-<tr><td>2800</td><td>0403:6040</td><td>2</td><td>FT2233HP</td></tr>
-<tr><td>2900</td><td>0403:6041</td><td>4</td><td>FT4233HP</td></tr>
-<tr><td>3000</td><td>0403:6042</td><td>2</td><td>FT2232HP</td></tr>
-<tr><td>3100</td><td>0403:6043</td><td>4</td><td>FT4232HP</td></tr>
-<tr><td>3200</td><td>0403:6044</td><td>1</td><td>FT232HP</td></tr>
-<tr><td>3300</td><td>0403:6045</td><td>1</td><td>FT232HP</td></tr>
-<tr><td>3500</td><td>0403:6047</td><td>2</td><td>FT2232HA</td></tr>
-<tr><td>3600</td><td>0403:6048</td><td>4</td><td>FT4232HA</td></tr>
+<tr><td>2800</td><td>0403:6040</td><td>2</td><td><a href="ft2232h.html">FT2233HP</a></td></tr>
+<tr><td>2900</td><td>0403:6041</td><td>4</td><td><a href="ft2232h.html">FT4233HP</a></td></tr>
+<tr><td>3000</td><td>0403:6042</td><td>2</td><td><a href="ft2232h.html">FT2232HP</a></td></tr>
+<tr><td>3100</td><td>0403:6043</td><td>4</td><td><a href="ft2232h.html">FT4232HP</a></td></tr>
+<tr><td>3200</td><td>0403:6044</td><td>1</td><td><a href="ft232h.html">FT233HP</a></td></tr>
+<tr><td>3300</td><td>0403:6045</td><td>1</td><td><a href="ft232h.html">FT232HP</a></td></tr>
+<tr><td>3500</td><td>0403:6047</td><td>2</td><td><a href="ft2232h.html">FT2232HA</a></td></tr>
+<tr><td>3600</td><td>0403:6048</td><td>4</td><td><a href="ft2232h.html">FT4232HA</a></td></tr>
 </tbody></table>
 </div>
 <h3 id="ft8u232a-and-ft8u245a"><a class="header" href="#ft8u232a-and-ft8u245a">FT8U232A and FT8U245A</a></h3>
@@ -651,6 +653,9 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
 
+                            <a rel="next prefetch" href="d2xx.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -659,6 +664,9 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
 
+                    <a rel="next prefetch" href="d2xx.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>
