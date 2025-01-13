@@ -513,12 +513,10 @@
 <tr><td>VNC2-32Q</td><td>32-pin QFN</td><td>12</td></tr>
 </tbody></table>
 </div>
-<h2 id="ft31x-series"><a class="header" href="#ft31x-series">FT31x series</a></h2>
-<h3 id="ft311-and-ft312"><a class="header" href="#ft311-and-ft312">FT311 and FT312</a></h3>
+<h4 id="ft311-and-ft312"><a class="header" href="#ft311-and-ft312">FT311 and FT312</a></h4>
 <p>FT311 and FT312 are Android Open Accessory host devices. They are USB full-speed hosts that accept a single peripherial that should support the AOA protocol. They will then expose UART or other interface to the Android device.</p>
 <p>The device has internal flash memory which stores, among other things, the descriptor strings presented to the Android device. It can be modified via an FTDI null-modem cable and a configuration utility.</p>
-<p>FT311 and FT312 are the same silicon.</p>
-<p>The device is most likely based on the VNC1 or VNC2 MCU.</p>
+<p>Both of these devices are actually just VNC2 chips with preprogrammed firmware.</p>
 <div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>interfaces</th></tr></thead><tbody>
 <tr><td>FT311D-32Q1C</td><td>32-pin QFN</td><td>one of: UART, GPIO, PWM, I2C controller, SPI controller, SPI peripherial</td></tr>
 <tr><td>FT311D-32L1C</td><td>32-pin LQFP</td><td>one of: UART, GPIO, PWM, I2C controller, SPI controller, SPI peripherial</td></tr>
@@ -526,7 +524,7 @@
 <tr><td>FT312D-32L1C</td><td>32-pin LQFP</td><td>UART</td></tr>
 </tbody></table>
 </div>
-<h3 id="ft313"><a class="header" href="#ft313">FT313</a></h3>
+<h2 id="ft313"><a class="header" href="#ft313">FT313</a></h2>
 <p>FT313 is an EHCI controller meant to be connected as a peripherial to 8051-style MCU bus.  It has 24kiB of internal buffer memory and DMA support.</p>
 <div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th></tr></thead><tbody>
 <tr><td>FT313HQ</td><td>64-pin QFN</td></tr>
