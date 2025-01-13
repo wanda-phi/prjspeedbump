@@ -246,7 +246,7 @@ In addition to providing the UART baud rate, the channel clock (not divided by 1
 
 These devices are USB high-speed peripherials, and support a higher baud rate and channel clock range.  The base clock of the device is 120MHz.  The divisor encoding is an extension of the one used in FT232B, and is backwards compatible.
 
-The divisor is encoded into an 18-bit number (with top bit overflowing into the `wIndex` field) as follows:
+The divisor is encoded into an 18-bit number (with top two bits overflowing into the `wIndex` field) as follows:
 
 - bits 0-13: integer part (must be at least 2, except for the special cases below)
 - bits 14-16: fractional part, encoded
