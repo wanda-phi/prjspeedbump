@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>FT4222H - Project Speedbump</title>
+        <title>USB-PD devices - Project Speedbump</title>
 
 
         <!-- Custom HTML head -->
@@ -152,20 +152,30 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="ft4222h"><a class="header" href="#ft4222h">FT4222H</a></h1>
+                        <h1 id="usb-pd-devices"><a class="header" href="#usb-pd-devices">USB-PD devices</a></h1>
+<p>The <a href="ft2232h.html">FT2232H, FT4232H</a>, and <a href="ft232h.html">FT232H</a> devices have variants with USB-PD support.  They essentially consist of the base device and a USB-PD controller core put together with some super glue.  The USB-PD part is described here.</p>
+<p>The devices are:</p>
+<ul>
+<li>FT2233HP: FT2232H with two USB-PD ports</li>
+<li>FT4233HP: FT4232H with two USB-PD ports</li>
+<li>FT2232HP: FT2232H with one USB-PD port</li>
+<li>FT4232HP: FT4232H with one USB-PD port</li>
+<li>FT233HP: FT232H with two USB-PD ports</li>
+<li>FT232HP: FT232H with one USB-PD port</li>
+</ul>
+<p>TODO</p>
+<h2 id="eeprom-data-format"><a class="header" href="#eeprom-data-format">EEPROM data format</a></h2>
+<p>A 256-word EEPROM is required for the USB-PD part of the device to function.  The second half of the EEPROM is used to store the USB-PD configuration data.</p>
 <p>TODO</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ft-x.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ft4222h.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="usb-pd.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -173,13 +183,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ft-x.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ft4222h.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="usb-pd.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>

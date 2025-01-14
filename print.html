@@ -1743,12 +1743,460 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ft232r-and-ft245r"><a class="header" href="#ft232r-and-ft245r">FT232R and FT245R</a></h1>
 <p>TODO</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ft2232h-and-ft4232h-1"><a class="header" href="#ft2232h-and-ft4232h-1">FT2232H and FT4232H</a></h1>
-<p>TODO</p>
+<p>The fifth generation of fixed-function D2xx devices.  There are two base devices:</p>
+<ul>
+<li>FT2232H: has two channels with 16 IO pins each and a large selection of operating modes</li>
+<li>FT4232H: has four channels with 8 IO pins each and a smaller selection of operating modes</li>
+</ul>
+<p>Both of these devices are actually the same silicon, and are thus highly similar.  Whether a device is FT2232H or FT4232H is determined by a fuse programmed at the factory.  Note that the <a href="ft232h.html">FT232H</a> is not another variant of the same silicon, but a completely distinct device with different capabilities.</p>
+<p>The devices have automotive variants, known as FT2232HA and FT4232HA.  It is not known what their functional differences are, if any.</p>
+<p>The devices also have USB-PD variants, which integrate a power delivery core into the same die.  The D2xx function and the power delivery function are largely separate and operate independently, but they do share the same configuration EEPROM.  The USB-PD variants are:</p>
+<ul>
+<li>FT2233HP and FT4233HP: two USB-PD ports</li>
+<li>FT2232HP and FT4232HP: one USB-PD port (actually identical to FTx233HP with the extra port unbonded)</li>
+</ul>
+<p>All USB-PD variants are the same silicon (which is distinct from the "base" FT2232H silicon).</p>
+<p>This document will use the name FT2232H to refer to FT2232HA/FT2232HP/FT2233HP as well, unless otherwise specified.  The same applies for FT4232H.</p>
+<p>Features:</p>
+<ul>
+<li>is a high-speed USB 2.0 peripherial
+<ul>
+<li>supports higher UART baud rates and bitbang/FIFO/MPSSE speeds thanks to the extra oomph</li>
+<li>integrated D+ pullup registor</li>
+</ul>
+</li>
+<li>dual-channel (FT2232H) or quad-channel (FT4232H)</li>
+<li>each channel can be independently configured to one of several supported modes:
+<ul>
+<li>FT232B-like UART mode (default)</li>
+<li>FT245B-like <a href="fifo.html">FIFO mode</a> (selected in EEPROM; FT2232H only)</li>
+<li>new <a href="fifo.html">synchronous FIFO mode</a> (dynamically selected variant of FIFO mode; FT2232H only)
+<ul>
+<li>available on channel A only</li>
+<li>NOTE: channel B cannot be used while this mode is active, as it reuses channel B's buffer resources</li>
+</ul>
+</li>
+<li>FT2232D-like <a href="fifo.html">CPU FIFO mode</a> (selected in EEPROM; FT2232H only)</li>
+<li>FT2xxB-like <a href="bitbang.html">async bitbang mode</a> (dynamically selected)</li>
+<li>FT2232C-like <a href="bitbang.html">sync bitbang mode</a> (dynamically selected)</li>
+<li>FT2232C-like <a href="mpsse.html">MPSSE mode</a> (dynamically selected)
+<ul>
+<li>on FT2232H, supported on both channels (an improvement from FT2232C)</li>
+<li>on FT4232H, supported on channels A and B only</li>
+</ul>
+</li>
+<li>FT2232C-like <a href="opto.html">fast opto-isolated serial mode</a> (selected in EEPROM; FT2232H only)</li>
+<li>FT2232C-like <a href="mcu-bus.html">MCU bus controller mode</a> (dynamically selected; FT2232H only, uses both channels)</li>
+</ul>
+</li>
+<li>FT2232H: 4kiB IN FIFO and 4kiB OUT FIFO for each channel</li>
+<li>FT4232H: 2kiB IN FIFO and 2kiB OUT FIFO for each channel</li>
+<li>120MHz internal base clock, generated from 12MHz crystal</li>
+<li>internal 3.3V to 1.8V LDO</li>
+<li>1.8V VCORE power supply for internal logic; can be connected to internal LDO</li>
+<li>3.3V VCCIO power supply for business-end IO</li>
+<li>3.3V VPHY power supply for USB PHY</li>
+<li>3.3V separate AGND and VPLL power supply for PHY PLL</li>
+<li>internal power-on reset circuit</li>
+<li>required external support circuitry:
+<ul>
+<li>precision resistor for PHY current reference</li>
+<li>VBUS to 3.3V LDO (or other 3.3V power source)</li>
+<li>decoupling capacitor for internal LDO</li>
+<li>12MHz crystal</li>
+<li>optionally, a 93LC46 (64×16-bit), 93LC56 (128×16-bit), or 93LC66 (256×16-bit) EEPROM</li>
+</ul>
+</li>
+</ul>
+<p>The full list of devices is:</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>channels</th><th>USB-PD ports</th><th>default VID:PID</th><th><code>bcdDevice</code></th><th>package</th></tr></thead><tbody>
+<tr><td>FT2232HL</td><td>2</td><td>-</td><td><code>0403:6010</code></td><td><code>0x0700</code></td><td>64-pin LQFP</td></tr>
+<tr><td>FT2232HQ</td><td>2</td><td>-</td><td><code>0403:6010</code></td><td><code>0x0700</code></td><td>64-pin QFN</td></tr>
+<tr><td>FT2232H-56Q</td><td>2</td><td>-</td><td><code>0403:6010</code></td><td><code>0x0700</code></td><td>56-pin VQFN</td></tr>
+<tr><td>FT4232HL</td><td>4</td><td>-</td><td><code>0403:6011</code></td><td><code>0x0800</code></td><td>64-pin LQFP</td></tr>
+<tr><td>FT4232HQ</td><td>4</td><td>-</td><td><code>0403:6011</code></td><td><code>0x0800</code></td><td>64-pin QFN</td></tr>
+<tr><td>FT4232H-56Q</td><td>4</td><td>-</td><td><code>0403:6011</code></td><td><code>0x0800</code></td><td>56-pin VQFN</td></tr>
+<tr><td>FT2233HPQ</td><td>2</td><td>2</td><td><code>0403:6040</code></td><td><code>0x2800</code></td><td>76-pin QFN</td></tr>
+<tr><td>FT4233HPQ</td><td>4</td><td>2</td><td><code>0403:6041</code></td><td><code>0x2900</code></td><td>76-pin QFN</td></tr>
+<tr><td>FT2232HPQ</td><td>2</td><td>1</td><td><code>0403:6042</code></td><td><code>0x2a00</code></td><td>68-pin QFN</td></tr>
+<tr><td>FT4232HPQ</td><td>4</td><td>1</td><td><code>0403:6043</code></td><td><code>0x2b00</code></td><td>68-pin QFN</td></tr>
+<tr><td>FT2232HA?</td><td>2</td><td>-</td><td><code>0403:6047</code></td><td><code>0x3500</code></td><td>???</td></tr>
+<tr><td>FT4232HAQ</td><td>4</td><td>-</td><td><code>0403:6048</code></td><td><code>0x3600</code></td><td>64-pin QFN</td></tr>
+</tbody></table>
+</div>
+<p>Note: while FT2232HA is supported by the drivers, there is no datasheet available, thus packaging options are unknown.  However, "same as FT4232HA" is probably a good bet.</p>
+<p>TODO: USB-PD stuff.</p>
+<h2 id="pinout--base-and-automotive-devices"><a class="header" href="#pinout--base-and-automotive-devices">Pinout — base and automotive devices</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>LQFP64 or QFN64 pin</th><th>VQFN56 pin</th><th>category</th><th>FT2232H</th><th>FT4232H</th></tr></thead><tbody>
+<tr><td>1</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>2</td><td>3</td><td>clock</td><td>OSCI</td><td>OSCI</td></tr>
+<tr><td>3</td><td>4</td><td>clock</td><td>OSCO</td><td>OSCO</td></tr>
+<tr><td>4</td><td>5</td><td>power</td><td>VPHY</td><td>VPHY</td></tr>
+<tr><td>5</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>6</td><td>6</td><td>reference</td><td>REF</td><td>REF</td></tr>
+<tr><td>7</td><td>7</td><td>USB</td><td>DM</td><td>DM</td></tr>
+<tr><td>8</td><td>8</td><td>USB</td><td>DP</td><td>DP</td></tr>
+<tr><td>9</td><td>9</td><td>power</td><td>VPLL</td><td>VPLL</td></tr>
+<tr><td>10</td><td>-</td><td>power</td><td>AGND</td><td>AGND</td></tr>
+<tr><td>11</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>12</td><td>-</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+<tr><td>13</td><td>10</td><td>control</td><td>TEST</td><td>TEST</td></tr>
+<tr><td>14</td><td>11</td><td>control</td><td>RESET#</td><td>RESET#</td></tr>
+<tr><td>15</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>16</td><td>12</td><td>IO-A</td><td>ADBUS0</td><td>ADBUS0</td></tr>
+<tr><td>17</td><td>13</td><td>IO-A</td><td>ADBUS1</td><td>ADBUS1</td></tr>
+<tr><td>18</td><td>14</td><td>IO-A</td><td>ADBUS2</td><td>ADBUS2</td></tr>
+<tr><td>19</td><td>15</td><td>IO-A</td><td>ADBUS3</td><td>ADBUS3</td></tr>
+<tr><td>20</td><td>16</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>21</td><td>17</td><td>IO-A</td><td>ADBUS4</td><td>ADBUS4</td></tr>
+<tr><td>22</td><td>18</td><td>IO-A</td><td>ADBUS5</td><td>ADBUS5</td></tr>
+<tr><td>23</td><td>19</td><td>IO-A</td><td>ADBUS6</td><td>ADBUS6</td></tr>
+<tr><td>24</td><td>20</td><td>IO-A</td><td>ADBUS7</td><td>ADBUS7</td></tr>
+<tr><td>25</td><td>21</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>26</td><td>22</td><td>IO-B</td><td>ACBUS0</td><td>BDBUS0</td></tr>
+<tr><td>27</td><td>23</td><td>IO-B</td><td>ACBUS1</td><td>BDBUS1</td></tr>
+<tr><td>28</td><td>24</td><td>IO-B</td><td>ACBUS2</td><td>BDBUS2</td></tr>
+<tr><td>29</td><td>25</td><td>IO-B</td><td>ACBUS3</td><td>BDBUS3</td></tr>
+<tr><td>30</td><td>26</td><td>IO-B</td><td>ACBUS4</td><td>BDBUS4</td></tr>
+<tr><td>31</td><td>-</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>32</td><td>27</td><td>IO-B</td><td>ACBUS5</td><td>BDBUS5</td></tr>
+<tr><td>33</td><td>28</td><td>IO-B</td><td>ACBUS6</td><td>BDBUS6</td></tr>
+<tr><td>34</td><td>29</td><td>IO-B</td><td>ACBUS7</td><td>BDBUS7</td></tr>
+<tr><td>35</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>36</td><td>30</td><td>IO-shared</td><td>SUSPEND#</td><td>SUSPEND#</td></tr>
+<tr><td>37</td><td>31</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+<tr><td>38</td><td>32</td><td>IO-C</td><td>BDBUS0</td><td>CDBUS0</td></tr>
+<tr><td>39</td><td>33</td><td>IO-C</td><td>BDBUS1</td><td>CDBUS1</td></tr>
+<tr><td>40</td><td>34</td><td>IO-C</td><td>BDBUS2</td><td>CDBUS2</td></tr>
+<tr><td>41</td><td>35</td><td>IO-C</td><td>BDBUS3</td><td>CDBUS3</td></tr>
+<tr><td>42</td><td>36</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>43</td><td>37</td><td>IO-C</td><td>BDBUS4</td><td>CDBUS4</td></tr>
+<tr><td>44</td><td>38</td><td>IO-C</td><td>BDBUS5</td><td>CDBUS5</td></tr>
+<tr><td>45</td><td>39</td><td>IO-C</td><td>BDBUS6</td><td>CDBUS6</td></tr>
+<tr><td>46</td><td>40</td><td>IO-C</td><td>BDBUS7</td><td>CDBUS7</td></tr>
+<tr><td>47</td><td>41</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>48</td><td>42</td><td>IO-D</td><td>BCBUS0</td><td>DDBUS0</td></tr>
+<tr><td>49</td><td>43</td><td>power</td><td>VREGOUT</td><td>VREGOUT</td></tr>
+<tr><td>50</td><td>44</td><td>power</td><td>VREGIN</td><td>VREGIN</td></tr>
+<tr><td>51</td><td>45</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>52</td><td>46</td><td>IO-D</td><td>BCBUS1</td><td>DDBUS1</td></tr>
+<tr><td>53</td><td>47</td><td>IO-D</td><td>BCBUS2</td><td>DDBUS2</td></tr>
+<tr><td>54</td><td>48</td><td>IO-D</td><td>BCBUS3</td><td>DDBUS3</td></tr>
+<tr><td>55</td><td>49</td><td>IO-D</td><td>BCBUS4</td><td>DDBUS4</td></tr>
+<tr><td>56</td><td>50</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>57</td><td>51</td><td>IO-D</td><td>BCBUS5</td><td>DDBUS5</td></tr>
+<tr><td>58</td><td>52</td><td>IO-D</td><td>BCBUS6</td><td>DDBUS6</td></tr>
+<tr><td>59</td><td>53</td><td>IO-D</td><td>BCBUS7</td><td>DDBUS7</td></tr>
+<tr><td>60</td><td>54</td><td>IO-shared</td><td>PWREN#</td><td>PWREN#</td></tr>
+<tr><td>61</td><td>55</td><td>EEPROM</td><td>EEDATA</td><td>EEDATA</td></tr>
+<tr><td>62</td><td>56</td><td>EEPROM</td><td>EECLK</td><td>EECLK</td></tr>
+<tr><td>63</td><td>1</td><td>EEPROM</td><td>EECS</td><td>EECS</td></tr>
+<tr><td>64</td><td>2</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+</tbody></table>
+</div>
+<h2 id="pinout--usb-pd-devices"><a class="header" href="#pinout--usb-pd-devices">Pinout — USB-PD devices</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>QFN76</th><th>QFN68</th><th>category</th><th>FT2232H</th><th>FT4232H</th></tr></thead><tbody>
+<tr><td>1</td><td>1</td><td>EEPROM</td><td>EECLK</td><td>EECLK</td></tr>
+<tr><td>2</td><td>2</td><td>EEPROM</td><td>EEDATA</td><td>EEDATA</td></tr>
+<tr><td>3</td><td>3</td><td>control</td><td>TEST</td><td>TEST</td></tr>
+<tr><td>4</td><td>4</td><td>control</td><td>RESET#</td><td>RESET#</td></tr>
+<tr><td>5</td><td>5</td><td>IO-PD</td><td>GPIO3</td><td>GPIO3</td></tr>
+<tr><td>6</td><td>-</td><td>IO-PD</td><td>GPIO4</td><td>GPIO4</td></tr>
+<tr><td>7</td><td>-</td><td>IO-PD</td><td>GPIO5</td><td>GPIO5</td></tr>
+<tr><td>8</td><td>6</td><td>IO-A</td><td>ADBUS0</td><td>ADBUS0</td></tr>
+<tr><td>9</td><td>7</td><td>IO-A</td><td>ADBUS1</td><td>ADBUS1</td></tr>
+<tr><td>10</td><td>8</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+<tr><td>11</td><td>9</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>12</td><td>10</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>13</td><td>11</td><td>IO-A</td><td>ADBUS2</td><td>ADBUS2</td></tr>
+<tr><td>14</td><td>12</td><td>IO-A</td><td>ADBUS3</td><td>ADBUS3</td></tr>
+<tr><td>15</td><td>13</td><td>IO-A</td><td>ADBUS4</td><td>ADBUS4</td></tr>
+<tr><td>16</td><td>14</td><td>IO-A</td><td>ADBUS5</td><td>ADBUS5</td></tr>
+<tr><td>17</td><td>15</td><td>IO-A</td><td>ADBUS6</td><td>ADBUS6</td></tr>
+<tr><td>18</td><td>16</td><td>IO-A</td><td>ADBUS7</td><td>ADBUS7</td></tr>
+<tr><td>19</td><td>17</td><td>IO-B</td><td>ACBUS0</td><td>BDBUS0</td></tr>
+<tr><td>20</td><td>18</td><td>IO-B</td><td>ACBUS1</td><td>BDBUS1</td></tr>
+<tr><td>21</td><td>19</td><td>IO-B</td><td>ACBUS2</td><td>BDBUS2</td></tr>
+<tr><td>22</td><td>20</td><td>IO-B</td><td>ACBUS3</td><td>BDBUS3</td></tr>
+<tr><td>23</td><td>21</td><td>IO-B</td><td>ACBUS4</td><td>BDBUS4</td></tr>
+<tr><td>24</td><td>22</td><td>IO-B</td><td>ACBUS5</td><td>BDBUS5</td></tr>
+<tr><td>25</td><td>23</td><td>IO-B</td><td>ACBUS6</td><td>BDBUS6</td></tr>
+<tr><td>26</td><td>24</td><td>IO-B</td><td>ACBUS7</td><td>BDBUS7</td></tr>
+<tr><td>27</td><td>25</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+<tr><td>28</td><td>26</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>29</td><td>27</td><td>clock</td><td>OSCI</td><td>OSCI</td></tr>
+<tr><td>30</td><td>28</td><td>clock</td><td>OSCO</td><td>OSCO</td></tr>
+<tr><td>31</td><td>29</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>32</td><td>30</td><td>power</td><td>VREGIN</td><td>VREGIN</td></tr>
+<tr><td>33</td><td>31</td><td>power</td><td>VREGOUT</td><td>VREGOUT</td></tr>
+<tr><td>34</td><td>32</td><td>power</td><td>FSOURCE</td><td>FSOURCE</td></tr>
+<tr><td>35</td><td>33</td><td>power</td><td>VPP</td><td>VPP</td></tr>
+<tr><td>36</td><td>34</td><td>IO-C</td><td>BDBUS0</td><td>CDBUS0</td></tr>
+<tr><td>37</td><td>35</td><td>IO-C</td><td>BDBUS1</td><td>CDBUS1</td></tr>
+<tr><td>38</td><td>36</td><td>IO-C</td><td>BDBUS2</td><td>CDBUS2</td></tr>
+<tr><td>39</td><td>37</td><td>IO-C</td><td>BDBUS3</td><td>CDBUS3</td></tr>
+<tr><td>40</td><td>38</td><td>IO-C</td><td>BDBUS4</td><td>CDBUS4</td></tr>
+<tr><td>41</td><td>39</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>42</td><td>40</td><td>IO-C</td><td>BDBUS5</td><td>CDBUS5</td></tr>
+<tr><td>43</td><td>41</td><td>IO-C</td><td>BDBUS6</td><td>CDBUS6</td></tr>
+<tr><td>44</td><td>42</td><td>IO-C</td><td>BDBUS7</td><td>CDBUS7</td></tr>
+<tr><td>45</td><td>43</td><td>IO-shared</td><td>SUSPEND#</td><td>SUSPEND#</td></tr>
+<tr><td>46</td><td>-</td><td>IO-PD</td><td>GPIO6</td><td>GPIO6</td></tr>
+<tr><td>47</td><td>44</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+<tr><td>48</td><td>45</td><td>IO-D</td><td>BCBUS0</td><td>DDBUS0</td></tr>
+<tr><td>49</td><td>46</td><td>IO-D</td><td>BCBUS1</td><td>DDBUS1</td></tr>
+<tr><td>50</td><td>47</td><td>IO-D</td><td>BCBUS2</td><td>DDBUS2</td></tr>
+<tr><td>51</td><td>48</td><td>IO-D</td><td>BCBUS3</td><td>DDBUS3</td></tr>
+<tr><td>52</td><td>49</td><td>IO-D</td><td>BCBUS4</td><td>DDBUS4</td></tr>
+<tr><td>53</td><td>50</td><td>IO-D</td><td>BCBUS5</td><td>DDBUS5</td></tr>
+<tr><td>54</td><td>51</td><td>power</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>55</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
+<tr><td>56</td><td>52</td><td>IO-D</td><td>BCBUS6</td><td>DDBUS6</td></tr>
+<tr><td>57</td><td>53</td><td>IO-D</td><td>BCBUS7</td><td>DDBUS7</td></tr>
+<tr><td>58</td><td>-</td><td>IO-PD</td><td>GPIO7</td><td>GPIO7</td></tr>
+<tr><td>59</td><td>54</td><td>IO-PD</td><td>GPIO2</td><td>GPIO2</td></tr>
+<tr><td>60</td><td>55</td><td>IO-PD</td><td>GPIO1</td><td>GPIO1</td></tr>
+<tr><td>61</td><td>56</td><td>IO-PD</td><td>GPIO0</td><td>GPIO0</td></tr>
+<tr><td>62</td><td>57</td><td>power</td><td>VCC_USB</td><td>VCC_USB</td></tr>
+<tr><td>63</td><td>58</td><td>USB</td><td>DM</td><td>DM</td></tr>
+<tr><td>64</td><td>59</td><td>USB</td><td>DP</td><td>DP</td></tr>
+<tr><td>65</td><td>60</td><td>reference</td><td>REF</td><td>REF</td></tr>
+<tr><td>66</td><td>61</td><td>power</td><td>VCC_PD</td><td>VCC_PD</td></tr>
+<tr><td>67</td><td>62</td><td>PD</td><td>PD1_CC2</td><td>PD1_CC2</td></tr>
+<tr><td>68</td><td>63</td><td>PD</td><td>PD1_SVBUS</td><td>PD1_SVBUS</td></tr>
+<tr><td>69</td><td>64</td><td>PD</td><td>PD1_VCONN</td><td>PD1_VCONN</td></tr>
+<tr><td>70</td><td>65</td><td>PD</td><td>PD1_CC1</td><td>PD1_CC1</td></tr>
+<tr><td>71</td><td>-</td><td>PD</td><td>PD2_CC1</td><td>PD2_CC1</td></tr>
+<tr><td>72</td><td>-</td><td>PD</td><td>PD2_SVBUS</td><td>PD2_SVBUS</td></tr>
+<tr><td>73</td><td>-</td><td>PD</td><td>PD2_CC2</td><td>PD2_CC2</td></tr>
+<tr><td>74</td><td>66</td><td>power</td><td>VCORE</td><td>VCORE</td></tr>
+<tr><td>75</td><td>67</td><td>IO-shared</td><td>PWREN#</td><td>PWREN#</td></tr>
+<tr><td>76</td><td>68</td><td>EEPROM</td><td>EECS</td><td>EECS</td></tr>
+</tbody></table>
+</div>
+<h2 id="pin-functions-per-mode--ft2232h"><a class="header" href="#pin-functions-per-mode--ft2232h">Pin functions per mode — FT2232H</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>pin</th><th>UART</th><th>FIFO</th><th>sync FIFO</th><th>CPU FIFO</th><th>bitbang</th><th>MPSSE</th><th>MCU bus</th><th>opto-isolated</th></tr></thead><tbody>
+<tr><td>ADBUS0</td><td>TXD</td><td>D0</td><td>D0</td><td>D0</td><td>D0</td><td>TCK/SK</td><td>AD0</td><td>-</td></tr>
+<tr><td>ADBUS1</td><td>RXD</td><td>D1</td><td>D1</td><td>D1</td><td>D1</td><td>TDI/DO</td><td>AD1</td><td>-</td></tr>
+<tr><td>ADBUS2</td><td>RTS#</td><td>D2</td><td>D2</td><td>D2</td><td>D2</td><td>TDO/DI</td><td>AD2</td><td>-</td></tr>
+<tr><td>ADBUS3</td><td>CTS#</td><td>D3</td><td>D3</td><td>D3</td><td>D3</td><td>TMS/CS</td><td>AD3</td><td>-</td></tr>
+<tr><td>ADBUS4</td><td>DTR#</td><td>D4</td><td>D4</td><td>D4</td><td>D4</td><td>GPIOL0</td><td>AD4</td><td>-</td></tr>
+<tr><td>ADBUS5</td><td>DSR#</td><td>D5</td><td>D5</td><td>D5</td><td>D5</td><td>GPIOL1</td><td>AD5</td><td>-</td></tr>
+<tr><td>ADBUS6</td><td>DCD#</td><td>D6</td><td>D6</td><td>D6</td><td>D6</td><td>GPIOL2</td><td>AD6</td><td>-</td></tr>
+<tr><td>ADBUS7</td><td>RI#</td><td>D7</td><td>D7</td><td>D7</td><td>D7</td><td>GPIOL3</td><td>AD7</td><td>-</td></tr>
+<tr><td>ACBUS0</td><td>TXDEN</td><td>RXF#</td><td>RXF#</td><td>CS#</td><td>-</td><td>GPIOH0</td><td>A8</td><td>-</td></tr>
+<tr><td>ACBUS1</td><td>-</td><td>TXE#</td><td>TXE#</td><td>A0</td><td>WR#</td><td>GPIOH1</td><td>A9</td><td>-</td></tr>
+<tr><td>ACBUS2</td><td>-</td><td>RD#</td><td>RD#</td><td>RD#</td><td>RD#</td><td>GPIOH2</td><td>A10</td><td>-</td></tr>
+<tr><td>ACBUS3</td><td>RXLED#</td><td>WR</td><td>WR</td><td>WR#</td><td>-</td><td>GPIOH3</td><td>A11</td><td>-</td></tr>
+<tr><td>ACBUS4</td><td>TXLED#</td><td>SI/WU</td><td>SI/WU</td><td>SI/WU</td><td>SI/WU</td><td>GPIOH4</td><td>A12</td><td>-</td></tr>
+<tr><td>ACBUS5</td><td>-</td><td>-</td><td>CLKOUT</td><td>-</td><td>-</td><td>GPIOH5</td><td>A13</td><td>-</td></tr>
+<tr><td>ACBUS6</td><td>-</td><td>-</td><td>OE#</td><td>-</td><td>-</td><td>GPIOH6</td><td>A14</td><td>-</td></tr>
+<tr><td>ACBUS7</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>GPIOH7</td><td>A15</td><td>-</td></tr>
+<tr><td>BDBUS0</td><td>TXD</td><td>D0</td><td>N/A</td><td>D0</td><td>D0</td><td>TCK/SK</td><td>CS#</td><td>FSDI</td></tr>
+<tr><td>BDBUS1</td><td>RXD</td><td>D1</td><td>N/A</td><td>D1</td><td>D1</td><td>TDI/DO</td><td>ALE</td><td>FSCLK</td></tr>
+<tr><td>BDBUS2</td><td>RTS#</td><td>D2</td><td>N/A</td><td>D2</td><td>D2</td><td>TDO/DI</td><td>RD#</td><td>FSDO</td></tr>
+<tr><td>BDBUS3</td><td>CTS#</td><td>D3</td><td>N/A</td><td>D3</td><td>D3</td><td>TMS/CS</td><td>WR#</td><td>FSCTS</td></tr>
+<tr><td>BDBUS4</td><td>DTR#</td><td>D4</td><td>N/A</td><td>D4</td><td>D4</td><td>GPIOL0</td><td>IORDY</td><td>-</td></tr>
+<tr><td>BDBUS5</td><td>DSR#</td><td>D5</td><td>N/A</td><td>D5</td><td>D5</td><td>GPIOL1</td><td>CLKOUT</td><td>-</td></tr>
+<tr><td>BDBUS6</td><td>DCD#</td><td>D6</td><td>N/A</td><td>D6</td><td>D6</td><td>GPIOL2</td><td>I/O0</td><td>-</td></tr>
+<tr><td>BDBUS7</td><td>RI#</td><td>D7</td><td>N/A</td><td>D7</td><td>D7</td><td>GPIOL3</td><td>I/O1</td><td>-</td></tr>
+<tr><td>BCBUS0</td><td>TXDEN</td><td>RXF#</td><td>N/A</td><td>CS#</td><td>-</td><td>GPIOH0</td><td>-</td><td>-</td></tr>
+<tr><td>BCBUS1</td><td>SLEEP#</td><td>TXE#</td><td>N/A</td><td>A0</td><td>WR#</td><td>GPIOH1</td><td>-</td><td>-</td></tr>
+<tr><td>BCBUS2</td><td>RXLED#</td><td>RD#</td><td>N/A</td><td>RD#</td><td>RD#</td><td>GPIOH2</td><td>-</td><td>-</td></tr>
+<tr><td>BCBUS3</td><td>TXLED#</td><td>WR</td><td>N/A</td><td>WR#</td><td>-</td><td>GPIOH3</td><td>-</td><td>-</td></tr>
+<tr><td>BCBUS4</td><td>SI/WU</td><td>SI/WU</td><td>N/A</td><td>SI/WU</td><td>SI/WU</td><td>GPIOH4</td><td>-</td><td>SI/WU</td></tr>
+<tr><td>BCBUS5</td><td>-</td><td>-</td><td>N/A</td><td>-</td><td>-</td><td>GPIOH5</td><td>-</td><td>-</td></tr>
+<tr><td>BCBUS6</td><td>-</td><td>-</td><td>N/A</td><td>-</td><td>-</td><td>GPIOH6</td><td>-</td><td>-</td></tr>
+<tr><td>BCBUS7</td><td>PWRSAV#</td><td>PWRSAV#</td><td>N/A</td><td>PWRSAV#</td><td>PWRSAV#</td><td>GPIOH7</td><td>PWRSAV#</td><td>PWRSAV#</td></tr>
+</tbody></table>
+</div>
+<p>NOTE: The pin mapping is changed from FT2232C/D for many modes.</p>
+<p>PWRSAV# is a device input that, if enabled in EEPROM, will force the device into suspend mode when low.  It can be connected to VBUS/GND via a resistor ladder to force-suspend a self-powered device when not connected to USB.</p>
+<h2 id="pin-functions-per-mode--ft4232h"><a class="header" href="#pin-functions-per-mode--ft4232h">Pin functions per mode — FT4232H</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>pin</th><th>UART</th><th>bitbang</th><th>MPSSE</th></tr></thead><tbody>
+<tr><td>*DBUS0</td><td>TXD</td><td>D0</td><td>TCK/SK</td></tr>
+<tr><td>*DBUS1</td><td>RXD</td><td>D1</td><td>TDI/DO</td></tr>
+<tr><td>*DBUS2</td><td>RTS#</td><td>D2</td><td>TDO/SI</td></tr>
+<tr><td>*DBUS3</td><td>CTS#</td><td>D3</td><td>TMS/CS</td></tr>
+<tr><td>*DBUS4</td><td>DTR#</td><td>D4</td><td>GPIOL0</td></tr>
+<tr><td>*DBUS5</td><td>DSR#</td><td>D5</td><td>GPIOL1</td></tr>
+<tr><td>*DBUS6</td><td>DCD#</td><td>D6</td><td>GPIOL2</td></tr>
+<tr><td>*DBUS7</td><td>RI# or TXDEN (selected in EEPROM)</td><td>D7</td><td>GPIOL3</td></tr>
+</tbody></table>
+</div>
+<h2 id="eeprom-data-format-3"><a class="header" href="#eeprom-data-format-3">EEPROM data format</a></h2>
+<p>The device will accept 64-word, 128-word, and 256-word EEPROMs.  In case of 256-word EEPROMs, only first half is covered by the checksum.  The other half can still be used to store user data.</p>
+<p>For USB-PD devices, a 256-word EEPROM is required for the USB-PD part of the device to function.  The second half of the EEPROM is used to store the USB-PD configuration data, and it has its own, separate checksum.  It is described on the <a href="usb-pd.html#eeprom-data-format">USB-PD page</a>.</p>
+<ul>
+<li>word 0x00 (FT2232H):
+<ul>
+<li>bits 0-2: channel A mode
+<ul>
+<li>0: UART</li>
+<li>1: <a href="fifo.html">245-style FIFO</a></li>
+<li>2: <a href="fifo.html">CPU FIFO</a></li>
+<li>4: <a href="opto.html">fast opto-isolated serial</a></li>
+</ul>
+</li>
+<li>bit 3: channel A enable bind to VCP driver</li>
+<li>bits 8-10: channel B mode (see above)</li>
+<li>bit 11: channel B enable bind to VCP driver</li>
+<li>bit 15: enable PWRSAV# function on BCBUS7</li>
+</ul>
+</li>
+<li>word 0x00 (FT4232H):
+<ul>
+<li>bit 3: channel A enable bind to VCP driver</li>
+<li>bit 7: channel C enable bind to VCP driver</li>
+<li>bit 11: channel B enable bind to VCP driver</li>
+<li>bit 15: channel D enable bind to VCP driver</li>
+</ul>
+</li>
+<li>word 0x01: idVendor (USB VID)</li>
+<li>word 0x02: idProduct (USB PID)</li>
+<li>word 0x03: bcdDevice (see table)</li>
+<li>word 0x04: USB config (goes straight to configuration descriptor)
+<ul>
+<li>bits 0-7: bmAttributes
+<ul>
+<li>bit 5: remote wakeup enabled</li>
+<li>bit 6: self-powered</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>bits 8-15: bMaxPower (max power in units of 2mA)</li>
+</ul>
+</li>
+<li>word 0x05: device control
+<ul>
+<li>bit 2: IO pulldown in suspend</li>
+<li>bit 3: serial number enabled</li>
+<li>bit 12 (FT423[23]* only): ADBUS7 function in UART mode
+<ul>
+<li>0: RI</li>
+<li>1: TXDEN</li>
+</ul>
+</li>
+<li>bit 13 (FT423[23]* only): BDBUS7 function in UART mode</li>
+<li>bit 14 (FT423[23]* only): CDBUS7 function in UART mode</li>
+<li>bit 15 (FT423[23]* only): DDBUS7 function in UART mode</li>
+</ul>
+</li>
+<li>word 0x06: controls electrical characteristics of channel IO pins; the IO-* names match the pin categories in the pinout table above. on FT4232H, they correspond directly to channels, while on FT2232H, CBUS and DBUS of each channel can be controlled independently
+<ul>
+<li>bits 0-1: IO-A pin drive strength
+<ul>
+<li>0: 4mA</li>
+<li>1: 8mA</li>
+<li>2: 12mA</li>
+<li>3: 16mA</li>
+</ul>
+</li>
+<li>bit 2: IO-A pin slow slew rate</li>
+<li>bit 3: IO-A pin schmitt trigger</li>
+<li>bits 4-5: IO-B drive strength</li>
+<li>bit 6: IO-B slow slew rate</li>
+<li>bit 7: IO-B schmitt trigger</li>
+<li>bits 8-9: IO-C drive strength</li>
+<li>bit 10: IO-C slow slew rate</li>
+<li>bit 11: IO-C schmitt trigger</li>
+<li>bits 12-13: IO-D drive strength</li>
+<li>bit 14: IO-D slow slew rate</li>
+<li>bit 15: IO-D schmitt trigger</li>
+</ul>
+</li>
+<li>word 0x07: manufacturer string pointer</li>
+<li>word 0x08: product description string pointer</li>
+<li>word 0x09: serial number string pointer</li>
+<li>word 0x0a: ???</li>
+<li>word 0x0b:
+<ul>
+<li>bits 3-4: TPRDRV (an obscure undocumented trim parameter for the USB HS PHY)</li>
+</ul>
+</li>
+<li>word 0x0c: EEPROM type
+<ul>
+<li>0x46: 93C46 (64-word)</li>
+<li>0x56: 93C56 (128-word)</li>
+<li>0x66: 93C66 (256-word)</li>
+</ul>
+</li>
+<li>for 64-word EEPROM:
+<ul>
+<li>words 0x0d..0x3f: string / user area</li>
+<li>word 0x3f: checksum</li>
+</ul>
+</li>
+<li>for 128-word and 256-word EEPROM:
+<ul>
+<li>words 0xd..0x4d: user area
+<ul>
+<li>word 0x2b: for some reason, set to 0x302 by default (concidentally or not, this corresponds to a header of an empty string descriptor)</li>
+</ul>
+</li>
+<li>words 0x4d..0x7f: string / user area</li>
+<li>word 0x7f: checksum</li>
+</ul>
+</li>
+</ul>
+<p>String pointers are formatted as follows:</p>
+<ul>
+<li>for 64-word EEPROM:
+<ul>
+<li>bits 0-6: pointer to descriptor within EEPROM (counted <em>in bytes</em>)</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>for 128-word or 256-word EEPROM: pointer to descriptor within EEPROM (counted <em>in bytes</em>); note that FTDI tools will only store string descriptors in the area starting at word 0x4d, ensuring the high bit is always set</li>
+<li>bits 8-15: total length of descriptor in bytes</li>
+</ul>
+<p>TODO: figure out wtf it is with the always-set high bit</p>
+<p>The string descriptors are stored in ROM with the descriptor header included, as follows:</p>
+<ul>
+<li>word 0: header
+<ul>
+<li>bits 0-7: total length of descriptor in bytes (includes header)</li>
+<li>bits 8-15: descriptor type (always 3 — string)</li>
+</ul>
+</li>
+<li>words 1 and up: string in UTF-16</li>
+</ul>
+<p>The checksum can be computed as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn checksum(eeprom: &amp;[u16]) -&gt; u16 {
+    let checksum_word = match eeprom.len() {
+        0x40 =&gt; 0x3f,
+        0x80 | 0x100 =&gt; 0x7f,
+    };
+    let mut res: u16 = 0xaaaa;
+    for pos in 0..checksum_word { // checksum word is NOT included — we're calculating it
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    res
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ft232h-1"><a class="header" href="#ft232h-1">FT232H</a></h1>
 <p>TODO</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ft-x-series-1"><a class="header" href="#ft-x-series-1">FT-X series</a></h1>
 <p>TODO</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="ft4222h-1"><a class="header" href="#ft4222h-1">FT4222H</a></h1>
+<p>TODO</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="usb-pd-devices"><a class="header" href="#usb-pd-devices">USB-PD devices</a></h1>
+<p>The <a href="ft2232h.html">FT2232H, FT4232H</a>, and <a href="ft232h.html">FT232H</a> devices have variants with USB-PD support.  They essentially consist of the base device and a USB-PD controller core put together with some super glue.  The USB-PD part is described here.</p>
+<p>The devices are:</p>
+<ul>
+<li>FT2233HP: FT2232H with two USB-PD ports</li>
+<li>FT4233HP: FT4232H with two USB-PD ports</li>
+<li>FT2232HP: FT2232H with one USB-PD port</li>
+<li>FT4232HP: FT4232H with one USB-PD port</li>
+<li>FT233HP: FT232H with two USB-PD ports</li>
+<li>FT232HP: FT232H with one USB-PD port</li>
+</ul>
+<p>TODO</p>
+<h2 id="eeprom-data-format-4"><a class="header" href="#eeprom-data-format-4">EEPROM data format</a></h2>
+<p>A 256-word EEPROM is required for the USB-PD part of the device to function.  The second half of the EEPROM is used to store the USB-PD configuration data.</p>
 <p>TODO</p>
 
                     </main>
