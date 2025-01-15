@@ -216,27 +216,27 @@ A single-channel D2xx device. Essentially an enhanced version of FT232R, with th
 - internal 2048-byte MTP memory for configuration, including some immutable factory pre-programmed data
 - the device comes in several variants; the variant is selected by the factory-programmed MTP area and cannot be changed
   - FT200X and FT201X: USB to I2C peripherial bridge
-  - FT220X and FT221X: USB to FT1248 / SPI bridge
+  - FT220X and FT221X: USB to FT1248 bridge
   - FT230X, FT231X, FT234X: USB to UART bridge (like FT232R)
   - FT240X: USB to FIFO bridge (like FT245R)
 - adds battery charger detection
 
-| device  | package     | business end        | business end pins      |
-| ------- | ----------- | ------------------- | ---------------------- |
-| FT200XD | 10-pin DFN  | I2C peripherial     | 2×I2C + 1×CBUS         |
-| FT201XS | 16-pin SSOP | I2C peripherial     | 2×I2C + 6×CBUS         |
-| FT201XQ | 16-pin QFN  | I2C peripherial     | 2×I2C + 6×CBUS         |
-| FT220XS | 16-pin SSOP | 4-bit FT1248 or SPI | 7×FT1248/SPI + 1×CBUS  |
-| FT220XQ | 16-pin QFN  | 4-bit FT1248 or SPI | 7×FT1248/SPI + 1×CBUS  |
-| FT221XS | 20-pin SSOP | 8-bit FT1248 or SPI | 11×FT1248/SPI + 1×CBUS |
-| FT221XQ | 20-pin QFN  | 8-bit FT1248 or SPI | 11×FT1248/SPI + 1×CBUS |
-| FT230XS | 16-pin SSOP | basic UART          | 4×UART + 4×CBUS        |
-| FT230XQ | 16-pin QFN  | basic UART          | 4×UART + 4×CBUS        |
-| FT231XS | 20-pin SSOP | full UART           | 8×UART + 4×CBUS        |
-| FT231XQ | 20-pin QFN  | full UART           | 8×UART + 4×CBUS        |
-| FT234XD | 12-pin DFN  | basic UART          | 4×UART + 1×CBUS        |
-| FT240XS | 24-pin SSOP | FIFO                | 13×FIFO + 2×CBUS       |
-| FT240XQ | 24-pin QFN  | FIFO                | 13×FIFO + 2×CBUS       |
+| device  | package     | business end    | business end pins  |
+| ------- | ----------- | --------------- | ------------------ |
+| FT200XD | 10-pin DFN  | I2C peripherial | 2×I2C + 1×CBUS     |
+| FT201XS | 16-pin SSOP | I2C peripherial | 2×I2C + 6×CBUS     |
+| FT201XQ | 16-pin QFN  | I2C peripherial | 2×I2C + 6×CBUS     |
+| FT220XS | 16-pin SSOP | 4-bit FT1248    | 7×FT1248 + 1×CBUS  |
+| FT220XQ | 16-pin QFN  | 4-bit FT1248    | 7×FT1248 + 1×CBUS  |
+| FT221XS | 20-pin SSOP | 8-bit FT1248    | 11×FT1248 + 1×CBUS |
+| FT221XQ | 20-pin QFN  | 8-bit FT1248    | 11×FT1248 + 1×CBUS |
+| FT230XS | 16-pin SSOP | basic UART      | 4×UART + 4×CBUS    |
+| FT230XQ | 16-pin QFN  | basic UART      | 4×UART + 4×CBUS    |
+| FT231XS | 20-pin SSOP | full UART       | 8×UART + 4×CBUS    |
+| FT231XQ | 20-pin QFN  | full UART       | 8×UART + 4×CBUS    |
+| FT234XD | 12-pin DFN  | basic UART      | 4×UART + 1×CBUS    |
+| FT240XS | 24-pin SSOP | FIFO            | 13×FIFO + 2×CBUS   |
+| FT240XQ | 24-pin QFN  | FIFO            | 13×FIFO + 2×CBUS   |
 
 ### FT4222H
 
