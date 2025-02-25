@@ -357,7 +357,11 @@
 <li>bit 7: always set to 1</li>
 </ul>
 </li>
-<li>for 128-word or 256-word EEPROM: pointer to descriptor within EEPROM (counted <em>in bytes</em>); note that FTDI tools will only store string descriptors in the area starting at word 0x4b, ensuring the high bit is always set</li>
+<li>for 128-word or 256-word EEPROM:
+<ul>
+<li>bits 0-7: pointer to descriptor within EEPROM (counted <em>in bytes</em>); note that FTDI tools will only store string descriptors in the area starting at word 0x4b, ensuring the high bit is always set</li>
+</ul>
+</li>
 <li>bits 8-15: total length of descriptor in bytes</li>
 </ul>
 <p>TODO: figure out wtf it is with the always-set high bit</p>

@@ -287,7 +287,7 @@
 <p>The checksum can be computed as follows:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn checksum(eeprom: [u16; 0x40]) -&gt; u16 {
+</span>fn checksum(eeprom: &amp;[u16; 0x40]) -&gt; u16 {
     let mut res: u16 = 0xaaaa;
     for pos in 0..0x3f { // checksum word is NOT included — we're calculating it
         res ^= eeprom[pos];

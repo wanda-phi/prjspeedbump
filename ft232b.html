@@ -153,7 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="ft232b-and-ft245b"><a class="header" href="#ft232b-and-ft245b">FT232B and FT245B</a></h1>
-<p>The second generation of fixed-function D2xx devices, an upgrade to FT8U232A and FT8U245A.  The devices are:</p>
+<p>The second generation of fixed-function D2xx devices, an upgrade to <a href="ft8u232a.html">FT8U232A and FT8U245A</a>.  The devices are:</p>
 <ul>
 <li>FT232BM: UART mode, 32-pin LQFP</li>
 <li>FT232BL: UART mode, 32-pin LQFP (lead-free version)</li>
@@ -304,7 +304,7 @@
 <p>The checksum can be computed as follows:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn checksum(eeprom: [u16; 0x40]) -&gt; u16 {
+</span>fn checksum(eeprom: &amp;[u16; 0x40]) -&gt; u16 {
     let mut res: u16 = 0xaaaa;
     for pos in 0..0x3f { // checksum word is NOT included — we're calculating it
         res ^= eeprom[pos];

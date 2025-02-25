@@ -153,7 +153,317 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="ft-x-series"><a class="header" href="#ft-x-series">FT-X series</a></h1>
-<p>TODO</p>
+<p>The seventh generation of fixed-function D2xx devices, an upgrade to <a href="ft232r.html">FT232R and FT245R</a>.  There are four kinds of FT-X series devices:</p>
+<ul>
+<li>the FT20xX series, USB to I2C peripherial bridges (effectively a new mode of operation)</li>
+<li>the FT22xX series, USB to FT1248 bridges (based on the <a href="ft1248.html">FT1248 mode</a> introduced in <a href="ft232h.html">FT232H</a>)</li>
+<li>the FT23xX series, USB to UART bridges (a sequel to FT232R)</li>
+<li>the FT240X, USB to FIFO bridge (a sequel to FT245R)</li>
+</ul>
+<p>Note: FT22xX claims to be an "FT1248/SPI bridge".  In reality, it has nothing to do with SPI.  It could at most be charitably described as "SPI fanfic with little regard for canon".</p>
+<p>All FT-X series devices are actually the same silicon, differentiated through mode selection in the factory-programmed area of its EEPROM memory and packaging.</p>
+<p>Features:</p>
+<ul>
+<li>is a full-speed USB 1.1 peripherial</li>
+<li>single channel D2xx device</li>
+<li>set to one of four base modes depending on factory configuration:
+<ul>
+<li>FT200X and FT201X: a new <a href="d2xx-i2cp.html">I2C peripherial mode</a></li>
+<li>FT220X and FT221X: FT232H-like <a href="ft1248.html">FT1248 mode</a></li>
+<li>FT230X, FT231X, FT234X: FT232R-like UART mode</li>
+<li>FT240X: FT245R-like <a href="fifo.html">FIFO mode</a></li>
+</ul>
+</li>
+<li>dynamically-selectable alternate modes include:
+<ul>
+<li>FT2xxB-like <a href="bitbang.html">async bitbang</a></li>
+<li>FT2232-like <a href="bitbang.html">sync bitbang</a></li>
+<li>FT2xxR-like <a href="bitbang.html">CBUS bitbang</a></li>
+</ul>
+</li>
+<li>512-byte IN FIFO, 512-byte OUT FIFO</li>
+<li>internal 2048-byte EEPROM
+<ul>
+<li>pre-programmed factory area in EEPROM</li>
+<li>in FT1248 and I2C peripherial modes, the EEPROM can be accessed from the business end too</li>
+</ul>
+</li>
+<li>USB battery charger detection</li>
+<li>48MHZ internal base clock, generated from an internal 12MHz oscillator</li>
+<li>3.3V or 5V VCC supply for internal circuitry</li>
+<li>separate 1.8V to 3.3V VCCIO supply for business-end IO</li>
+<li>internal 5V-to-3.3V LDO</li>
+<li>internal 3.3V/5V-to-1.8V LDO</li>
+<li>internal D+ pullup resistor</li>
+<li>internal power-on reset circuit</li>
+<li>required external support circuitry:
+<ul>
+<li>just the decoupling capacitors</li>
+</ul>
+</li>
+</ul>
+<p>The default VID:PID of the device is <code>0403:6015</code>, unless configured otherwise by the EEPROM.  The <code>bcdDevice</code> value is <code>0x1000</code>.</p>
+<p>The devices are:</p>
+<div class="table-wrapper"><table><thead><tr><th>device</th><th>package</th><th>business end</th><th>business end pins</th></tr></thead><tbody>
+<tr><td>FT200XD</td><td>10-pin DFN</td><td>I2C peripherial</td><td>2×I2C + 1×CBUS</td></tr>
+<tr><td>FT201XS</td><td>16-pin SSOP</td><td>I2C peripherial</td><td>2×I2C + 6×CBUS</td></tr>
+<tr><td>FT201XQ</td><td>16-pin QFN</td><td>I2C peripherial</td><td>2×I2C + 6×CBUS</td></tr>
+<tr><td>FT220XS</td><td>16-pin SSOP</td><td>4-bit FT1248</td><td>7×FT1248 + 1×CBUS</td></tr>
+<tr><td>FT220XQ</td><td>16-pin QFN</td><td>4-bit FT1248</td><td>7×FT1248 + 1×CBUS</td></tr>
+<tr><td>FT221XS</td><td>20-pin SSOP</td><td>8-bit FT1248</td><td>11×FT1248 + 1×CBUS</td></tr>
+<tr><td>FT221XQ</td><td>20-pin QFN</td><td>8-bit FT1248</td><td>11×FT1248 + 1×CBUS</td></tr>
+<tr><td>FT230XS</td><td>16-pin SSOP</td><td>basic UART</td><td>4×UART + 4×CBUS</td></tr>
+<tr><td>FT230XQ</td><td>16-pin QFN</td><td>basic UART</td><td>4×UART + 4×CBUS</td></tr>
+<tr><td>FT231XS</td><td>20-pin SSOP</td><td>full UART</td><td>8×UART + 4×CBUS</td></tr>
+<tr><td>FT231XQ</td><td>20-pin QFN</td><td>full UART</td><td>8×UART + 4×CBUS</td></tr>
+<tr><td>FT234XD</td><td>12-pin DFN</td><td>basic UART</td><td>4×UART + 1×CBUS</td></tr>
+<tr><td>FT240XS</td><td>24-pin SSOP</td><td>FIFO</td><td>13×FIFO + 2×CBUS</td></tr>
+<tr><td>FT240XQ</td><td>24-pin QFN</td><td>FIFO</td><td>13×FIFO + 2×CBUS</td></tr>
+</tbody></table>
+</div>
+<h2 id="pinout--ft20xx-ft22xx-ft23xx"><a class="header" href="#pinout--ft20xx-ft22xx-ft23xx">Pinout — FT20xX, FT22xX, FT23xX</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>QFN20</th><th>SSOP20</th><th>QFN16</th><th>SSOP16</th><th>DFN12</th><th>DFN10</th><th>FT20xX</th><th>FT22xX</th><th>FT23xX</th></tr></thead><tbody>
+<tr><td>1</td><td>4</td><td>2</td><td>4</td><td>10</td><td>8</td><td>SDA</td><td>MIOSI1</td><td>RXD</td></tr>
+<tr><td>2</td><td>5</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>MIOSI7</td><td>RI#</td></tr>
+<tr><td>3</td><td>6</td><td>3</td><td>5</td><td>-</td><td>9</td><td>GND</td><td>GND</td><td>GND</td></tr>
+<tr><td>4</td><td>7</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>MIOSI5</td><td>DSR#</td></tr>
+<tr><td>5</td><td>8</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>MIOSI6</td><td>DCD#</td></tr>
+<tr><td>6</td><td>9</td><td>4</td><td>6</td><td>11</td><td>-</td><td>CBUS4</td><td>MIOSI3</td><td>CTS#</td></tr>
+<tr><td>7</td><td>10</td><td>5</td><td>7</td><td>-</td><td>-</td><td>CBUS2</td><td>MISO</td><td>CBUS2</td></tr>
+<tr><td>8</td><td>11</td><td>6</td><td>8</td><td>12</td><td>10</td><td>USBDP</td><td>USBDP</td><td>USBDP</td></tr>
+<tr><td>9</td><td>12</td><td>7</td><td>9</td><td>1</td><td>1</td><td>USBDM</td><td>USBDM</td><td>USBDM</td></tr>
+<tr><td>10</td><td>13</td><td>8</td><td>10</td><td>3</td><td>3</td><td>3V3OUT</td><td>3V3OUT</td><td>3V3OUT</td></tr>
+<tr><td>11</td><td>14</td><td>9</td><td>11</td><td>2</td><td>2</td><td>RESET#</td><td>RESET#</td><td>RESET#</td></tr>
+<tr><td>12</td><td>15</td><td>10</td><td>12</td><td>4</td><td>4</td><td>VCC</td><td>VCC</td><td>VCC</td></tr>
+<tr><td>13</td><td>16</td><td>13</td><td>13</td><td>5</td><td>-</td><td>GND</td><td>GND</td><td>GND</td></tr>
+<tr><td>14</td><td>17</td><td>11</td><td>14</td><td>-</td><td>-</td><td>CBUS1</td><td>CS#</td><td>CBUS1</td></tr>
+<tr><td>15</td><td>18</td><td>12</td><td>15</td><td>6</td><td>5</td><td>CBUS0</td><td>CLK</td><td>CBUS0</td></tr>
+<tr><td>16</td><td>19</td><td>14</td><td>16</td><td>-</td><td>-</td><td>CBUS3</td><td>CBUS3</td><td>CBUS3</td></tr>
+<tr><td>17</td><td>20</td><td>15</td><td>1</td><td>7</td><td>-</td><td>CBUS5</td><td>MIOSI0</td><td>TXD</td></tr>
+<tr><td>18</td><td>1</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>MIOSI4</td><td>DTR#</td></tr>
+<tr><td>19</td><td>2</td><td>16</td><td>2</td><td>8</td><td>6</td><td>SCL</td><td>MIOSI2</td><td>RTS#</td></tr>
+<tr><td>20</td><td>3</td><td>1</td><td>3</td><td>9</td><td>7</td><td>VCCIO</td><td>VCCIO</td><td>VCCIO</td></tr>
+<tr><td>[pad]</td><td></td><td>[pad]</td><td>-</td><td>[pad]</td><td>[pad]</td><td>GND</td><td>GND</td><td>GND</td></tr>
+</tbody></table>
+</div>
+<h2 id="pinout--ft240x"><a class="header" href="#pinout--ft240x">Pinout — FT240X</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>QFN24</th><th>SSOP24</th><th>FT240X</th></tr></thead><tbody>
+<tr><td>1</td><td>4</td><td>DATA1</td></tr>
+<tr><td>2</td><td>5</td><td>DATA7</td></tr>
+<tr><td>3</td><td>6</td><td>GND</td></tr>
+<tr><td>4</td><td>7</td><td>DATA5</td></tr>
+<tr><td>5</td><td>8</td><td>DATA6</td></tr>
+<tr><td>6</td><td>9</td><td>DATA3</td></tr>
+<tr><td>7</td><td>10</td><td>SI/WU#</td></tr>
+<tr><td>8</td><td>11</td><td>RD#</td></tr>
+<tr><td>9</td><td>12</td><td>WR</td></tr>
+<tr><td>10</td><td>13</td><td>USBDP</td></tr>
+<tr><td>11</td><td>14</td><td>USBDM</td></tr>
+<tr><td>12</td><td>15</td><td>3V3OUT</td></tr>
+<tr><td>13</td><td>16</td><td>RESET#</td></tr>
+<tr><td>14</td><td>17</td><td>VCORE</td></tr>
+<tr><td>15</td><td>18</td><td>VCC</td></tr>
+<tr><td>16</td><td>19</td><td>GND</td></tr>
+<tr><td>17</td><td>20</td><td>TXE#</td></tr>
+<tr><td>18</td><td>21</td><td>RXF#</td></tr>
+<tr><td>19</td><td>22</td><td>CBUS6</td></tr>
+<tr><td>20</td><td>23</td><td>CBUS5</td></tr>
+<tr><td>21</td><td>24</td><td>DATA0</td></tr>
+<tr><td>22</td><td>1</td><td>DATA4</td></tr>
+<tr><td>23</td><td>2</td><td>DATA2</td></tr>
+<tr><td>24</td><td>3</td><td>VCCIO</td></tr>
+</tbody></table>
+</div>
+<h2 id="cbus-pins"><a class="header" href="#cbus-pins">CBUS pins</a></h2>
+<p>The device has up to 6 CBUS pins.  They can be configured through the EEPROM to do the following functions:</p>
+<div class="table-wrapper"><table><thead><tr><th>EEPROM value</th><th>valid on pins</th><th>function</th></tr></thead><tbody>
+<tr><td><code>0x00</code></td><td>all</td><td>tristate</td></tr>
+<tr><td><code>0x01</code></td><td>all</td><td>UART TXLED#</td></tr>
+<tr><td><code>0x02</code></td><td>all</td><td>UART RXLED#</td></tr>
+<tr><td><code>0x03</code></td><td>all</td><td>UART TXRXLED#</td></tr>
+<tr><td><code>0x04</code></td><td>all</td><td>PWREN#</td></tr>
+<tr><td><code>0x05</code></td><td>all</td><td>SLEEP#</td></tr>
+<tr><td><code>0x06</code></td><td>all</td><td>const-0 output</td></tr>
+<tr><td><code>0x07</code></td><td>all</td><td>const-1 output</td></tr>
+<tr><td><code>0x08</code></td><td>all (everything but FT20xX), CBUS[0-3] (FT20xX)</td><td>I/O (for CBUS bitbang mode)</td></tr>
+<tr><td><code>0x09</code></td><td>all</td><td>UART TXDEN</td></tr>
+<tr><td><code>0x0a</code></td><td>all</td><td>CLK24</td></tr>
+<tr><td><code>0x0b</code></td><td>all</td><td>CLK12</td></tr>
+<tr><td><code>0x0c</code></td><td>all</td><td>CLK6</td></tr>
+<tr><td><code>0x0d</code></td><td>all</td><td>BCD_CHARGER</td></tr>
+<tr><td><code>0x0e</code></td><td>all</td><td>BCD_CHARGER#</td></tr>
+<tr><td><code>0x0f</code></td><td>all</td><td>I2C TXE#</td></tr>
+<tr><td><code>0x10</code></td><td>all</td><td>I2C RXF#</td></tr>
+<tr><td><code>0x11</code></td><td>all</td><td>VBUS_SENSE (previously known as PWRSAV#)</td></tr>
+<tr><td><code>0x12</code></td><td>all</td><td>bitbang WR#</td></tr>
+<tr><td><code>0x13</code></td><td>all</td><td>bitbang RD#</td></tr>
+<tr><td><code>0x14</code></td><td>all</td><td>TIMESTAMP</td></tr>
+<tr><td><code>0x15</code></td><td>all</td><td>KEEP_AWAKE</td></tr>
+</tbody></table>
+</div>
+<p>The two new functions are:</p>
+<ul>
+<li>TIMESTAMP (device output, toggles on every USB SOF frame)</li>
+<li>KEEP_AWAKE (device input, prevents device from entering suspend state when unplugged)</li>
+</ul>
+<h2 id="eeprom-format"><a class="header" href="#eeprom-format">EEPROM format</a></h2>
+<p>The FT-X series has an internal EEPROM of 2048 bytes.  It can be accessed from the USB host side like on previous devices, where it is instead viewed as an array of 1024 16-bit words.  On the FT20xX and FT22xX, it can also be accessed from the I2C/FT1248 side through special requests, where it is viewed as a 2048-byte array.</p>
+<p>Note that the vendor calls the EEPROM "MTP memory" on this device.  The difference, if any, is unknown.</p>
+<p>The EEPROM format is (viewed as 1024×16-bit words, like from the host):</p>
+<ul>
+<li>word 0x00:
+<ul>
+<li>bit 0: battery charge detect: enable</li>
+<li>bit 1: battery charge detect: force PWREN# low when charger detected</li>
+<li>bit 2: battery charge detect: disable sleep mode when charger detected</li>
+<li>bit 3: RS485 echo suppression (FT23xX only)</li>
+<li>bit 4: use external oscillator (?!? how? unbonded pads?)</li>
+<li>bit 5: external oscillator feedback resistor enable</li>
+<li>bit 6: USB suspend VBUS (set if one of CBUS is allocated as VBUS sense)</li>
+<li>bit 7: enable bind to VCP driver</li>
+</ul>
+</li>
+<li>word 0x01: idVendor (USB VID)</li>
+<li>word 0x02: idProduct (USB PID)</li>
+<li>word 0x03: bcdDevice (0x1000)</li>
+<li>word 0x04: USB config (goes straight to configuration descriptor)
+<ul>
+<li>bits 0-7: bmAttributes
+<ul>
+<li>bit 5: remote wakeup enabled</li>
+<li>bit 6: self-powered</li>
+<li>bit 7: always set to 1</li>
+</ul>
+</li>
+<li>bits 8-15: bMaxPower (max power in units of 2mA)</li>
+</ul>
+</li>
+<li>word 0x05: device control
+<ul>
+<li>bit 2: IO pulldown in suspend</li>
+<li>bit 3: serial number enabled</li>
+<li>bit 4: FT1248 clock polarity (CPOL) (FT22xX only)
+<ul>
+<li>0: low</li>
+<li>1: high</li>
+</ul>
+</li>
+<li>bit 5: FT1248 bit order (FT22xX only)
+<ul>
+<li>0: MSB</li>
+<li>1: LSB</li>
+</ul>
+</li>
+<li>bit 6: FT1248 flow control enable (FT22xX only)</li>
+<li>bit 7: I2C disable schmitt trigger (FT20xX only)</li>
+<li>bit 8: invert TXD (FT23xX only)</li>
+<li>bit 9: invert RXD (FT23xX only)</li>
+<li>bit 10: invert RTS (FT23xX only)</li>
+<li>bit 11: invert CTS (FT23xX only)</li>
+<li>bit 12: invert DTR (FT23xX only)</li>
+<li>bit 13: invert DSR (FT23xX only)</li>
+<li>bit 14: invert DCD (FT23xX only)</li>
+<li>bit 15: invert RI (FT23xX only)</li>
+</ul>
+</li>
+<li>word 0x06:
+<ul>
+<li>bits 0-1: DBUS drive strength
+<ul>
+<li>0: 4mA</li>
+<li>1: 8mA</li>
+<li>2: 12mA</li>
+<li>3: 16mA</li>
+</ul>
+</li>
+<li>bit 2: DBUS slow slew rate</li>
+<li>bit 3: DBUS schmitt trigger</li>
+<li>bits 4-5: CBUS drive strength</li>
+<li>bit 6: CBUS slow slew rate</li>
+<li>bit 7: CBUS schmitt trigger</li>
+</ul>
+</li>
+<li>word 0x07: manufacturer string pointer</li>
+<li>word 0x08: product description string pointer</li>
+<li>word 0x09: serial number string pointer</li>
+<li>word 0x0a: I2C slave address (FT20xX only)</li>
+<li>word 0x0b: I2C device ID low word (FT20xX only)</li>
+<li>word 0x0c: I2C device ID high word (FT20xX only)</li>
+<li>word 0x0d:
+<ul>
+<li>bits 0-7: CBUS0 function</li>
+<li>bits 8-15: CBUS1 function</li>
+</ul>
+</li>
+<li>word 0x0e:
+<ul>
+<li>bits 0-7: CBUS2 function</li>
+<li>bits 8-15: CBUS3 function</li>
+</ul>
+</li>
+<li>word 0x0f:
+<ul>
+<li>bits 0-7: CBUS4 function</li>
+<li>bits 8-15: CBUS5 function</li>
+</ul>
+</li>
+<li>word 0x10:
+<ul>
+<li>bits 0-7: CBUS6 function</li>
+</ul>
+</li>
+<li>words 0x12..0x40: user area (not checksummed)</li>
+<li>words 0x40..0x50: factory configuration area
+<ul>
+<li>word 0x49:
+<ul>
+<li>bits 8-15: device type
+<ul>
+<li>0: UART (FT23xX)</li>
+<li>1: FIFO (FT24xX)</li>
+<li>2: FT1248 (FT22xX)</li>
+<li>3: I2C (FT20xX)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>words 0x50..0x7f: string area</li>
+<li>word 0x7f: checksum</li>
+<li>word 0x80..0x400: user area (not checksummed)</li>
+</ul>
+<p>String pointers are formatted as follows:</p>
+<ul>
+<li>bits 0-7: pointer to descriptor within EEPROM (counted <em>in bytes</em>)</li>
+<li>bits 8-15: total length of descriptor in bytes</li>
+</ul>
+<p>The string descriptors are stored in ROM with the descriptor header included, as follows:</p>
+<ul>
+<li>word 0: header
+<ul>
+<li>bits 0-7: total length of descriptor in bytes (includes header)</li>
+<li>bits 8-15: descriptor type (always 3 — string)</li>
+</ul>
+</li>
+<li>words 1 and up: string in UTF-16</li>
+</ul>
+<p>The checksum can be computed as follows:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn checksum(eeprom: &amp;[u16; 0x400]) -&gt; u16 {
+    let mut res: u16 = 0xaaaa;
+    for pos in 0..0x12 {
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    for pos in 0x40..0x7f { // checksum word is NOT included — we're calculating it
+        res ^= eeprom[pos];
+        res = res.rotate_left(1);
+    }
+    res
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

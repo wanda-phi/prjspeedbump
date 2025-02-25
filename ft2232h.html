@@ -153,7 +153,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="ft2232h-and-ft4232h"><a class="header" href="#ft2232h-and-ft4232h">FT2232H and FT4232H</a></h1>
-<p>The fifth generation of fixed-function D2xx devices.  There are two base devices:</p>
+<p>The fifth generation of fixed-function D2xx devices, an upgrade to <a href="ft2232.html">FT2232D</a>.  There are two base devices:</p>
 <ul>
 <li>FT2232H: has two channels with 16 IO pins each and a large selection of operating modes</li>
 <li>FT4232H: has four channels with 8 IO pins each and a smaller selection of operating modes</li>
@@ -172,10 +172,10 @@
 <li>is a high-speed USB 2.0 peripherial
 <ul>
 <li>supports higher UART baud rates and bitbang/FIFO/MPSSE speeds thanks to the extra oomph</li>
-<li>integrated D+ pullup registor</li>
+<li>integrated D+ pullup resistor</li>
 </ul>
 </li>
-<li>dual-channel (FT2232H) or quad-channel (FT4232H)</li>
+<li>dual-channel (FT2232H) or quad-channel (FT4232H) D2xx device</li>
 <li>each channel can be independently configured to one of several supported modes:
 <ul>
 <li>FT232B-like UART mode (default)</li>
@@ -218,6 +218,7 @@
 </ul>
 </li>
 </ul>
+<p>For USB-PD devices, the USB-PD function is described on the <a href="usb-pd.html">USB-PD page</a>.</p>
 <p>The full list of devices is:</p>
 <div class="table-wrapper"><table><thead><tr><th>device</th><th>channels</th><th>USB-PD ports</th><th>default VID:PID</th><th><code>bcdDevice</code></th><th>package</th></tr></thead><tbody>
 <tr><td>FT2232HL</td><td>2</td><td>-</td><td><code>0403:6010</code></td><td><code>0x0700</code></td><td>64-pin LQFP</td></tr>
@@ -235,7 +236,6 @@
 </tbody></table>
 </div>
 <p>Note: while FT2232HA is supported by the drivers, there is no datasheet available, thus packaging options are unknown.  However, "same as FT4232HA" is probably a good bet.</p>
-<p>TODO: USB-PD stuff.</p>
 <h2 id="pinout--base-and-automotive-devices"><a class="header" href="#pinout--base-and-automotive-devices">Pinout — base and automotive devices</a></h2>
 <div class="table-wrapper"><table><thead><tr><th>LQFP64 or QFN64 pin</th><th>VQFN56 pin</th><th>category</th><th>FT2232H</th><th>FT4232H</th></tr></thead><tbody>
 <tr><td>1</td><td>-</td><td>power</td><td>GND</td><td>GND</td></tr>
@@ -481,15 +481,15 @@
 <ul>
 <li>bit 2: IO pulldown in suspend</li>
 <li>bit 3: serial number enabled</li>
-<li>bit 12 (FT423[23]* only): ADBUS7 function in UART mode
+<li>bit 12 (FT4232H only): ADBUS7 function in UART mode
 <ul>
 <li>0: RI</li>
 <li>1: TXDEN</li>
 </ul>
 </li>
-<li>bit 13 (FT423[23]* only): BDBUS7 function in UART mode</li>
-<li>bit 14 (FT423[23]* only): CDBUS7 function in UART mode</li>
-<li>bit 15 (FT423[23]* only): DDBUS7 function in UART mode</li>
+<li>bit 13 (FT4232H only): BDBUS7 function in UART mode</li>
+<li>bit 14 (FT4232H only): CDBUS7 function in UART mode</li>
+<li>bit 15 (FT4232H only): DDBUS7 function in UART mode</li>
 </ul>
 </li>
 <li>word 0x06: controls electrical characteristics of channel IO pins; the IO-* names match the pin categories in the pinout table above. on FT4232H, they correspond directly to channels, while on FT2232H, CBUS and DBUS of each channel can be controlled independently
@@ -518,7 +518,7 @@
 <li>word 0x07: manufacturer string pointer</li>
 <li>word 0x08: product description string pointer</li>
 <li>word 0x09: serial number string pointer</li>
-<li>word 0x0a: ???</li>
+<li>word 0x0a: always 0</li>
 <li>word 0x0b:
 <ul>
 <li>bits 3-4: TPRDRV (an obscure undocumented trim parameter for the USB HS PHY)</li>
@@ -526,9 +526,9 @@
 </li>
 <li>word 0x0c: EEPROM type
 <ul>
-<li>0x46: 93C46 (64-word)</li>
-<li>0x56: 93C56 (128-word)</li>
-<li>0x66: 93C66 (256-word)</li>
+<li>0x46: 93LC46 (64-word)</li>
+<li>0x56: 93LC56 (128-word)</li>
+<li>0x66: 93LC66 (256-word)</li>
 </ul>
 </li>
 <li>for 64-word EEPROM:
@@ -557,7 +557,11 @@
 <li>bit 7: always set to 1</li>
 </ul>
 </li>
-<li>for 128-word or 256-word EEPROM: pointer to descriptor within EEPROM (counted <em>in bytes</em>); note that FTDI tools will only store string descriptors in the area starting at word 0x4d, ensuring the high bit is always set</li>
+<li>for 128-word or 256-word EEPROM:
+<ul>
+<li>bits 0-7: pointer to descriptor within EEPROM (counted <em>in bytes</em>); note that FTDI tools will only store string descriptors in the area starting at word 0x4d, ensuring the high bit is always set</li>
+</ul>
+</li>
 <li>bits 8-15: total length of descriptor in bytes</li>
 </ul>
 <p>TODO: figure out wtf it is with the always-set high bit</p>
